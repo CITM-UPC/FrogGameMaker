@@ -2,9 +2,9 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/MyGameMaker
-/MyGameEditor/x64/Debug
+/.vs/FrogGameMaker
+/FrogGameEditor/x64/Debug
 *.user
 /x64/Debug
 /.vs
-/MyGameEngine/x64/Debug
+/FrogGameEngine/x64/Debug
