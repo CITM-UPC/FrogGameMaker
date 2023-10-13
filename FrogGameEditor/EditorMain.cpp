@@ -1,9 +1,9 @@
 #include <iostream>
 #include "EditorApp.h"
 
-int main() {
+int main(int argc, char* args[]) {
 
-	EditorApp* editorApp = new EditorApp;
+	EditorApp* editorApp = new EditorApp();
 
 	// start
 	bool toContinue = true;
