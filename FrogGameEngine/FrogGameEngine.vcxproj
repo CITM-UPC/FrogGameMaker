@@ -150,10 +150,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h" />
+    <ClInclude Include="GameRenderer.h" />
+    <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

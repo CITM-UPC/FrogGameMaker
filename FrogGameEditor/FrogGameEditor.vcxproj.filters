@@ -26,5 +26,11 @@
     <ClInclude Include="EditorWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EditorInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

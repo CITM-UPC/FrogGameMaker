@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.33027.164
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrogGameEditor", "FrogGameEditor\FrogGameEditor.vcxproj", "{B850C1D8-9F78-4055-8FD0-DB724E71F83F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E3376F4-E954-4089-A40F-84D9033020F0} = {8E3376F4-E954-4089-A40F-84D9033020F0}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FrogGameEngine", "FrogGameEngine\FrogGameEngine.vcxproj", "{8E3376F4-E954-4089-A40F-84D9033020F0}"
 EndProject

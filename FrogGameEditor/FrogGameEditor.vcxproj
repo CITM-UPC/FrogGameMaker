@@ -154,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h" />
+    <ClInclude Include="EditorInput.h" />
+    <ClInclude Include="EditorUI.h" />
     <ClInclude Include="EditorWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

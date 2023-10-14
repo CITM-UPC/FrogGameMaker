@@ -30,7 +30,7 @@ public:
 
 	bool CleanUp();
 
-private:
+
 	SDL_Window* window;
 
 	SDL_GLContext glContext;
@@ -46,18 +46,6 @@ EditorWindow::~EditorWindow()
 }
 
 bool EditorWindow::Start() {
-
-	// sdl init
-	if (SDL_Init(SDL_INIT_VIDEO) != 0)
-		throw exception(SDL_GetError());
-
-	SDL_version compiled;
-	SDL_VERSION(&compiled);
-	cout << "SDL Compiled with " << to_string(compiled.major) << '.' << to_string(compiled.minor) << '.' << to_string(compiled.patch);
-
-	SDL_version linked;
-	SDL_GetVersion(&linked);
-	cout << "SDL Linked with " << to_string(linked.major) << '.' << to_string(linked.minor) << '.' << to_string(linked.patch);
 
 	// setup SDL window
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -84,6 +72,7 @@ bool EditorWindow::Start() {
 	if (SDL_GL_SetSwapInterval(1) != 0) 
 		throw exception(SDL_GetError());
 
+	// init opengl
 	auto glew_init_error = glewInit();
 	if (glew_init_error != GLEW_OK) 
 		throw exception((char*)glewGetErrorString(glew_init_error));
@@ -95,18 +84,18 @@ bool EditorWindow::Start() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-
 	return true;
 }
 
 bool EditorWindow::PreUpdate() {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	return true;
 }
 
 bool EditorWindow::Update() {
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 
 	return true;
 }
