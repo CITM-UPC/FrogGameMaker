@@ -20,9 +20,9 @@ void GameApp::Render(RenderModes renderMode)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    /*gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
+    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
         camera.center.x, camera.center.y, camera.center.z,
-        camera.up.x, camera.up.y, camera.up.z);*/
+        camera.up.x, camera.up.y, camera.up.z);
 
     /*if (renderMode == RenderModes::DEBUG) {
         drawGrid(100, 1);
