@@ -5,15 +5,15 @@
 #include <chrono>
 #include <thread>
 
-
+#include "GL/glew.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_opengl.h"
 
 #include "EditorWindow.h"
 #include "EditorInput.h"
 #include "EditorUI.h"
 
 #include "../FrogGameEngine/GameApp.h"
-
-
 
 class EditorApp
 {
@@ -31,7 +31,7 @@ public:
 	EditorInput* editorInput;
 	EditorUI* editorUI;
 
-	GameApp* gameApp;
+	GameApp gameApp;
 
 private:
 
@@ -42,8 +42,6 @@ EditorApp::EditorApp()
 	editorWindow = new EditorWindow();
 	editorInput = new EditorInput();
 	editorUI = new EditorUI();
-
-	//gameApp = new GameApp();
 }
 
 EditorApp::~EditorApp()
