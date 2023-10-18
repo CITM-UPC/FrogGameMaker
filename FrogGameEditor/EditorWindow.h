@@ -12,8 +12,6 @@ using namespace std;
 using namespace chrono;
 
 
-static const unsigned int FPS = 60;
-static const auto FDT = 1.0s / FPS;
 class EditorWindow
 {
 public:

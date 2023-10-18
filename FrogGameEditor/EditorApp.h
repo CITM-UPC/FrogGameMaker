@@ -15,6 +15,9 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
+static const unsigned int FPS = 60;
+static const auto FDT = 1.0s / FPS;
+
 class EditorApp
 {
 public:

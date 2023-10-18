@@ -8,7 +8,7 @@ GameApp::~GameApp()
 {
 }
 
-inline void GameApp::Step(std::chrono::duration<double> dt)
+void GameApp::Step(std::chrono::duration<double> dt)
 {
 }
 
