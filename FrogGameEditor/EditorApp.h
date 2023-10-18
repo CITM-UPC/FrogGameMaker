@@ -31,7 +31,7 @@ public:
 	EditorInput* editorInput;
 	EditorUI* editorUI;
 
-	GameApp gameApp;
+	GameApp* gameApp;
 
 private:
 
@@ -42,6 +42,8 @@ EditorApp::EditorApp()
 	editorWindow = new EditorWindow();
 	editorInput = new EditorInput();
 	editorUI = new EditorUI();
+
+	gameApp = new GameApp();
 }
 
 EditorApp::~EditorApp()
@@ -67,7 +69,6 @@ bool EditorApp::Start() {
 		editorWindow->Start();
 		editorInput->Start();
 		editorUI->Start(editorWindow->window, editorWindow->glContext);
-
 	}
 
 	return true;
@@ -91,7 +92,7 @@ bool EditorApp::Update() {
 			editorInput->Update();
 			editorUI->Update();
 
-			//gameApp->Step(FDT);
+			gameApp->Step(FDT);
 		}
 
 		// post update
@@ -100,7 +101,7 @@ bool EditorApp::Update() {
 			editorInput->PostUpdate();
 			editorUI->PostUpdate();
 
-			//gameApp->Render(GameApp::RenderModes::DEBUG);
+			gameApp->Render(GameApp::RenderModes::DEBUG);
 		}
 
 		const auto frame_end = steady_clock::now();
@@ -116,6 +117,8 @@ bool EditorApp::Update() {
 }
 
 bool EditorApp::Cleanup() {
+
+	
 
 	editorUI->CleanUp();
 	editorInput->CleanUp();
