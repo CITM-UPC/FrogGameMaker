@@ -100,11 +100,13 @@ bool EditorApp::Update() {
 
 		// post update
 		{
-			editorWindow->PostUpdate();
 			editorInput->PostUpdate();
 			editorUI->PostUpdate();
 
 			gameApp->Render(GameApp::RenderModes::DEBUG);
+
+			editorWindow->PostUpdate();
+
 		}
 
 		const auto frame_end = steady_clock::now();
@@ -121,14 +123,11 @@ bool EditorApp::Update() {
 
 bool EditorApp::Cleanup() {
 
-	
-
 	editorUI->CleanUp();
 	editorInput->CleanUp();
 	editorWindow->CleanUp();
 
-
-
+	SDL_Quit();
 	
 	return true;
 }
