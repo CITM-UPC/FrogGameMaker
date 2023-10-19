@@ -83,13 +83,26 @@ public:
 			dock_flags |= ImGuiDockNodeFlags_PassthruCentralNode;
 			ImGui::DockSpaceOverViewport(0, dock_flags);
 		}
-
-		if (ImGui::BeginMainMenuBar()) {
-
-		}		
+	
 	}
 
 	void Update() {
+
+		// main menu bar
+		ImGui::BeginMainMenuBar();
+
+		if (ImGui::BeginMenu("Help")) {
+
+			if (ImGui::MenuItem("Demo Window")) {
+				show_demo_window = !show_demo_window;
+			}
+
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+
+
 		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window) {
 			ImGui::ShowDemoWindow(&show_demo_window);
@@ -130,6 +143,7 @@ public:
 
 		}
 
+		
 	}
 
 	void PostUpdate() {
