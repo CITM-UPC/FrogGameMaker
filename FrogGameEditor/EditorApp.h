@@ -101,9 +101,8 @@ bool EditorApp::Update() {
 		// post update
 		{
 			editorInput->PostUpdate();
-			editorUI->PostUpdate();
-
 			gameApp->Render(GameApp::RenderModes::DEBUG);
+			editorUI->PostUpdate();
 
 			editorWindow->PostUpdate();
 
