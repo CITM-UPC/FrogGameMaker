@@ -86,8 +86,10 @@ public:
 
 		if (ImGui::BeginMainMenuBar()) {
 
-		}
+		}		
+	}
 
+	void Update() {
 		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window) {
 			ImGui::ShowDemoWindow(&show_demo_window);
@@ -126,10 +128,7 @@ public:
 			if (ImGui::Button("Close Me"))
 				show_another_window = false;
 
-			}
-	}
-
-	void Update() {
+		}
 
 	}
 
