@@ -66,6 +66,7 @@ public:
 		show_another_window = true;
 		dockSpaceEnabled = true;
 		showHardwareWindow = true;
+		showAboutPopup = false;
 
 		return true;
 	}
@@ -99,27 +100,52 @@ public:
 	bool Update() {
 
 		// main menu bar
-		ImGui::BeginMainMenuBar();
+		if (ImGui::BeginMainMenuBar()) {
+			if (ImGui::BeginMenu("Info")) {
 
-		if (ImGui::BeginMenu("Info")) {
+				if (ImGui::MenuItem("Hardware Information")) {
+					showHardwareWindow = !showHardwareWindow;
+				}
 
-			if (ImGui::MenuItem("Hardware Information")) {
-				showHardwareWindow = !showHardwareWindow;
+				ImGui::EndMenu();
 			}
 
-			ImGui::EndMenu();
-		}
+			if (ImGui::BeginMenu("Help")) {
 
-		if (ImGui::BeginMenu("Help")) {
+				if (ImGui::MenuItem("Demo Window")) {
+					show_demo_window = !show_demo_window;
+				}
 
-			if (ImGui::MenuItem("Demo Window")) {
-				show_demo_window = !show_demo_window;
+				if (ImGui::MenuItem("About")) {
+					showAboutPopup = !showAboutPopup;
+				}
+				ImGui::EndMenu();
 			}
 
-			ImGui::EndMenu();
+			ImGui::EndMainMenuBar();
 		}
+		
+		// about poput (there is a bug in imgui that causes that you cannot open a popup directly from the menu, this is a kinda solution)
+		{
+			if (showAboutPopup) {
+				ImGui::OpenPopup("About");
+				showAboutPopup = false;
+			}
 
-		ImGui::EndMainMenuBar();
+			ImVec2 center(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f);
+			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+			if (ImGui::BeginPopupModal("About")) {
+				{
+					ImGui::Text("text text text");
+					if (ImGui::Button("OK")) {
+						ImGui::CloseCurrentPopup();
+					}
+					ImGui::EndPopup();
+				}
+			}
+
+		}
+		
 
 		// windows
 		if (showHardwareWindow) {
@@ -210,12 +236,10 @@ public:
 
 
 	bool show_demo_window;
-
 	bool show_another_window;
-
 	bool dockSpaceEnabled;
-
 	bool showHardwareWindow;
+	bool showAboutPopup;
 
 	ImVec4 clear_color;
 };
