@@ -65,6 +65,7 @@ public:
 		show_demo_window = true;
 		show_another_window = true;
 		dockSpaceEnabled = true;
+		showHardwareWindow = true;
 
 		return true;
 	}
@@ -100,6 +101,15 @@ public:
 		// main menu bar
 		ImGui::BeginMainMenuBar();
 
+		if (ImGui::BeginMenu("Info")) {
+
+			if (ImGui::MenuItem("Hardware Information")) {
+				showHardwareWindow = !showHardwareWindow;
+			}
+
+			ImGui::EndMenu();
+		}
+
 		if (ImGui::BeginMenu("Help")) {
 
 			if (ImGui::MenuItem("Demo Window")) {
@@ -111,6 +121,32 @@ public:
 
 		ImGui::EndMainMenuBar();
 
+		// windows
+		if (showHardwareWindow) {
+			ImGui::Begin("Hardware");
+
+			const GLubyte* vendor = glGetString(GL_VENDOR); // Returns the vendor
+			const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model			
+
+			ImGui::Text("%s", vendor);
+			ImGui::Text("%s", renderer);
+
+			SDL_version sdlVersion;
+			SDL_GetVersion(&sdlVersion);
+
+			ImGui::Text("SDL Version: %d.%d.%d", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
+
+			for (int i = 0; i < SDL_GetNumVideoDrivers(); ++i) {
+				ImGui::Text("%s", SDL_GetVideoDriver(i));
+			}
+			
+
+			ImGui::Text("CPU's Cores:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %d kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+
+			ImGui::End();
+		}
 
 		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 		if (show_demo_window) {
@@ -178,6 +214,8 @@ public:
 	bool show_another_window;
 
 	bool dockSpaceEnabled;
+
+	bool showHardwareWindow;
 
 	ImVec4 clear_color;
 };
