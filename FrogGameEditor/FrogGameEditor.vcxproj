@@ -158,11 +158,13 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EditorApp.cpp" />
     <ClCompile Include="EditorMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h" />
     <ClInclude Include="EditorInput.h" />
+    <ClInclude Include="EditorModule.h" />
     <ClInclude Include="EditorUI.h" />
     <ClInclude Include="EditorWindow.h" />
   </ItemGroup>

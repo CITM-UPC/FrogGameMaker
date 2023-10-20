@@ -1,5 +1,7 @@
 #pragma once
 
+#include "EditorModule.h"
+
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
@@ -8,13 +10,17 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
-class EditorUI {
+class EditorUI : public EditorModule
+{
 
 public:
-	EditorUI() {	};
+	EditorUI(EditorApp* editor) : EditorModule(editor) {
+
+
+	};
 
 	// TODO: change window and gl_context to pick it from app
-	void Start(SDL_Window* window, void* gl_context) {
+	bool Start() {
 
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
@@ -31,7 +37,7 @@ public:
 
 
 		// Setup Platform/Renderer backends
-		ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+		ImGui_ImplSDL2_InitForOpenGL(editor->editorWindow->window, editor->editorWindow->glContext);
 		ImGui_ImplOpenGL3_Init();
 
 
@@ -59,9 +65,11 @@ public:
 		show_demo_window = true;
 		show_another_window = true;
 		dockSpaceEnabled = true;
+
+		return true;
 	}
 
-	void PreUpdate() {
+	bool PreUpdate() {
 		// Poll and handle events (inputs, window resize, etc.)
 		// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
 		// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
@@ -83,10 +91,11 @@ public:
 			dock_flags |= ImGuiDockNodeFlags_PassthruCentralNode;
 			ImGui::DockSpaceOverViewport(0, dock_flags);
 		}
-	
+
+		return true;
 	}
 
-	void Update() {
+	bool Update() {
 
 		// main menu bar
 		ImGui::BeginMainMenuBar();
@@ -143,21 +152,24 @@ public:
 
 		}
 
-		
+		return true;
 	}
 
-	void PostUpdate() {
+	bool PostUpdate() {
 		ImGui::Render();
 		//glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		//SDL_GL_SwapWindow(window);
+		return true;
 	}
 
-	void CleanUp() {
+	bool CleanUp() {
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplSDL2_Shutdown();
 		ImGui::DestroyContext();
+
+		return true;
 	}
 
 

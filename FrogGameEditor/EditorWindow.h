@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include "EditorModule.h"
+
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_opengl.h"
@@ -12,10 +14,10 @@ using namespace std;
 using namespace chrono;
 
 
-class EditorWindow
+class EditorWindow : public EditorModule
 {
 public:
-	EditorWindow();
+	EditorWindow(EditorApp* editor);
 	~EditorWindow();
 
 	bool Start();
@@ -28,14 +30,15 @@ public:
 
 	bool CleanUp();
 
+	void Render();
 
-	SDL_Window* window;
+	SDL_Window* window = nullptr;
 
-	SDL_GLContext glContext;
+	SDL_GLContext glContext = nullptr;
 
 };
 
-EditorWindow::EditorWindow()
+EditorWindow::EditorWindow(EditorApp* editor) : EditorModule(editor)
 {
 }
 
@@ -100,10 +103,12 @@ bool EditorWindow::Update() {
 
 bool EditorWindow::PostUpdate() {
 
+	return true;
+}
+
+void EditorWindow::Render() {
 
 	SDL_GL_SwapWindow(window);
-
-	return true;
 }
 
 bool EditorWindow::CleanUp() {

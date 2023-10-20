@@ -1,16 +1,18 @@
 #pragma once
 #include <iostream>
 
+#include "EditorModule.h"
+
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_opengl.h"
 
 #include "EditorUI.h"
 
-class EditorInput
+class EditorInput : public EditorModule
 {
 public:
-	EditorInput();
+	EditorInput(EditorApp* editor);
 	~EditorInput();
 
 	bool Start();
@@ -24,14 +26,10 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Window* window;
-
-	SDL_GLContext glContext;
-
 
 };
 
-EditorInput::EditorInput()
+EditorInput::EditorInput(EditorApp* editor) : EditorModule(editor)
 {
 }
 
@@ -73,10 +71,6 @@ bool EditorInput::PostUpdate() {
 }
 
 bool EditorInput::CleanUp() {
-
-	SDL_GL_DeleteContext(glContext);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
 
 	return true;
 }
