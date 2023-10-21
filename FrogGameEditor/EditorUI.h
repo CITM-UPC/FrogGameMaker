@@ -10,6 +10,8 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
+
+
 class EditorUI : public EditorModule
 {
 
@@ -57,9 +59,6 @@ public:
 		//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 		//IM_ASSERT(font != NULL);
 
-		// Our state
-		//bool show_demo_window = true;
-		//bool show_another_window = false;
 		clear_color = ImVec4(0.039f, 0.039f, 0.039f, 1.00f);
 
 		show_demo_window = true;
@@ -72,16 +71,6 @@ public:
 	}
 
 	bool PreUpdate() {
-		// Poll and handle events (inputs, window resize, etc.)
-		// You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-		// - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
-		// - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application, or clear/overwrite your copy of the keyboard data.
-		// Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-		/*SDL_Event event;
-		while (SDL_PollEvent(&event))
-		{
-			ImGui_ImplSDL2_ProcessEvent(&event);
-		}*/
 
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
@@ -100,30 +89,7 @@ public:
 	bool Update() {
 
 		// main menu bar
-		if (ImGui::BeginMainMenuBar()) {
-			if (ImGui::BeginMenu("Info")) {
-
-				if (ImGui::MenuItem("Hardware Information")) {
-					showHardwareWindow = !showHardwareWindow;
-				}
-
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::BeginMenu("Help")) {
-
-				if (ImGui::MenuItem("Demo Window")) {
-					show_demo_window = !show_demo_window;
-				}
-
-				if (ImGui::MenuItem("About")) {
-					showAboutPopup = !showAboutPopup;
-				}
-				ImGui::EndMenu();
-			}
-
-			ImGui::EndMainMenuBar();
-		}
+		UIMainMenuBar();
 		
 		// about poput (there is a bug in imgui that causes that you cannot open a popup directly from the menu, this is a kinda solution)
 		{
@@ -131,126 +97,14 @@ public:
 				ImGui::OpenPopup("About");
 				showAboutPopup = false;
 			}
-
-			ImVec2 center(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f);
-			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-			if (ImGui::BeginPopupModal("About")) {
-				{
-					// name engine + version
-					ImGui::SeparatorText("Frog Game Engine v0.1");
-
-					// made by
-					ImGui::Text("Made by: ");
-					ImGui::Text("   Victor Martin (Github: VicMarBall)");
-					ImGui::Text("   Ari Sevcik (Github: AriSevcik)");
-
-					// external libraries
-					{
-						ImGui::SeparatorText("External Libraries Used: ");
-						// sdl
-						{
-							SDL_version sdlVersion;
-							SDL_GetVersion(&sdlVersion);
-
-							ImGui::Bullet(); ImGui::Text("SDL %d.%d.%d", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
-						}
-						
-						// opengl
-						{
-							ImGui::Bullet(); ImGui::Text("OpenGL %s", glGetString(GL_VERSION));
-						}
-
-						// glew
-						{
-							ImGui::Bullet(); ImGui::Text("GLEW %s", glewGetString(GLEW_VERSION));
-						}
-
-						// imgui
-						{
-							ImGui::Bullet(); ImGui::Text("ImGui %s", IMGUI_VERSION);
-						}
-
-						// glu
-						{
-							ImGui::Bullet(); ImGui::Text("GLU --TODO--");
-						}
-
-						// devil
-						{
-							ImGui::Bullet(); ImGui::Text("DevIL --TODO--");
-						}
-
-						// assimp
-						{
-							ImGui::Bullet(); ImGui::Text("Assimp --TODO--");
-						}
-						
-					}
-
-					{
-						ImGui::SeparatorText("License");
-
-						// --TODO-- read directly the license document (?)
-						ImGui::Text("MIT License");
-						ImGui::Text("");
-						ImGui::Text("Copyright(c) 2023 CITM - UPC");
-						ImGui::Text("");
-						ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
-						ImGui::Text("of this software and associated documentation files(the \"Software\"), to deal");
-						ImGui::Text("in the Software without restriction, including without limitation the rights");
-						ImGui::Text("to use, copy, modify, merge, publish, distribute, sublicense, and /or sell");
-						ImGui::Text("copies of the Software, and to permit persons to whom the Software is");
-						ImGui::Text("furnished to do so, subject to the following conditions :");
-						ImGui::Text("");
-						ImGui::Text("The above copyright notice and this permission notice shall be included in all");
-						ImGui::Text("copies or substantial portions of the Software.");
-						ImGui::Text("");
-						ImGui::Text("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR");
-						ImGui::Text("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
-						ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE");
-						ImGui::Text("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER");
-						ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,");
-						ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
-						ImGui::Text("SOFTWARE.");
-					}
-
-					ImGui::Separator();
-
-					if (ImGui::Button("Close")) {
-						ImGui::CloseCurrentPopup();
-					}
-					ImGui::EndPopup();
-				}
-			}
+			UIAboutPopup();
 
 		}
 		
 
 		// windows
 		if (showHardwareWindow) {
-			ImGui::Begin("Hardware");
-
-			const GLubyte* vendor = glGetString(GL_VENDOR); // Returns the vendor
-			const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model			
-
-			ImGui::Text("%s", vendor);
-			ImGui::Text("%s", renderer);
-
-			SDL_version sdlVersion;
-			SDL_GetVersion(&sdlVersion);
-
-			ImGui::Text("SDL Version: %d.%d.%d", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
-
-			for (int i = 0; i < SDL_GetNumVideoDrivers(); ++i) {
-				ImGui::Text("%s", SDL_GetVideoDriver(i));
-			}
-			
-
-			ImGui::Text("CPU's Cores:");
-			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %d kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
-
-			ImGui::End();
+			UIHardwareWindow();
 		}
 
 		// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
@@ -321,4 +175,144 @@ public:
 	bool showAboutPopup;
 
 	ImVec4 clear_color;
+
+private:
+	void UIMainMenuBar() {
+		if (ImGui::BeginMainMenuBar()) {
+			if (ImGui::BeginMenu("Info")) {
+
+				if (ImGui::MenuItem("Hardware Information")) {
+					showHardwareWindow = !showHardwareWindow;
+				}
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Help")) {
+
+				if (ImGui::MenuItem("Demo Window")) {
+					show_demo_window = !show_demo_window;
+				}
+
+				if (ImGui::MenuItem("About")) {
+					showAboutPopup = !showAboutPopup;
+				}
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMainMenuBar();
+		}
+	}
+
+	void UIAboutPopup() {
+		ImVec2 center(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f);
+		ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		if (ImGui::BeginPopupModal("About")) {
+			{
+				// name engine + version
+				ImGui::SeparatorText("Frog Game Engine v0.1");
+
+				// made by
+				ImGui::Text("Made by: ");
+				ImGui::Text("   Victor Martin (Github: VicMarBall)");
+				ImGui::Text("   Ari Sevcik (Github: AriSevcik)");
+
+				// external libraries
+				{
+					ImGui::SeparatorText("External Libraries Used: ");
+					// sdl
+					{
+						SDL_version sdlVersion;
+						SDL_GetVersion(&sdlVersion);
+
+						ImGui::Bullet(); ImGui::Text("SDL %d.%d.%d", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
+					}
+
+					// opengl
+					{
+						ImGui::Bullet(); ImGui::Text("OpenGL %s", glGetString(GL_VERSION));
+					}
+
+					// glew
+					{
+						ImGui::Bullet(); ImGui::Text("GLEW %s", glewGetString(GLEW_VERSION));
+					}
+
+					// imgui
+					{
+						ImGui::Bullet(); ImGui::Text("ImGui %s", IMGUI_VERSION);
+					}
+
+					// glu
+					{
+						ImGui::Bullet(); ImGui::Text("GLU --TODO--");
+					}
+
+					// devil
+					{
+						ImGui::Bullet(); ImGui::Text("DevIL --TODO--");
+					}
+
+					// assimp
+					{
+						ImGui::Bullet(); ImGui::Text("Assimp --TODO--");
+					}
+
+				}
+
+				{
+					ImGui::SeparatorText("License");
+
+					// --TODO-- read directly the license document (?)
+					ImGui::Text("MIT License");
+					ImGui::Text("");
+					ImGui::Text("Copyright(c) 2023 CITM - UPC");
+					ImGui::Text("");
+					ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
+					ImGui::Text("of this software and associated documentation files(the \"Software\"), to deal");
+					ImGui::Text("in the Software without restriction, including without limitation the rights");
+					ImGui::Text("to use, copy, modify, merge, publish, distribute, sublicense, and /or sell");
+					ImGui::Text("copies of the Software, and to permit persons to whom the Software is");
+					ImGui::Text("furnished to do so, subject to the following conditions :");
+					ImGui::Text("");
+					ImGui::Text("The above copyright notice and this permission notice shall be included in all");
+					ImGui::Text("copies or substantial portions of the Software.");
+					ImGui::Text("");
+					ImGui::Text("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR");
+					ImGui::Text("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
+					ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE");
+					ImGui::Text("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER");
+					ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,");
+					ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
+					ImGui::Text("SOFTWARE.");
+				}
+
+				ImGui::Separator();
+
+				if (ImGui::Button("Close")) {
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::EndPopup();
+			}
+		}
+	}
+
+	void UIHardwareWindow() {
+		ImGui::Begin("Hardware");
+
+		ImGui::Text("CPU's Cores:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d (Cache: %d kb)", SDL_GetCPUCount(), SDL_GetCPUCacheLineSize());
+
+		ImGui::Text("System RAM:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", SDL_GetSystemRAM());
+
+		const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model			
+
+		ImGui::Text("%s", renderer);
+
+		ImGui::End();
+
+	}
 };
