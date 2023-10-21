@@ -136,8 +136,64 @@ public:
 			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 			if (ImGui::BeginPopupModal("About")) {
 				{
-					ImGui::Text("text text text");
-					if (ImGui::Button("OK")) {
+					// name engine + version
+					ImGui::SeparatorText("Frog Game Engine");
+					ImGui::SameLine();
+					ImGui::Text("v0.1 ");
+
+					// made by
+					ImGui::Text("Made by: ");
+					ImGui::Text("Victor Martin (Github: VicMarBall)");
+					ImGui::Text("Ari Sevcik (Github: AriSevcik)");
+
+					ImGui::Separator();
+
+					// external libraries
+					{
+						ImGui::SeparatorText("External Libraries Used: ");
+						// sdl
+						{
+							SDL_version sdlVersion;
+							SDL_GetVersion(&sdlVersion);
+
+							ImGui::Bullet(); ImGui::Text("SDL %d.%d.%d", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
+						}
+						
+						// opengl
+						{
+							ImGui::Bullet(); ImGui::Text("OpenGL %s", glGetString(GL_VERSION));
+						}
+
+						// glew
+						{
+							ImGui::Bullet(); ImGui::Text("GLEW %s", glewGetString(GLEW_VERSION));
+						}
+
+						// imgui
+						{
+							ImGui::Bullet(); ImGui::Text("ImGui %s", IMGUI_VERSION);
+						}
+
+						// glu
+						{
+							ImGui::Bullet(); ImGui::Text("GLU --TODO--");
+						}
+
+						// devil
+						{
+							ImGui::Bullet(); ImGui::Text("DevIL --TODO--");
+						}
+
+						// assimp
+						{
+							ImGui::Bullet(); ImGui::Text("Assimp --TODO--");
+						}
+						
+					}
+
+					ImGui::Separator();
+
+					if (ImGui::Button("Close")) {
 						ImGui::CloseCurrentPopup();
 					}
 					ImGui::EndPopup();
