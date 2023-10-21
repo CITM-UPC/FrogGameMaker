@@ -137,16 +137,12 @@ public:
 			if (ImGui::BeginPopupModal("About")) {
 				{
 					// name engine + version
-					ImGui::SeparatorText("Frog Game Engine");
-					ImGui::SameLine();
-					ImGui::Text("v0.1 ");
+					ImGui::SeparatorText("Frog Game Engine v0.1");
 
 					// made by
 					ImGui::Text("Made by: ");
-					ImGui::Text("Victor Martin (Github: VicMarBall)");
-					ImGui::Text("Ari Sevcik (Github: AriSevcik)");
-
-					ImGui::Separator();
+					ImGui::Text("   Victor Martin (Github: VicMarBall)");
+					ImGui::Text("   Ari Sevcik (Github: AriSevcik)");
 
 					// external libraries
 					{
@@ -189,6 +185,33 @@ public:
 							ImGui::Bullet(); ImGui::Text("Assimp --TODO--");
 						}
 						
+					}
+
+					{
+						ImGui::SeparatorText("License");
+
+						// --TODO-- read directly the license document (?)
+						ImGui::Text("MIT License");
+						ImGui::Text("");
+						ImGui::Text("Copyright(c) 2023 CITM - UPC");
+						ImGui::Text("");
+						ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy");
+						ImGui::Text("of this software and associated documentation files(the \"Software\"), to deal");
+						ImGui::Text("in the Software without restriction, including without limitation the rights");
+						ImGui::Text("to use, copy, modify, merge, publish, distribute, sublicense, and /or sell");
+						ImGui::Text("copies of the Software, and to permit persons to whom the Software is");
+						ImGui::Text("furnished to do so, subject to the following conditions :");
+						ImGui::Text("");
+						ImGui::Text("The above copyright notice and this permission notice shall be included in all");
+						ImGui::Text("copies or substantial portions of the Software.");
+						ImGui::Text("");
+						ImGui::Text("THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR");
+						ImGui::Text("IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,");
+						ImGui::Text("FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE");
+						ImGui::Text("AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER");
+						ImGui::Text("LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,");
+						ImGui::Text("OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE");
+						ImGui::Text("SOFTWARE.");
 					}
 
 					ImGui::Separator();
