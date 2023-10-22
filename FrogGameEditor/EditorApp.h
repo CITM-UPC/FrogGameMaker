@@ -48,6 +48,8 @@ public:
 
 	list<EditorModule*> modules;
 
+	vector<float> FPS_Log;
+
 	GameApp* gameApp;
 
 	/*GLuint gameAppRenderFBO;

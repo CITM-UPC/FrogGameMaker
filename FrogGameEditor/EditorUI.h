@@ -68,6 +68,7 @@ public:
 		showAboutPopup = false;
 		/*showGameScene = true;
 		showEditorScene = true;*/
+		showFPSLog = true;
 
 		return true;
 	}
@@ -147,6 +148,8 @@ public:
 			if (ImGui::Button("Close Me"))
 				show_another_window = false;
 
+			ImGui::End();
+
 		}
 
 		/*if (showGameScene) {
@@ -156,6 +159,10 @@ public:
 		if (showEditorScene) {
 			UIEditorScene();
 		}*/
+
+		if (showFPSLog) {
+			UIFPSLog();
+		}
 
 		return true;
 	}
@@ -185,6 +192,7 @@ public:
 	bool showAboutPopup;
 	/*bool showGameScene;
 	bool showEditorScene;*/
+	bool showFPSLog;
 
 	ImVec4 clear_color;
 
@@ -320,12 +328,22 @@ private:
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", SDL_GetSystemRAM());
 
-		const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model			
+		const GLubyte* renderer = glGetString(GL_RENDERER); // Returns a hint to the model
 
 		ImGui::Text("%s", renderer);
 
 		ImGui::End();
 
+	}
+
+	void UIFPSLog() {
+		ImGui::Begin("FPS Log");
+		char title[25];
+		sprintf_s(title, 25, "Framerate %.1f", editor->FPS_Log[editor->FPS_Log.size() - 1]);
+		ImGui::PlotHistogram("##framerate", &editor->FPS_Log[0], editor->FPS_Log.size(), 0, title, 0.0f, 100.0f, ImVec2(300, 100));
+
+		//ImGui::PlotHistogram("##milliseconds", &editor->FPS_Log[0], editor->FPS_Log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		ImGui::End();
 	}
 
 	// call this function to create the game screen (we can create another one for the editor screen)

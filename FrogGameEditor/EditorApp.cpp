@@ -14,6 +14,7 @@ EditorApp::EditorApp()
 	modules.push_back(editorWindow);
 	modules.push_back(editorUI);
 
+	FPS_Log.push_back(0.0f);
 
 	gameApp = new GameApp();
 }
@@ -97,8 +98,19 @@ bool EditorApp::Update() {
 
 	const auto frame_end = steady_clock::now();
 	const auto frame_duration = frame_end - frame_start;
+
 	if (frame_duration < FDT)
 		this_thread::sleep_for(FDT - frame_duration);
+
+	const auto frameEndAfterSleep = steady_clock::now();
+	const auto frameDurationAfterSleep = frameEndAfterSleep - frame_start;
+
+	float lastFPS = 1.0f / (frameDurationAfterSleep.count() * 0.000000001f);
+
+	FPS_Log.push_back(lastFPS);
+	if (FPS_Log.size() > 100) {
+		FPS_Log.erase(FPS_Log.begin());
+	}
 
 	return ret;
 }
