@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -130,8 +130,7 @@
     </Lib>
     <PreBuildEvent>
       <Command>call "$(SolutionDir)vcpkg\bootstrap-vcpkg.bat"
-"$(SolutionDir)vcpkg\vcpkg.exe" install opengl glew glm devil[libjpeg,libpng] assimp --recurse --triplet x64-windows
-</Command>
+"$(SolutionDir)vcpkg\vcpkg.exe" install opengl glew glm devil[libjpeg,libpng] assimp --recurse --triplet x64-windows</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,11 +161,20 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="GameApp.cpp" />
+    <ClCompile Include="GraphicObject.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cube.h" />
     <ClInclude Include="GameApp.h" />
     <ClInclude Include="GameRenderer.h" />
+    <ClInclude Include="Graphic.h" />
+    <ClInclude Include="GraphicObject.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
