@@ -64,8 +64,10 @@ public:
 		show_demo_window = true;
 		show_another_window = true;
 		dockSpaceEnabled = true;
-		showHardwareWindow = true;
+		showHardwareWindow = false;
 		showAboutPopup = false;
+		/*showGameScene = true;
+		showEditorScene = true;*/
 
 		return true;
 	}
@@ -147,6 +149,14 @@ public:
 
 		}
 
+		/*if (showGameScene) {
+			UIGameScene(editor->gameAppRenderTexture);
+		}
+
+		if (showEditorScene) {
+			UIEditorScene();
+		}*/
+
 		return true;
 	}
 
@@ -173,6 +183,8 @@ public:
 	bool dockSpaceEnabled;
 	bool showHardwareWindow;
 	bool showAboutPopup;
+	/*bool showGameScene;
+	bool showEditorScene;*/
 
 	ImVec4 clear_color;
 
@@ -315,4 +327,35 @@ private:
 		ImGui::End();
 
 	}
+
+	// call this function to create the game screen (we can create another one for the editor screen)
+	/*
+	void UIGameScene(GLuint gameSceneTexture) {
+		ImGui::Begin("Game");
+		{
+			// using a child allow to fill all the window and later editing
+			ImGui::BeginChild("Game Render");
+
+			ImVec2 windowSize = ImGui::GetWindowSize();
+			ImGui::Image((ImTextureID)gameSceneTexture, windowSize, ImVec2(0, 1), ImVec2(1, 0));
+
+			ImGui::EndChild();
+		}
+		ImGui::End();
+	}
+
+	void UIEditorScene(GLuint editorSceneTexture) {
+		ImGui::Begin("Editor");
+		{
+			// using a child allow to fill all the window and later editing
+			ImGui::BeginChild("Editor Render");
+
+			ImVec2 windowSize = ImGui::GetWindowSize();
+			//ImGui::Image((ImTextureID)editorSceneTexture, windowSize, ImVec2(0, 1), ImVec2(1, 0));
+
+			ImGui::EndChild();
+		}
+		ImGui::End();
+	}
+	*/
 };

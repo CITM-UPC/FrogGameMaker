@@ -81,7 +81,9 @@ bool EditorApp::Update() {
 
 	// post update
 	{
+		//PreGameAppRender();
 		gameApp->Render(GameApp::RenderModes::DEBUG);
+		//PostGameAppRender();
 
 		auto item = modules.begin();
 
@@ -111,3 +113,26 @@ bool EditorApp::Cleanup() {
 
 	return true;
 }
+
+//void EditorApp::PreGameAppRender()
+//{
+//	glGenFramebuffers(1, &gameAppRenderFBO);
+//
+//	glBindFramebuffer(GL_FRAMEBUFFER, gameAppRenderFBO);
+//}
+//
+//void EditorApp::PostGameAppRender()
+//{
+//	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+//	glDeleteFramebuffers(1, &gameAppRenderFBO);
+//
+//	glGenTextures(1, &gameAppRenderTexture);
+//	glBindTexture(GL_TEXTURE_2D, gameAppRenderTexture);
+//
+//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+//
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//
+//	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameAppRenderTexture, 0);
+//}

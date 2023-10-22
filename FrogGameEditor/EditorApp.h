@@ -36,6 +36,12 @@ public:
 
 	bool Cleanup();
 
+	//// use this before the game render to get all the info into the BFO to then pass it to the UI
+	//void PreGameAppRender();
+
+	//// use this after the game render to finish the BFO
+	//void PostGameAppRender();
+
 	EditorInput* editorInput;
 	EditorWindow* editorWindow;
 	EditorUI* editorUI;
@@ -43,6 +49,10 @@ public:
 	list<EditorModule*> modules;
 
 	GameApp* gameApp;
+
+	/*GLuint gameAppRenderFBO;
+
+	GLuint gameAppRenderTexture;*/
 
 private:
 
