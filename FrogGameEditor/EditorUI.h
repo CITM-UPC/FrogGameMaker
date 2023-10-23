@@ -69,6 +69,9 @@ public:
 		/*showGameScene = true;
 		showEditorScene = true;*/
 		showFPSLog = true;
+		showConfigWindowWindow = false;
+		showConfigRendererWindow = false;
+		showConfigInputWindow = false;
 
 		return true;
 	}
@@ -164,6 +167,18 @@ public:
 			UIFPSLog();
 		}
 
+		if (showConfigWindowWindow) {
+			UIConfigWindowWindow();
+		}
+
+		if (showConfigRendererWindow) {
+			UIConfigRendererWindow();
+		}
+
+		if (showConfigInputWindow) {
+			UIConfigInputWindow();
+		}
+
 		return true;
 	}
 
@@ -193,6 +208,9 @@ public:
 	/*bool showGameScene;
 	bool showEditorScene;*/
 	bool showFPSLog;
+	bool showConfigWindowWindow;
+	bool showConfigRendererWindow;
+	bool showConfigInputWindow;
 
 	ImVec4 clear_color;
 
@@ -217,6 +235,23 @@ private:
 				if (ImGui::MenuItem("About")) {
 					showAboutPopup = !showAboutPopup;
 				}
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Configuration")) {
+
+				if (ImGui::MenuItem("Window")) {
+					showConfigWindowWindow = !showConfigWindowWindow;
+				}
+
+				if (ImGui::MenuItem("Renderer")) {
+					showConfigRendererWindow = !showConfigRendererWindow;
+				}
+
+				if (ImGui::MenuItem("Input")) {
+					showConfigInputWindow = !showConfigInputWindow;
+				}
+
 				ImGui::EndMenu();
 			}
 
@@ -343,6 +378,39 @@ private:
 		ImGui::PlotHistogram("##framerate", &editor->FPS_Log[0], editor->FPS_Log.size(), 0, title, 0.0f, 100.0f, ImVec2(300, 100));
 
 		//ImGui::PlotHistogram("##milliseconds", &editor->FPS_Log[0], editor->FPS_Log.size(), 0, title, 0.0f, 100.0f, ImVec2(310, 100));
+		ImGui::End();
+	}
+
+	void UIConfigWindowWindow() {
+		ImGui::Begin("Window Configuration");
+		
+		ImGui::Text("Window Width:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_WIDTH);
+
+		ImGui::Text("Window Height:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_HEIGHT);
+
+		float aspectRatio = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;
+
+		ImGui::Text("Aspect Ratio:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
+
+
+		ImGui::End();
+	}
+
+	void UIConfigRendererWindow() {
+		ImGui::Begin("Renderer Configuration");
+		
+		ImGui::End();
+	}
+
+	void UIConfigInputWindow() {
+		ImGui::Begin("Input Configuration");
+		
 		ImGui::End();
 	}
 
