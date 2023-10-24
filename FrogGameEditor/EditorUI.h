@@ -231,6 +231,15 @@ private:
 		if (ImGui::BeginMainMenuBar()) {
 
 			if (ImGui::BeginMenu("General")) {
+				if (ImGui::MenuItem("New Project --TODO--")) {
+
+				}
+
+				if (ImGui::MenuItem("Open Project --TODO--")) {
+
+				}
+
+				ImGui::Separator();
 
 				if (editorActivated) {
 					if (ImGui::MenuItem("Deactivate Editor")) {
@@ -307,8 +316,23 @@ private:
 
 				// made by
 				ImGui::Text("Made by: ");
-				ImGui::Text("   Victor Martin (Github: VicMarBall)");
-				ImGui::Text("   Ari Sevcik (Github: AriSevcik)");
+				ImGui::Text("   Victor Martin (Github:");
+				ImGui::SameLine();
+				if (ImGui::SmallButton("VicMarBall")) {
+					editor->WebRequest("https://github.com/VicMarBall");
+				}
+				ImGui::SameLine();
+				ImGui::Text(")");
+
+				ImGui::Text("   Ari Sevcik (Github:");
+				ImGui::SameLine();
+				if (ImGui::SmallButton("AriSevcik")) {
+					editor->WebRequest("https://github.com/AriSevcik");
+				}
+				ImGui::SameLine();
+				ImGui::Text(")");
+
+
 
 				// external libraries
 				{
