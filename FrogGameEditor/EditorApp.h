@@ -39,7 +39,7 @@ public:
 
 	bool Cleanup();
 
-	void RequestBrowser(const char* url);
+	void WebRequest(const char* url);
 
 	//// use this before the game render to get all the info into the BFO to then pass it to the UI
 	//void PreGameAppRender();

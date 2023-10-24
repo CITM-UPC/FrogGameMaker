@@ -244,7 +244,7 @@ private:
 				}
 
 				if (ImGui::MenuItem("Go To Github")) {
-					editor->RequestBrowser("https://github.com/CITM-UPC/FrogGameMaker");
+					editor->WebRequest("https://github.com/CITM-UPC/FrogGameMaker");
 				}
 
 				if (ImGui::MenuItem("Quit")) {

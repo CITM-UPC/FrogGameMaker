@@ -126,7 +126,7 @@ bool EditorApp::Cleanup() {
 	return true;
 }
 
-void EditorApp::RequestBrowser(const char* url)
+void EditorApp::WebRequest(const char* url)
 {
 	ShellExecute(0, 0, url, 0, 0, SW_SHOW);
 }
