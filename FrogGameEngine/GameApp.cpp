@@ -1,4 +1,16 @@
 #include "GameApp.h"
+#include <GL\glew.h>
+#include <glm/ext/matrix_transform.hpp>
+#include <vector>
+#include <IL/il.h>
+
+#include "Mesh.h"
+
+#include "GraphicObject.h"
+
+using namespace std;
+
+static double angle = 0.0;
 
 static void drawAxis() {
     glLineWidth(4.0);
@@ -38,6 +50,7 @@ static void drawGrid(int grid_size, int grid_step) {
 
 GameApp::GameApp()
 {
+    ilInit();
 }
 
 GameApp::~GameApp()
@@ -46,6 +59,8 @@ GameApp::~GameApp()
 
 void GameApp::Step(std::chrono::duration<double> dt)
 {
+    const double angle_vel = 90.0; // degrees per second
+    angle += angle_vel * dt.count();
 }
 
 void GameApp::Render(RenderModes renderMode)
@@ -64,5 +79,14 @@ void GameApp::Render(RenderModes renderMode)
         drawGrid(100, 1);
         drawAxis();
     }
+
+#pragma region Draw Sandbox
+    static auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx");
+    static GraphicObject meshA(mesh_ptrs.front());
+    static GraphicObject meshB(mesh_ptrs.back());
+
+
+    for (auto& mesh_ptr : mesh_ptrs) mesh_ptr->draw();
+#pragma endregion
 }
 
