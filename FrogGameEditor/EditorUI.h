@@ -10,6 +10,7 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
+#include "../FrogGameEngine/GraphicObject.h"
 
 
 class EditorUI : public EditorModule
@@ -76,6 +77,8 @@ public:
 		quitPressed = false;
 
 		editorActivated = true;
+
+		showHierarchyWindow = true;
 
 		return true;
 	}
@@ -187,6 +190,10 @@ public:
 			UIConfigInputWindow();
 		}
 
+		if (showHierarchyWindow) {
+			UIHierarchyWindow();
+		}
+
 		return true;
 	}
 
@@ -224,6 +231,8 @@ public:
 
 	bool editorActivated;
 
+	bool showHierarchyWindow;
+	
 	ImVec4 clear_color;
 
 private:
@@ -473,6 +482,38 @@ private:
 	void UIConfigInputWindow() {
 		ImGui::Begin("Input Configuration");
 		
+		ImGui::End();
+	}
+
+	void UIHierarchyNodeWrite() {
+		if (ImGui::TreeNode("alo")) {
+
+			ImGui::TreePop();
+		}
+	}
+
+	void UIHierarchyWindow() {
+		ImGui::Begin("Hierarchy");
+
+		// unity style: 
+		// get the scene that has as children the rest of game objects
+		if (ImGui::CollapsingHeader("Scene")) {
+
+
+			for (int i = 0; i < 10; ++i) {
+				UIHierarchyNodeWrite();
+			}
+
+		}
+
+		ImGui::End();
+	}
+
+	void UIInspectorWindow() {
+		ImGui::Begin("Inspector");
+
+
+
 		ImGui::End();
 	}
 

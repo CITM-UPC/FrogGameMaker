@@ -8,6 +8,7 @@
 
 class GraphicObject
 {
+public:
 	mat4 _transform;
 	std::set<GraphicObject*> _children;
 	GraphicObject* _parent;
