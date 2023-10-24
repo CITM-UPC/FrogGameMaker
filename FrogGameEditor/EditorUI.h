@@ -73,6 +73,10 @@ public:
 		showConfigRendererWindow = false;
 		showConfigInputWindow = false;
 
+		quitPressed = false;
+
+		editorActivated = true;
+
 		return true;
 	}
 
@@ -97,6 +101,10 @@ public:
 		// main menu bar
 		UIMainMenuBar();
 		
+		if (!editorActivated) {
+			return true;
+		}
+
 		// about poput (there is a bug in imgui that causes that you cannot open a popup directly from the menu, this is a kinda solution)
 		{
 			if (showAboutPopup) {
@@ -188,7 +196,7 @@ public:
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		//SDL_GL_SwapWindow(window);
-		return true;
+		return !quitPressed;
 	}
 
 	bool CleanUp() {
@@ -212,11 +220,58 @@ public:
 	bool showConfigRendererWindow;
 	bool showConfigInputWindow;
 
+	bool quitPressed;
+
+	bool editorActivated;
+
 	ImVec4 clear_color;
 
 private:
 	void UIMainMenuBar() {
 		if (ImGui::BeginMainMenuBar()) {
+
+			if (ImGui::BeginMenu("General")) {
+
+				if (editorActivated) {
+					if (ImGui::MenuItem("Deactivate Editor")) {
+						editorActivated = !editorActivated;
+					}
+				}
+				else {
+					if (ImGui::MenuItem("Activate Editor")) {
+						editorActivated = !editorActivated;
+					}
+				}
+
+				if (ImGui::MenuItem("Go To Github")) {
+					editor->RequestBrowser("https://github.com/CITM-UPC/FrogGameMaker");
+				}
+
+				if (ImGui::MenuItem("Quit")) {
+					quitPressed = !quitPressed;
+				}
+
+				ImGui::EndMenu();
+			}
+
+
+			if (ImGui::BeginMenu("Configuration")) {
+
+				if (ImGui::MenuItem("Window")) {
+					showConfigWindowWindow = !showConfigWindowWindow;
+				}
+
+				if (ImGui::MenuItem("Renderer")) {
+					showConfigRendererWindow = !showConfigRendererWindow;
+				}
+
+				if (ImGui::MenuItem("Input")) {
+					showConfigInputWindow = !showConfigInputWindow;
+				}
+
+				ImGui::EndMenu();
+			}
+
 			if (ImGui::BeginMenu("Info")) {
 
 				if (ImGui::MenuItem("Hardware Information")) {
@@ -235,23 +290,6 @@ private:
 				if (ImGui::MenuItem("About")) {
 					showAboutPopup = !showAboutPopup;
 				}
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::BeginMenu("Configuration")) {
-
-				if (ImGui::MenuItem("Window")) {
-					showConfigWindowWindow = !showConfigWindowWindow;
-				}
-
-				if (ImGui::MenuItem("Renderer")) {
-					showConfigRendererWindow = !showConfigRendererWindow;
-				}
-
-				if (ImGui::MenuItem("Input")) {
-					showConfigInputWindow = !showConfigInputWindow;
-				}
-
 				ImGui::EndMenu();
 			}
 

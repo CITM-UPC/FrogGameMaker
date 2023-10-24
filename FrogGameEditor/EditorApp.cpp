@@ -126,6 +126,11 @@ bool EditorApp::Cleanup() {
 	return true;
 }
 
+void EditorApp::RequestBrowser(const char* url)
+{
+	ShellExecute(0, 0, url, 0, 0, SW_SHOW);
+}
+
 //void EditorApp::PreGameAppRender()
 //{
 //	glGenFramebuffers(1, &gameAppRenderFBO);

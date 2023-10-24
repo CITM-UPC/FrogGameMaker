@@ -6,6 +6,9 @@
 #include <thread>
 #include <list>
 
+#include <windows.h>
+#include <shellapi.h>
+
 #include "GL/glew.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_opengl.h"
@@ -35,6 +38,8 @@ public:
 	bool Update();
 
 	bool Cleanup();
+
+	void RequestBrowser(const char* url);
 
 	//// use this before the game render to get all the info into the BFO to then pass it to the UI
 	//void PreGameAppRender();
