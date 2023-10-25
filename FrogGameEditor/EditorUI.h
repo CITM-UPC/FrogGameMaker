@@ -424,7 +424,7 @@ private:
 	}
 
 	void UIHardwareWindow() {
-		ImGui::Begin("Hardware");
+		ImGui::Begin("Hardware", &showHardwareWindow);
 
 		ImGui::Text("CPU's Cores:");
 		ImGui::SameLine();
@@ -453,7 +453,7 @@ private:
 	}
 
 	void UIConfigWindowWindow() {
-		ImGui::Begin("Window Configuration");
+		ImGui::Begin("Window Configuration", &showConfigWindowWindow);
 		
 		ImGui::Text("Window Width:");
 		ImGui::SameLine();
@@ -474,13 +474,13 @@ private:
 	}
 
 	void UIConfigRendererWindow() {
-		ImGui::Begin("Renderer Configuration");
+		ImGui::Begin("Renderer Configuration", &showConfigRendererWindow);
 		
 		ImGui::End();
 	}
 
 	void UIConfigInputWindow() {
-		ImGui::Begin("Input Configuration");
+		ImGui::Begin("Input Configuration", &showConfigInputWindow);
 		
 		ImGui::End();
 	}
