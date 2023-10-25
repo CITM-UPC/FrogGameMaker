@@ -486,7 +486,8 @@ private:
 	}
 
 	void UIHierarchyNodeWrite() {
-		if (ImGui::TreeNode("alo")) {
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+		if (ImGui::TreeNodeEx("alo", flags)) {
 
 			ImGui::TreePop();
 		}
@@ -498,6 +499,7 @@ private:
 		// unity style: 
 		// get the scene that has as children the rest of game objects
 		if (ImGui::CollapsingHeader("Scene")) {
+
 
 
 			for (int i = 0; i < 10; ++i) {
