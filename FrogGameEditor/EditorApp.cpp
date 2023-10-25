@@ -49,6 +49,10 @@ bool EditorApp::Start() {
 		}
 	}
 
+	gameApp->scene = new Scene("Test");
+
+	gameApp->scene->DebugStart();
+
 	return ret;
 }
 

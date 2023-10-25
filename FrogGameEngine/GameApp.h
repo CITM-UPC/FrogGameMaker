@@ -6,6 +6,8 @@
 #include "GL/glew.h"
 #include "glm/ext/matrix_transform.hpp"
 
+#include "Scene.h"
+
 class GameApp
 {
 public:
@@ -20,6 +22,9 @@ public:
 	void Render(RenderModes renderMode);
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };
+
+
+	Scene* scene = nullptr;
 
 private:
 

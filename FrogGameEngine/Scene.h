@@ -1,15 +1,52 @@
 #pragma once
-#include "GraphicObject.h"
-class Scene
-{
+#include <string>
+#include <list>
+#include "GameObject.h"
+
+using namespace std;
+
+class Scene {
 public:
-	Scene();
-	~Scene();
+	Scene() {
+	
+	};
+	Scene(string name) {
+		this->name = name;
+	};
+	~Scene() {
+	
+	};
 
-	std::set<GraphicObject*> _children;
+	void DebugStart() {
+		{
+			GameObject* tempGO = new GameObject();
+			children.push_back(tempGO);
+		}
+		{
+			GameObject* tempGO = new GameObject();
+			children.push_back(tempGO);
+			GameObject* tempGO2 = new GameObject();
+			tempGO->addChild(tempGO2);
+		}
+		{
+			GameObject* tempGO = new GameObject();
+			children.push_back(tempGO);
+		}
+	};
 
-	void addChild(GraphicObject* child);
-	void removeChild(GraphicObject* child);
+	// --TODO--
+	void Start() {};
+
+	// --TODO--
+	void Update() {};
+
+	void CleanUp() {};
+
+	// uuid id
+	string name;
+	// should be a list of uuids
+	list<GameObject*> children;
+	
+
 
 };
-
