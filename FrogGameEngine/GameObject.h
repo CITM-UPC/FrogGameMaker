@@ -11,6 +11,11 @@ public:
 		name = "test";
 		Transform tempTransform;
 		components.push_back(tempTransform);
+	}
+	GameObject(string name) {
+		this->name = name;
+		Transform tempTransform;
+		components.push_back(tempTransform);
 	};
 
 	void addChild(GameObject* child) {

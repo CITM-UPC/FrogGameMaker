@@ -19,17 +19,17 @@ public:
 
 	void DebugStart() {
 		{
-			GameObject* tempGO = new GameObject();
+			GameObject* tempGO = new GameObject("GameObject 1");
 			children.push_back(tempGO);
 		}
 		{
-			GameObject* tempGO = new GameObject();
+			GameObject* tempGO = new GameObject("GameObject 2");
 			children.push_back(tempGO);
-			GameObject* tempGO2 = new GameObject();
+			GameObject* tempGO2 = new GameObject("GameObject 3");
 			tempGO->addChild(tempGO2);
 		}
 		{
-			GameObject* tempGO = new GameObject();
+			GameObject* tempGO = new GameObject("GameObject 4");
 			children.push_back(tempGO);
 		}
 	};

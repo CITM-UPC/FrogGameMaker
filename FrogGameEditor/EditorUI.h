@@ -485,27 +485,34 @@ private:
 		ImGui::End();
 	}
 
-	void UIHierarchyNodeWrite() {
+	void UIHierarchyNodeWrite(GameObject* GO) {
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-		if (ImGui::TreeNodeEx("alo", flags)) {
-
+		if (GO->children.empty()) {
+			flags = flags | ImGuiTreeNodeFlags_Leaf;
+		}
+		if (ImGui::TreeNodeEx(GO->name.c_str(), flags)) {
+			for (std::list<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
+				UIHierarchyNodeWrite(*it);
+			}
 			ImGui::TreePop();
 		}
 	}
 
 	void UIHierarchyWindow() {
 		ImGui::Begin("Hierarchy");
+		if (editor->gameApp->scene == nullptr) {
+			ImGui::End();
+			return;
+		}
 
+		Scene* sceneToUI = editor->gameApp->scene;
 		// unity style: 
 		// get the scene that has as children the rest of game objects
-		if (ImGui::CollapsingHeader("Scene")) {
-
-
-
-			for (int i = 0; i < 10; ++i) {
-				UIHierarchyNodeWrite();
+		if (ImGui::CollapsingHeader(sceneToUI->name.c_str())) {
+			
+			for (std::list<GameObject*>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
+				UIHierarchyNodeWrite(*it);
 			}
-
 		}
 
 		ImGui::End();
