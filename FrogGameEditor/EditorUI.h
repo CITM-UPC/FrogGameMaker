@@ -233,6 +233,8 @@ public:
 
 	bool showHierarchyWindow;
 	
+	GameObject* gameObjectSelected = nullptr;
+
 	ImVec4 clear_color;
 
 private:
@@ -488,9 +490,18 @@ private:
 	void UIHierarchyNodeWrite(GameObject* GO) {
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 		if (GO->children.empty()) {
-			flags = flags | ImGuiTreeNodeFlags_Leaf;
+			flags |= ImGuiTreeNodeFlags_Leaf;
 		}
-		if (ImGui::TreeNodeEx(GO->name.c_str(), flags)) {
+		if (gameObjectSelected != NULL && gameObjectSelected == GO) {
+			flags |= ImGuiTreeNodeFlags_Selected;
+		}
+		bool nodeIsOpen = ImGui::TreeNodeEx(GO->name.c_str(), flags);
+
+		if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen()) {
+			gameObjectSelected = GO;
+		}
+
+		if (nodeIsOpen) {
 			for (std::list<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
 				UIHierarchyNodeWrite(*it);
 			}
