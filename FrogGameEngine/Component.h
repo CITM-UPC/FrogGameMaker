@@ -3,16 +3,34 @@
 #include "Types.h"
 
 #include <glm/ext/matrix_transform.hpp>
+#include <list>
+
+enum ComponentTypes {
+	NONE = 0,
+	TRANSFORM,
+
+};
 
 class Component {
-	void Start();
-	void Update();
+public:
+	virtual void Start() {};
+	virtual void Update() {};
 
+	ComponentTypes getComponentType() {
+		return componentType;
+	}
+
+protected:
+	ComponentTypes componentType = NONE;
 };
 
 
 class Transform : public Component {
 public:
+
+	Transform() {
+		componentType = TRANSFORM;
+	}
 
 	inline vec3 getPosition() { 
 		return _transform[3];
@@ -33,6 +51,7 @@ public:
 		return scale;
 	}
 
+protected:
 
 private:
 	mat4 _transform;

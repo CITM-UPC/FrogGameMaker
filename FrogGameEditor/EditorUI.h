@@ -79,6 +79,7 @@ public:
 		editorActivated = true;
 
 		showHierarchyWindow = true;
+		showInspectorWindow = true;
 
 		return true;
 	}
@@ -194,6 +195,10 @@ public:
 			UIHierarchyWindow();
 		}
 
+		if (showInspectorWindow) {
+			UIInspectorWindow();
+		}
+
 		return true;
 	}
 
@@ -232,6 +237,7 @@ public:
 	bool editorActivated;
 
 	bool showHierarchyWindow;
+	bool showInspectorWindow;
 	
 	GameObject* gameObjectSelected = nullptr;
 
@@ -529,9 +535,43 @@ private:
 		ImGui::End();
 	}
 
+	void UIInspectorWriteTransformNode(Component component) {
+		void* tempComp = &component;
+		Transform* transformComponent = (Transform*)tempComp;
+		if (ImGui::CollapsingHeader("Transform")) {
+			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
+			ImGui::InputFloat3("Position", vec3Position);
+			float vec3Rotation[3] = { (float)transformComponent->getRotation().x, (float)transformComponent->getRotation().y, (float)transformComponent->getRotation().z };
+			ImGui::InputFloat3("Rotation", vec3Rotation);
+			float vec3Scale[3] = { (float)transformComponent->getScale().x, (float)transformComponent->getScale().y, (float)transformComponent->getPosition().z };
+			ImGui::InputFloat3("Scale", vec3Scale);
+		}
+	}
+
+	void UIInspectorNodeWrite(Component component) {
+		switch (component.getComponentType())
+		{
+		case ComponentTypes::TRANSFORM:
+			UIInspectorWriteTransformNode(component);
+			break;
+		default:
+			break;
+		}
+	}
+
 	void UIInspectorWindow() {
 		ImGui::Begin("Inspector");
 
+		if (gameObjectSelected == nullptr) {
+			ImGui::End();
+			return;
+		}
+
+		// unity style: 
+		// get the scene that has as children the rest of game objects
+		for (std::list<Component>::iterator it = gameObjectSelected->components.begin(); it != gameObjectSelected->components.end(); ++it) {
+			UIInspectorNodeWrite(*it);
+		}
 
 
 		ImGui::End();
