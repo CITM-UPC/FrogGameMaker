@@ -548,11 +548,33 @@ private:
 		}
 	}
 
+	void UIInspectorWriteMeshNode(Component component) {
+		void* tempComp = &component;
+		// Transform* transformComponent = (Transform*)tempComp;
+		if (ImGui::CollapsingHeader("Mesh")) {
+
+		}
+	}
+
+	void UIInspectorWriteTextureNode(Component component) {
+		void* tempComp = &component;
+		// Transform* transformComponent = (Transform*)tempComp;
+		if (ImGui::CollapsingHeader("Texture")) {
+			
+		}
+	}
+
 	void UIInspectorNodeWrite(Component component) {
 		switch (component.getComponentType())
 		{
 		case ComponentTypes::TRANSFORM:
 			UIInspectorWriteTransformNode(component);
+			break;
+		case ComponentTypes::MESH:
+			UIInspectorWriteMeshNode(component);
+			break;
+		case ComponentTypes::TEXTURE:
+			UIInspectorWriteTextureNode(component);
 			break;
 		default:
 			break;

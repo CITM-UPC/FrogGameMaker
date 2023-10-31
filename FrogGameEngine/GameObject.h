@@ -10,12 +10,23 @@ public:
 	GameObject() {
 		name = "test";
 		Transform tempTransform;
+		MeshC tempMesh;
+		Texture tempTexture;
+
 		components.push_back(tempTransform);
+		components.push_back(tempMesh);
+		components.push_back(tempTexture);
+
 	}
 	GameObject(string name) {
 		this->name = name;
 		Transform tempTransform;
+		MeshC tempMesh;
+		Texture tempTexture;
+
 		components.push_back(tempTransform);
+		components.push_back(tempMesh);
+		components.push_back(tempTexture);
 	};
 
 	void addChild(GameObject* child) {

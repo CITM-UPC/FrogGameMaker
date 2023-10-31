@@ -8,6 +8,8 @@
 enum ComponentTypes {
 	NONE = 0,
 	TRANSFORM,
+	MESH,
+	TEXTURE
 
 };
 
@@ -55,5 +57,31 @@ protected:
 
 private:
 	mat4 _transform;
+
+};
+
+class MeshC : public Component {
+public:
+
+	MeshC() {
+		componentType = MESH;
+	}
+
+protected:
+
+private:
+
+};
+
+class Texture : public Component {
+public:
+
+	Texture() {
+		componentType = TEXTURE;
+	}
+
+protected:
+
+private:
 
 };
