@@ -8,12 +8,10 @@ using namespace std;
 
 Texture2D::Texture2D(const std::string& path) {
 
-    std::wstring widePath = std::wstring(path.begin(), path.end());
-
     //load image data using devil
     auto img = ilGenImage();
     ilBindImage(img);
-    ilLoadImage(widePath.c_str());
+    ilLoadImage(path.c_str());
     auto width = ilGetInteger(IL_IMAGE_WIDTH);
     auto height = ilGetInteger(IL_IMAGE_HEIGHT);
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);

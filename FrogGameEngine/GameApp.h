@@ -14,7 +14,7 @@ public:
 	GameApp();
 	~GameApp();
 
-	enum class RenderModes { RELEASE, DEBUG };
+	//enum class RenderModes { RELEASE, DEBUG };
 
 	Camera camera;
 
