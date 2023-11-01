@@ -63,8 +63,7 @@ void GameApp::Step(std::chrono::duration<double> dt)
     angle += angle_vel * dt.count();
 }
 
-void GameApp::Render(RenderModes renderMode)
-{
+void GameApp::Render() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(camera.fov, camera.aspect, camera.zNear, camera.zFar);
@@ -75,18 +74,28 @@ void GameApp::Render(RenderModes renderMode)
         camera.center.x, camera.center.y, camera.center.z,
         camera.up.x, camera.up.y, camera.up.z);
 
-    if (renderMode == RenderModes::DEBUG) {
-        drawGrid(100, 1);
-        drawAxis();
-    }
+    drawGrid(100, 1);
+    drawAxis();
 
 #pragma region Draw Sandbox
     static auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx");
-    static GraphicObject meshA(mesh_ptrs.front());
-    static GraphicObject meshB(mesh_ptrs.back());
 
+    GraphicObject mesh1(mesh_ptrs.front());
+    GraphicObject mesh2(mesh_ptrs.back());
 
-    for (auto& mesh_ptr : mesh_ptrs) mesh_ptr->draw();
+    GraphicObject house;
+
+    house.addChild(std::move(mesh1));
+    house.addChild(std::move(mesh2));
+
+    GraphicObject root;
+    root.addChild(std::move(house));
+
+    root.paint();
+
 #pragma endregion
+
+
+    assert(glGetError() == GL_NONE);
 }
 

@@ -19,7 +19,7 @@ public:
 	Camera camera;
 
 	void Step(std::chrono::duration<double> dt);
-	void Render(RenderModes renderMode);
+	void Render();
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };
 
