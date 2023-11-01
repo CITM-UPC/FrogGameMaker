@@ -9,24 +9,19 @@ class GameObject {
 public:
 	GameObject() {
 		name = "test";
-		Transform tempTransform;
-		MeshC tempMesh;
-		Texture tempTexture;
 
-		components.push_back(tempTransform);
-		components.push_back(tempMesh);
-		components.push_back(tempTexture);
-
+		// testing
+		AddComponent(TRANSFORM);
+		AddComponent(MESH);
+		AddComponent(TEXTURE);
 	}
 	GameObject(string name) {
 		this->name = name;
-		Transform tempTransform;
-		MeshC tempMesh;
-		Texture tempTexture;
 
-		components.push_back(tempTransform);
-		components.push_back(tempMesh);
-		components.push_back(tempTexture);
+		// testing
+		AddComponent(TRANSFORM);
+		AddComponent(MESH);
+		AddComponent(TEXTURE);
 	};
 
 	void addChild(GameObject* child) {
@@ -40,11 +35,48 @@ public:
 		child->_parent = nullptr;
 	};
 
+	Component* AddComponent(ComponentType type) {
+
+		Component* newComponent = nullptr;
+
+		switch (type)
+		{
+		case NONE:
+			break;
+		case TRANSFORM:
+			newComponent = new TransformComponent();
+			break;
+		case MESH:
+			newComponent = new MeshComponent();
+			break;
+		case TEXTURE:
+			newComponent = new TextureComponent();
+			break;
+		default:
+			break;
+		}
+
+		components.push_back(newComponent);
+
+		return newComponent;
+		
+	}
+
+	Component* GetComponent(ComponentType type) {
+
+		for (auto i = components.begin(); i != components.end(); ++i) {
+			if ((*i)->componentType == type) {
+				return *i;
+			}
+		}
+		return nullptr;
+	}
+
 	// uuid id
 	string name;
 	// should be a list of uuids
 	list<GameObject*> children;
 	GameObject* _parent;
 	
-	list<Component> components;
+	list<Component*> components;
 };

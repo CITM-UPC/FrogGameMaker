@@ -5,7 +5,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <list>
 
-enum ComponentTypes {
+enum ComponentType {
 	NONE = 0,
 	TRANSFORM,
 	MESH,
@@ -18,19 +18,15 @@ public:
 	virtual void Start() {};
 	virtual void Update() {};
 
-	ComponentTypes getComponentType() {
-		return componentType;
-	}
-
-protected:
-	ComponentTypes componentType = NONE;
+	ComponentType componentType = NONE;
 };
 
 
-class Transform : public Component {
+class TransformComponent : public Component {
 public:
 
-	Transform() {
+	TransformComponent() {
+		_transform = glm::identity<mat4>();
 		componentType = TRANSFORM;
 	}
 
@@ -60,10 +56,10 @@ private:
 
 };
 
-class MeshC : public Component {
+class MeshComponent : public Component {
 public:
 
-	MeshC() {
+	MeshComponent() {
 		componentType = MESH;
 	}
 
@@ -73,10 +69,10 @@ private:
 
 };
 
-class Texture : public Component {
+class TextureComponent : public Component {
 public:
 
-	Texture() {
+	TextureComponent() {
 		componentType = TEXTURE;
 	}
 

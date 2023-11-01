@@ -535,9 +535,9 @@ private:
 		ImGui::End();
 	}
 
-	void UIInspectorWriteTransformNode(Component component) {
+	void UIInspectorWriteTransformNode(Component* component) {
 		void* tempComp = &component;
-		Transform* transformComponent = (Transform*)tempComp;
+		TransformComponent* transformComponent = (TransformComponent*)tempComp;
 		if (ImGui::CollapsingHeader("Transform")) {
 			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
 			ImGui::InputFloat3("Position", vec3Position);
@@ -548,32 +548,32 @@ private:
 		}
 	}
 
-	void UIInspectorWriteMeshNode(Component component) {
+	void UIInspectorWriteMeshNode(Component* component) {
 		void* tempComp = &component;
-		// Transform* transformComponent = (Transform*)tempComp;
+		// TransformComponent* transformComponent = (TransformComponent*)tempComp;
 		if (ImGui::CollapsingHeader("Mesh")) {
 
 		}
 	}
 
-	void UIInspectorWriteTextureNode(Component component) {
+	void UIInspectorWriteTextureNode(Component* component) {
 		void* tempComp = &component;
-		// Transform* transformComponent = (Transform*)tempComp;
+		// TransformComponent* transformComponent = (TransformComponent*)tempComp;
 		if (ImGui::CollapsingHeader("Texture")) {
 			
 		}
 	}
 
-	void UIInspectorNodeWrite(Component component) {
-		switch (component.getComponentType())
+	void UIInspectorNodeWrite(Component* component) {
+		switch (component->componentType)
 		{
-		case ComponentTypes::TRANSFORM:
+		case ComponentType::TRANSFORM:
 			UIInspectorWriteTransformNode(component);
 			break;
-		case ComponentTypes::MESH:
+		case ComponentType::MESH:
 			UIInspectorWriteMeshNode(component);
 			break;
-		case ComponentTypes::TEXTURE:
+		case ComponentType::TEXTURE:
 			UIInspectorWriteTextureNode(component);
 			break;
 		default:
@@ -591,8 +591,8 @@ private:
 
 		// unity style: 
 		// get the scene that has as children the rest of game objects
-		for (std::list<Component>::iterator it = gameObjectSelected->components.begin(); it != gameObjectSelected->components.end(); ++it) {
-			UIInspectorNodeWrite(*it);
+		for (auto iComponent = gameObjectSelected->components.begin(); iComponent != gameObjectSelected->components.end(); ++iComponent) {
+			UIInspectorNodeWrite(*iComponent);
 		}
 
 
