@@ -87,7 +87,7 @@ bool EditorApp::Update() {
 	// post update
 	{
 		//PreGameAppRender();
-		gameApp->Render(GameApp::RenderModes::DEBUG);
+		gameApp->Render();
 		//PostGameAppRender();
 
 		auto item = modules.begin();
