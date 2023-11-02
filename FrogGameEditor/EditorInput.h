@@ -44,7 +44,7 @@ bool EditorInput::Start() {
 
 bool EditorInput::PreUpdate() {
 
-	char* dropped_filedir;
+	string dropped_filedir;
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
@@ -59,14 +59,24 @@ bool EditorInput::PreUpdate() {
 			break;
 		case (SDL_DROPFILE): {      // In case if dropped file
 			dropped_filedir = event.drop.file;
+			if (dropped_filedir.ends_with(".fbx")) {
+
+			}
+			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
+
+			}
+			else {
+
+			}
+			
 			// Shows directory of dropped file
-			SDL_ShowSimpleMessageBox(
+			/*SDL_ShowSimpleMessageBox(
 				SDL_MESSAGEBOX_INFORMATION,
 				"File dropped on window",
 				dropped_filedir,
 				editor->editorWindow->window
 			);
-			SDL_free(dropped_filedir); }   // Free dropped_filedir memory
+			SDL_free(dropped_filedir);*/ }   // Free dropped_filedir memory
 			break;
 		}
 	}
