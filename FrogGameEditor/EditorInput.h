@@ -8,6 +8,7 @@
 #include "SDL2/SDL_opengl.h"
 
 #include "EditorUI.h"
+#include <filesystem>
 
 class EditorInput : public EditorModule
 {
@@ -59,11 +60,12 @@ bool EditorInput::PreUpdate() {
 			break;
 		case (SDL_DROPFILE): {      // In case if dropped file
 			dropped_filedir = event.drop.file;
-			if (dropped_filedir.ends_with(".fbx")) {
 
+			if (dropped_filedir.ends_with(".fbx")) {
+				filesystem::copy(dropped_filedir, "Assets");
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
-
+				filesystem::copy(dropped_filedir, "Assets");
 			}
 			else {
 
