@@ -12,6 +12,10 @@
 
 #include "../FrogGameEngine/GraphicObject.h"
 
+#include "assimp/version.h"
+
+#include "IL/il.h"
+
 
 class EditorUI : public EditorModule
 {
@@ -411,17 +415,18 @@ private:
 
 					// glu
 					{
-						ImGui::Bullet(); ImGui::Text("GLU --TODO--");
+						ImGui::Bullet(); ImGui::Text("GLU %s", gluGetString(GLU_VERSION));
 					}
 
 					// devil
 					{
+
 						ImGui::Bullet(); ImGui::Text("DevIL --TODO--");
 					}
 
 					// assimp
 					{
-						ImGui::Bullet(); ImGui::Text("Assimp --TODO--");
+						ImGui::Bullet(); ImGui::Text("Assimp %d.%d.%d", aiGetVersionMajor(), aiGetVersionMinor(), aiGetVersionRevision());
 					}
 
 				}
