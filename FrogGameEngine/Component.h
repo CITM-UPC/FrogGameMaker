@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Types.h"
-
+#include "Mesh.h"
+#include "Texture2D.h"
 #include <glm/ext/matrix_transform.hpp>
 #include <list>
 
@@ -63,10 +64,14 @@ public:
 		componentType = MESH;
 	}
 
+	void setMesh(Mesh* mesh) {
+		_mesh = mesh;
+	}
+
 protected:
 
 private:
-
+	Mesh* _mesh = nullptr;
 };
 
 class TextureComponent : public Component {
@@ -76,8 +81,16 @@ public:
 		componentType = TEXTURE;
 	}
 
+	void setTexture(Texture2D* texture) {
+		_texture = texture;
+	}
+
+	Texture2D* getTexture() {
+		return _texture;
+	}
+
 protected:
 
 private:
-
+	Texture2D* _texture;
 };

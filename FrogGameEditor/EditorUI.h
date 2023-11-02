@@ -121,7 +121,6 @@ public:
 			UIAboutPopup();
 
 		}
-		
 
 		// windows
 		if (showHardwareWindow) {
@@ -296,6 +295,23 @@ private:
 				ImGui::EndMenu();
 			}
 
+			if (ImGui::BeginMenu("Create")) {
+				if (ImGui::BeginMenu("Basic Shapes")) {
+					if (ImGui::MenuItem("Cube --TODO--")) {
+
+					}
+					if (ImGui::MenuItem("Sphere --TODO--")) {
+
+					}
+					if (ImGui::MenuItem("Pyramid --TODO--")) {
+
+					}
+
+					ImGui::EndMenu();
+				}
+
+				ImGui::EndMenu();
+			}
 
 			if (ImGui::BeginMenu("Configuration")) {
 
@@ -566,17 +582,18 @@ private:
 
 	void UIInspectorWriteMeshNode(Component* component) {
 		void* tempComp = &component;
-		// TransformComponent* transformComponent = (TransformComponent*)tempComp;
+		MeshComponent* meshComponent = (MeshComponent*)tempComp;
 		if (ImGui::CollapsingHeader("Mesh")) {
-
+			ImGui::Text("Vertex: x");
+			ImGui::Text("Faces: x");
 		}
 	}
 
 	void UIInspectorWriteTextureNode(Component* component) {
 		void* tempComp = &component;
-		// TransformComponent* transformComponent = (TransformComponent*)tempComp;
+		TextureComponent* textureComponent = (TextureComponent*)tempComp;
 		if (ImGui::CollapsingHeader("Texture")) {
-			
+			ImGui::Text("path");
 		}
 	}
 

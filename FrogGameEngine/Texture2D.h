@@ -16,6 +16,8 @@ public:
 	void bind() const;
 	~Texture2D();
 
+	unsigned int getID() { return _id; };
+
 private:
 	Texture2D(const Texture2D&);
 	Texture2D operator=(const Texture2D&);
