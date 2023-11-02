@@ -81,6 +81,9 @@ public:
 		showHierarchyWindow = true;
 		showInspectorWindow = true;
 
+		showConsoleWindow = true;
+		showAssetsWindow = true;
+
 		return true;
 	}
 
@@ -198,6 +201,16 @@ public:
 		if (showInspectorWindow) {
 			UIInspectorWindow();
 		}
+		
+		if (showConsoleWindow) {
+			ImGui::Begin("Console");
+			ImGui::End();
+		}
+
+		if (showAssetsWindow) {
+			ImGui::Begin("Assets");
+			ImGui::End();
+		}
 
 		return true;
 	}
@@ -238,6 +251,9 @@ public:
 
 	bool showHierarchyWindow;
 	bool showInspectorWindow;
+
+	bool showConsoleWindow;
+	bool showAssetsWindow;
 	
 	GameObject* gameObjectSelected = nullptr;
 
