@@ -3,16 +3,19 @@
 #include "EditorWindow.h"
 #include "EditorInput.h"
 #include "EditorUI.h"
+#include "EditorCamera.h"
 
 EditorApp::EditorApp()
 {
 	editorInput = new EditorInput(this);
 	editorWindow = new EditorWindow(this);
 	editorUI = new EditorUI(this);
+	editorCamera = new EditorCamera(this);
 
 	modules.push_back(editorInput);
 	modules.push_back(editorWindow);
 	modules.push_back(editorUI);
+	modules.push_back(editorCamera);
 
 	FPS_Log.push_back(0.0f);
 
@@ -87,7 +90,7 @@ bool EditorApp::Update() {
 	// post update
 	{
 		//PreGameAppRender();
-		gameApp->Render(*gameApp->actualCamera);
+		gameApp->Render(editorCamera->camera);
 		//PostGameAppRender();
 
 		auto item = modules.begin();

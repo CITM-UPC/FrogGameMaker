@@ -26,6 +26,7 @@ static const auto FDT = 1.0s / FPS;
 class EditorInput;
 class EditorWindow;
 class EditorUI;
+class EditorCamera;
 
 class EditorApp
 {
@@ -50,6 +51,7 @@ public:
 	EditorInput* editorInput;
 	EditorWindow* editorWindow;
 	EditorUI* editorUI;
+	EditorCamera* editorCamera;
 
 	list<EditorModule*> modules;
 

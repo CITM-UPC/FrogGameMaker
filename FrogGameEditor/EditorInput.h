@@ -10,6 +10,17 @@
 #include "EditorUI.h"
 #include <filesystem>
 
+#define MAX_KEYS 300
+#define NUM_MOUSE_BUTTONS 5
+
+enum KeyState
+{
+	KEY_IDLE = 0,
+	KEY_DOWN,
+	KEY_REPEAT,
+	KEY_UP
+};
+
 class EditorInput : public EditorModule
 {
 public:
@@ -26,8 +37,20 @@ public:
 
 	bool CleanUp();
 
+	KeyState GetKey(int id) const
+	{
+		return keyboard[id];
+	}
+
+	KeyState GetMouseButtonDown(int id) const
+	{
+		return mouseButtons[id - 1];
+	}
+
 private:
 
+	KeyState* keyboard;
+	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
 };
 
 EditorInput::EditorInput(EditorApp* editor) : EditorModule(editor)
@@ -40,6 +63,10 @@ EditorInput::~EditorInput()
 
 bool EditorInput::Start() {
 
+	keyboard = new KeyState[MAX_KEYS];
+	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
+	memset(mouseButtons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
+
 	return true;
 }
 
@@ -48,6 +75,36 @@ bool EditorInput::PreUpdate() {
 	string dropped_filedir;
 
 	SDL_Event event;
+
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+	for (int i = 0; i < MAX_KEYS; ++i)
+	{
+		if (keys[i] == 1)
+		{
+			if (keyboard[i] == KEY_IDLE)
+				keyboard[i] = KEY_DOWN;
+			else
+				keyboard[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+				keyboard[i] = KEY_UP;
+			else
+				keyboard[i] = KEY_IDLE;
+		}
+	}
+
+	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
+	{
+		if (mouseButtons[i] == KEY_DOWN)
+			mouseButtons[i] = KEY_REPEAT;
+
+		if (mouseButtons[i] == KEY_UP)
+			mouseButtons[i] = KEY_IDLE;
+	}
+
 	while (SDL_PollEvent(&event))
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
@@ -57,6 +114,15 @@ bool EditorInput::PreUpdate() {
 			switch (event.key.keysym.sym) {
 			case SDLK_ESCAPE: return false;
 			}
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			mouseButtons[event.button.button - 1] = KEY_DOWN;
+			//LOG("Mouse button %d down", event.button.button-1);
+			break;
+
+		case SDL_MOUSEBUTTONUP:
+			mouseButtons[event.button.button - 1] = KEY_UP;
+			//LOG("Mouse button %d up", event.button.button-1);
 			break;
 		case (SDL_DROPFILE): {      // In case if dropped file
 			dropped_filedir = event.drop.file;
@@ -96,6 +162,7 @@ bool EditorInput::PostUpdate() {
 }
 
 bool EditorInput::CleanUp() {
+	delete[] keyboard;
 
 	return true;
 }
