@@ -51,10 +51,12 @@ static void drawGrid(int grid_size, int grid_step) {
 GameApp::GameApp()
 {
     ilInit();
+    actualCamera = new Camera();
 }
 
 GameApp::~GameApp()
 {
+    delete actualCamera;
 }
 
 void GameApp::Step(std::chrono::duration<double> dt)
@@ -63,7 +65,7 @@ void GameApp::Step(std::chrono::duration<double> dt)
     angle += angle_vel * dt.count();
 }
 
-void GameApp::Render() {
+void GameApp::Render(Camera camera) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluPerspective(camera.fov, camera.aspect, camera.zNear, camera.zFar);

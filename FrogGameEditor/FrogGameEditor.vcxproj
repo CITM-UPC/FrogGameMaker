@@ -165,6 +165,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h" />
+    <ClInclude Include="EditorCamera.h" />
     <ClInclude Include="EditorInput.h" />
     <ClInclude Include="EditorModule.h" />
     <ClInclude Include="EditorUI.h" />

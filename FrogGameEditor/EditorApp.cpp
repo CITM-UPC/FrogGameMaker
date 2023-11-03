@@ -87,7 +87,7 @@ bool EditorApp::Update() {
 	// post update
 	{
 		//PreGameAppRender();
-		gameApp->Render();
+		gameApp->Render(*gameApp->actualCamera);
 		//PostGameAppRender();
 
 		auto item = modules.begin();

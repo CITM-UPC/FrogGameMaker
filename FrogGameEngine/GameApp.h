@@ -16,10 +16,10 @@ public:
 
 	//enum class RenderModes { RELEASE, DEBUG };
 
-	Camera camera;
+	Camera* actualCamera;
 
 	void Step(std::chrono::duration<double> dt);
-	void Render();
+	void Render(Camera camera);
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };
 
