@@ -51,6 +51,10 @@ public:
 		return vec2(mouseMotionX, mouseMotionY);
 	}
 
+	int GetMouseWheelScroll() {
+		return mouseWheelScroll;
+	}
+
 private:
 
 	KeyState* keyboard;
@@ -58,6 +62,8 @@ private:
 
 	int	mouseMotionX;
 	int mouseMotionY;
+
+	int	mouseWheelScroll;
 };
 
 EditorInput::EditorInput(EditorApp* editor) : EditorModule(editor)
@@ -115,6 +121,8 @@ bool EditorInput::PreUpdate() {
 	mouseMotionX = 0;
 	mouseMotionY = 0;
 
+	mouseWheelScroll = 0;
+
 	while (SDL_PollEvent(&event))
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
@@ -160,8 +168,10 @@ bool EditorInput::PreUpdate() {
 			mouseMotionX = event.motion.xrel;
 			mouseMotionY = event.motion.yrel;
 			break;
+		case SDL_MOUSEWHEEL:
+			mouseWheelScroll = event.wheel.y;
+			break;
 		}
-		
 	}
 
 

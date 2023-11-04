@@ -26,31 +26,29 @@ public:
 			}
 
 		}
+		// While Right clicking, “WASD” fps-like movement and free look around must be enabled
+		else if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_RIGHT)) {
+			if (editor->editorInput->GetKey(SDL_SCANCODE_W)) {
+				TranslateLocally(vec3(0, 0, -speed));
+			}
+			if (editor->editorInput->GetKey(SDL_SCANCODE_A)) {
+				TranslateLocally(vec3(-speed, 0, 0));
+			}
+			if (editor->editorInput->GetKey(SDL_SCANCODE_S)) {
+				TranslateLocally(vec3(0, 0, speed));
+			}
+			if (editor->editorInput->GetKey(SDL_SCANCODE_D)) {
+				TranslateLocally(vec3(speed, 0, 0));
+			}
 
-		//else if
 
-		//// While Right clicking, “WASD” fps-like movement and free look around must be enabled
-		//if (/*right click*/) {
-		//	if (/*W*/) {
-		//		// move eye (position) and center (looking point) at local directions
-		//	}
-		//	if (/*A*/) {
-		//		// move eye (position) and center (looking point) at local directions
-		//	}
-		//	if (/*S*/) {
-		//		// move eye (position) and center (looking point) at local directions
-		//	}
-		//	if (/*D*/) {
-		//		// move eye (position) and center (looking point) at local directions
-		//	}
-		//}
+			LookAround(editor->editorInput->GetMouseMotion());
 
-		// else
-
-		//// Mouse wheel should zoom in and out
-		//if (/*mouse wheel*/) {
-		//	// move eye (position) locally on z, but do not cross center (looking point)
-		//}
+		}
+		// Mouse wheel should zoom in and out
+		if (editor->editorInput->GetMouseWheelScroll() != 0) {
+			CameraZoom(-editor->editorInput->GetMouseWheelScroll());
+		}
 
 		// Pressing “f” should focus the camera around the geometry
 		if (editor->editorInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
@@ -62,22 +60,6 @@ public:
 				}
 			}
 
-		}
-
-		if (editor->editorInput->GetKey(SDL_SCANCODE_W)) {
-			TranslateLocally(vec3(0, 0, -speed));
-		}
-
-		if (editor->editorInput->GetKey(SDL_SCANCODE_S)) {
-			TranslateLocally(vec3(0, 0, speed));
-		}
-
-		if (editor->editorInput->GetKey(SDL_SCANCODE_A)) {
-			TranslateLocally(vec3(-speed, 0, 0));
-		}
-
-		if (editor->editorInput->GetKey(SDL_SCANCODE_D)) {
-			TranslateLocally(vec3(speed, 0, 0));
 		}
 
 		return true;
@@ -117,6 +99,48 @@ public:
 		camera.eye = camera.center + ((glm::normalize(localZ)) * distanceZ);*/
 
 		//camera.computeLookAt();
+	}
+
+	void LookAround(vec2 motion) {
+
+		double distanceToPivot = glm::distance(camera.eye, camera.center);
+
+		if (motion.x != 0)
+		{
+			mat4 mat = camera.computeLookAt();
+			mat4 rotationMatrix = glm::rotate(mat, glm::radians(0.0), vec3(0, 1.0f, 0));
+
+			//mat4 finishedMatrix = rotationMatrix * camera.computeLookAt();
+			mat = mat;
+
+			vec3 newLocalZ = glm::normalize(rotationMatrix[2]);
+
+			camera.center = camera.eye - (newLocalZ * distanceToPivot);
+		}
+
+		/*if (dy != 0)
+		{
+			float DeltaY = (float)dy * Sensitivity;
+
+			Y = rotate(Y, DeltaY, X);
+			Z = rotate(Z, DeltaY, X);
+
+			if (Y.y < 0.0f)
+			{
+				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
+				Y = cross(Z, X);
+			}
+		}
+
+		Position = Reference + Z * length(Position);*/
+	}
+
+
+	void CameraZoom(double amount) {
+		double distanceToCenter = glm::distance(camera.eye, camera.center);
+		vec3 localZ = glm::normalize(camera.eye - camera.center);
+
+		camera.eye += localZ * amount * (distanceToCenter * 0.1f);
 	}
 
 	void FocusOn(vec3 focusPoint) {
