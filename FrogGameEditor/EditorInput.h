@@ -47,10 +47,17 @@ public:
 		return mouseButtons[id - 1];
 	}
 
+	vec2 GetMouseMotion() {
+		return vec2(mouseMotionX, mouseMotionY);
+	}
+
 private:
 
 	KeyState* keyboard;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
+
+	int	mouseMotionX;
+	int mouseMotionY;
 };
 
 EditorInput::EditorInput(EditorApp* editor) : EditorModule(editor)
@@ -105,6 +112,9 @@ bool EditorInput::PreUpdate() {
 			mouseButtons[i] = KEY_IDLE;
 	}
 
+	mouseMotionX = 0;
+	mouseMotionY = 0;
+
 	while (SDL_PollEvent(&event))
 	{
 		ImGui_ImplSDL2_ProcessEvent(&event);
@@ -146,8 +156,16 @@ bool EditorInput::PreUpdate() {
 			);
 			SDL_free(dropped_filedir);*/ }   // Free dropped_filedir memory
 			break;
+		case SDL_MOUSEMOTION:
+			mouseMotionX = event.motion.xrel;
+			mouseMotionY = event.motion.yrel;
+			break;
 		}
+		
 	}
+
+
+
 	return true;
 }
 
