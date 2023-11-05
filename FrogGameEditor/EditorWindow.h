@@ -80,6 +80,10 @@ bool EditorWindow::Start() {
 	if (!GLEW_VERSION_3_1) 
 		throw exception("OpenGL 3.1 Not Supported!");
 
+	editor->AddLog("OpenGL Compiled with " + (string)(const char*)glGetString(GL_VERSION));
+
+	editor->AddLog("GLEW Compiled with " + (string)(const char*)glewGetString(GLEW_VERSION));
+
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	glClearColor(1, 1, 1, 1);
 	glEnable(GL_DEPTH_TEST);

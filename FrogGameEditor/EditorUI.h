@@ -47,6 +47,7 @@ public:
 		ImGui_ImplSDL2_InitForOpenGL(editor->editorWindow->window, editor->editorWindow->glContext);
 		ImGui_ImplOpenGL3_Init();
 
+		editor->AddLog("ImGui Initialized" + (string)IMGUI_VERSION);
 
 		// Load Fonts
 		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.

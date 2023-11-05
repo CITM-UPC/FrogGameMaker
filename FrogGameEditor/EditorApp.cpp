@@ -37,10 +37,12 @@ bool EditorApp::Start() {
 	SDL_version compiled;
 	SDL_VERSION(&compiled);
 	cout << "SDL Compiled with " << to_string(compiled.major) << '.' << to_string(compiled.minor) << '.' << to_string(compiled.patch);
+	AddLog("SDL Compiled with " + to_string(compiled.major) + '.' + to_string(compiled.minor) + '.' + to_string(compiled.patch));
 
 	SDL_version linked;
 	SDL_GetVersion(&linked);
 	cout << "SDL Linked with " << to_string(linked.major) << '.' << to_string(linked.minor) << '.' << to_string(linked.patch);
+	AddLog("SDL Linked with " + to_string(linked.major) + '.' + to_string(linked.minor) + '.' + to_string(linked.patch));
 
 	// module start
 	{
