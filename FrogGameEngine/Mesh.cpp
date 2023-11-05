@@ -26,6 +26,7 @@ struct aiSceneExt : aiScene {
     auto meshes() const { return span((aiMeshExt**)mMeshes, mNumMeshes); }
 };
 
+
 std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
 
     const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -122,11 +123,13 @@ void Mesh::loadTextureToMesh(const std::string& path)
 
 }
 
+
 Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* index_data, unsigned int numIndexs) :
     _format(format),
     _numVerts(numVerts),
     _numIndexs(numIndexs)
 {
+
     glGenBuffers(1, &_vertex_buffer_id);
     glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
 
@@ -163,6 +166,7 @@ Mesh::Mesh(Mesh&& b) noexcept :
     _numIndexs(b._numIndexs),
     texture(b.texture)
 {
+
     b._vertex_buffer_id = 0;
     b._indexs_buffer_id = 0;
 
@@ -186,7 +190,13 @@ void Mesh::draw() {
         break;
     case Formats::F_V3T2:
         glEnable(GL_TEXTURE_2D);
-        if (texture.get()) texture->bind();
+        if (texture.get() && drawChecker==false)
+        {
+            texture->bind();
+        }
+        else {
+            checkboard.get()->bind();
+        }
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glVertexPointer(3, GL_FLOAT, sizeof(V3T2), nullptr);
         glTexCoordPointer(2, GL_FLOAT, sizeof(V3T2), (void*)sizeof(V3));
