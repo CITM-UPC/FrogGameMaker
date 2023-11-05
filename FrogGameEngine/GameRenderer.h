@@ -2,6 +2,8 @@
 
 #include "Types.h"
 #include "glm/ext/matrix_transform.hpp"
+#include "glm/gtx/rotate_vector.hpp"
+
 
 struct Camera
 {

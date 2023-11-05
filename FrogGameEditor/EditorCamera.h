@@ -103,24 +103,26 @@ public:
 
 	void LookAround(vec2 motion) {
 
-		double distanceToPivot = glm::distance(camera.eye, camera.center);
+		double sensibility = 0.1;
 
 		if (motion.x != 0)
 		{
-			mat4 mat = camera.computeLookAt();
-			mat4 rotationMatrix = glm::rotate(mat, glm::radians(0.0), vec3(0, 1.0f, 0));
+			vec3 localZ = camera.eye - camera.center;
+			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.x)* sensibility), vec3(0, 1.0f, 0));
 
-			//mat4 finishedMatrix = rotationMatrix * camera.computeLookAt();
-			mat = mat;
-
-			vec3 newLocalZ = glm::normalize(rotationMatrix[2]);
-
-			camera.center = camera.eye - (newLocalZ * distanceToPivot);
+			camera.center = camera.eye - newLocalZ;
 		}
 
-		/*if (dy != 0)
+		if (motion.y != 0)
 		{
-			float DeltaY = (float)dy * Sensitivity;
+			vec3 localZ = camera.eye - camera.center;
+			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), vec3(1.0, 0, 0));
+
+			camera.center = camera.eye - newLocalZ;
+		}
+
+
+			/*float DeltaY = (float)dy * Sensitivity;
 
 			Y = rotate(Y, DeltaY, X);
 			Z = rotate(Z, DeltaY, X);
