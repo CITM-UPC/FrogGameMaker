@@ -120,7 +120,6 @@ void Mesh::loadTextureToMesh(const std::string& path)
     auto texture_ptr = make_shared<Texture2D>(texPath.string());
     texture = texture_ptr;
 
-    texture;
 }
 
 Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* index_data, unsigned int numIndexs) :
