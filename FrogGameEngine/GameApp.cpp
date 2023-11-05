@@ -80,19 +80,22 @@ void GameApp::Render(Camera camera) {
     drawAxis();
 
 #pragma region Draw Sandbox
-    static auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx");
+    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
+
+    //mesh_ptrs[0].get()->loadTextureToMesh("Assets/Baker_house.png");
 
     GraphicObject mesh1(mesh_ptrs.front());
     GraphicObject mesh2(mesh_ptrs.back());
 
     GraphicObject house;
 
+    
     house.addChild(std::move(mesh1));
     house.addChild(std::move(mesh2));
 
     GraphicObject root;
     root.addChild(std::move(house));
-
+    
     root.paint();
 
 #pragma endregion
