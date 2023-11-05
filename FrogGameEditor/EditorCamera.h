@@ -115,17 +115,43 @@ public:
 
 		if (motion.y != 0)
 		{
-			vec3 localZ = camera.eye - camera.center;
-			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), vec3(1.0, 0, 0));
+			vec3 localX;
+			localX.x = camera.computeLookAt()[0].x;
+			localX.y = camera.computeLookAt()[1].x;
+			localX.z = camera.computeLookAt()[2].x;
+
+
+			vec3 localZ = +camera.eye - camera.center;
+			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), localX);
+
+			/*if (camera.computeLookAt()[1].y < 0) {
+				if (newLocalZ.y < 0) {
+					newLocalZ.y = -newLocalZ.y;
+				}
+			}*/
 
 			camera.center = camera.eye - newLocalZ;
+
 		}
 
+		////////
 
-			/*float DeltaY = (float)dy * Sensitivity;
+		/*mat4 mat = camera.computeLookAt();
+		vec3 X = mat[0];
+		vec3 Y = mat[1];
+		vec3 Z = mat[2];
 
-			Y = rotate(Y, DeltaY, X);
-			Z = rotate(Z, DeltaY, X);
+		if (motion.x != 0)
+		{
+			X = rotate(X, motion.x, vec3(0.0f, 1.0f, 0.0f));
+			Y = rotate(Y, motion.x, vec3(0.0f, 1.0f, 0.0f));
+			Z = rotate(Z, motion.x, vec3(0.0f, 1.0f, 0.0f));
+		}
+
+		if (motion.y != 0)
+		{
+			Y = rotate(Y, motion.y, X);
+			Z = rotate(Z, motion.y, X);
 
 			if (Y.y < 0.0f)
 			{
@@ -134,7 +160,9 @@ public:
 			}
 		}
 
-		Position = Reference + Z * length(Position);*/
+		camera.center = camera.eye + Z;*/
+
+
 	}
 
 
