@@ -206,13 +206,11 @@ public:
 		}
 		
 		if (showConsoleWindow) {
-			ImGui::Begin("Console");
-			ImGui::End();
+			UIConsoleWindow();
 		}
 
 		if (showAssetsWindow) {
-			ImGui::Begin("Assets");
-			ImGui::End();
+			UIAssetsWindow();
 		}
 
 		return true;
@@ -634,6 +632,25 @@ private:
 		}
 
 
+		ImGui::End();
+	}
+
+	void UIConsoleWindow() {
+		ImGui::Begin("Console");
+
+		{
+			vector<string> editorLogs = editor->GetLogs();
+
+			for (auto it = editorLogs.begin(); it != editorLogs.end(); ++it) {
+				ImGui::Text((*it).c_str());
+			}
+		}
+
+		ImGui::End();
+	}
+
+	void UIAssetsWindow() {
+		ImGui::Begin("Assets");
 		ImGui::End();
 	}
 

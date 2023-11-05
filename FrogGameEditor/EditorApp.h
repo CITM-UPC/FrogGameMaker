@@ -59,10 +59,17 @@ public:
 
 	GameApp* gameApp;
 
+	void AddLog(string l);
+
+	vector<string> GetLogs();
+
+	void ClearLogs();
+
 	/*GLuint gameAppRenderFBO;
 
 	GLuint gameAppRenderTexture;*/
 
 private:
+	vector<string> logs;
 
 };

@@ -103,6 +103,22 @@ bool EditorApp::Update() {
 		editorWindow->Render();
 	}
 
+	// get game logs
+	{
+		vector<string> gameLogs = gameApp->GetLogs();
+
+		for (auto it = gameLogs.begin(); it != gameLogs.end(); ++it) {
+			AddLog((*it));
+		}
+
+		gameApp->ClearLogs();
+	}
+
+
+
+
+
+
 	const auto frame_end = steady_clock::now();
 	const auto frame_duration = frame_end - frame_start;
 
@@ -137,6 +153,23 @@ void EditorApp::WebRequest(const char* url)
 {
 	ShellExecute(0, 0, url, 0, 0, SW_SHOW);
 }
+
+void EditorApp::AddLog(string l)
+{
+	logs.push_back(l);
+}
+
+vector<string> EditorApp::GetLogs()
+{
+	return logs;
+}
+
+void EditorApp::ClearLogs()
+{
+	logs.clear();
+}
+
+
 
 //void EditorApp::PreGameAppRender()
 //{

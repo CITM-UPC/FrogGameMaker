@@ -1,5 +1,6 @@
 #pragma once
 #include <chrono>
+#include <string>
 
 #include "Types.h"
 #include "GameRenderer.h"
@@ -25,8 +26,15 @@ public:
 
 
 	Scene* scene = nullptr;
+	
+	void AddLog(string l);
+
+	vector<string> GetLogs();
+
+	void ClearLogs();
 
 private:
+	vector<string> logs;
 
 };
 
