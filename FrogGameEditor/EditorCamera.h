@@ -76,29 +76,37 @@ public:
 		camera.eye += localTranslation;
 	}
 
-	void OrbitAround(vec2 mouseMovement) {
-		// move only eye (position) locally on x and y
+	void OrbitAround(vec2 motion) {
+		double sensibility = 0.1;
 
-		//double distanceZ = glm::distance(camera.eye, camera.center);
+		if (motion.x != 0)
+		{
+			vec3 localZ = camera.eye - camera.center;
+			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.x) * sensibility), vec3(0, 1.0f, 0));
 
-		/*mat4 transformMatrix = camera.computeLookAt();
-		mat4 rotatedMatrix = glm::rotate(transformMatrix, 1.0, vec3(mouseMovement.y, mouseMovement.x, 0));
+			camera.eye = camera.center + newLocalZ;
+		}
 
-		camera.eye = vec3(glm::length(rotatedMatrix[0]), glm::length(rotatedMatrix[1]), glm::length(rotatedMatrix[2]));*/
+		if (motion.y != 0)
+		{
+			vec3 localX;
+			localX.x = camera.computeLookAt()[0].x;
+			localX.y = camera.computeLookAt()[1].x;
+			localX.z = camera.computeLookAt()[2].x;
 
-		/*vec3 translation = vec3(-mouseMovement.x, mouseMovement.y, 0);
 
-		vec3 localZ = glm::normalize(camera.eye - camera.center);
-		vec3 localY = glm::normalize(camera.up);
-		vec3 localX = glm::normalize(glm::cross(localY, localZ));
+			vec3 localZ = camera.eye - camera.center;
+			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), localX);
 
-		vec3 localTranslation = glm::dmat3(localX, localY, localZ) * translation;
+			/*if (camera.computeLookAt()[1].y < 0) {
+				if (newLocalZ.y < 0) {
+					newLocalZ.y = -newLocalZ.y;
+				}
+			}*/
 
-		camera.eye += localTranslation;
+			camera.eye = camera.center + newLocalZ;
 
-		camera.eye = camera.center + ((glm::normalize(localZ)) * distanceZ);*/
-
-		//camera.computeLookAt();
+		}
 	}
 
 	void LookAround(vec2 motion) {
@@ -121,7 +129,7 @@ public:
 			localX.z = camera.computeLookAt()[2].x;
 
 
-			vec3 localZ = +camera.eye - camera.center;
+			vec3 localZ = camera.eye - camera.center;
 			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), localX);
 
 			/*if (camera.computeLookAt()[1].y < 0) {
@@ -133,35 +141,6 @@ public:
 			camera.center = camera.eye - newLocalZ;
 
 		}
-
-		////////
-
-		/*mat4 mat = camera.computeLookAt();
-		vec3 X = mat[0];
-		vec3 Y = mat[1];
-		vec3 Z = mat[2];
-
-		if (motion.x != 0)
-		{
-			X = rotate(X, motion.x, vec3(0.0f, 1.0f, 0.0f));
-			Y = rotate(Y, motion.x, vec3(0.0f, 1.0f, 0.0f));
-			Z = rotate(Z, motion.x, vec3(0.0f, 1.0f, 0.0f));
-		}
-
-		if (motion.y != 0)
-		{
-			Y = rotate(Y, motion.y, X);
-			Z = rotate(Z, motion.y, X);
-
-			if (Y.y < 0.0f)
-			{
-				Z = vec3(0.0f, Z.y > 0.0f ? 1.0f : -1.0f, 0.0f);
-				Y = cross(Z, X);
-			}
-		}
-
-		camera.center = camera.eye + Z;*/
-
 
 	}
 
