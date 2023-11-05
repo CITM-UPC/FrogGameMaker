@@ -80,11 +80,11 @@ void GameApp::Render(Camera camera) {
     drawAxis();
 
 #pragma region Draw Sandbox
-    static auto mesh_ptrs = Mesh::loadFromFile("Assets/gear.fbx", "Assets/Baker_house.png");
+    auto mesh_ptrs = Mesh::loadFromFile("Assets/gear.fbx", "Assets/Baker_house.png");
 
     Texture2D tex("Assets/gear.png");
 
-    //mesh_ptrs[0].get()->texture=*(Texture2D)tex;
+    mesh_ptrs[0].get()->loadTextureToMesh("Assets/gear.png");
 
     GraphicObject mesh1(mesh_ptrs[0]);
     //GraphicObject mesh2(mesh_ptrs.back());

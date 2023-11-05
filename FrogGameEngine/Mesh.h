@@ -29,8 +29,8 @@ public:
 
 	static std::vector<Ptr> loadFromFile(const std::string& path);
 	static std::vector<Ptr> loadFromFile(const std::string& path, const std::string& stringPath);
-	//static std::vector<Ptr> loadTextureToMesh(const std::string& path, vector<Mesh::Ptr> mesh_ptrs);
-
+	
+	void loadTextureToMesh(const std::string& path);
 	Texture2D::Ptr texture;
 
 	Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* indexs_data = nullptr, unsigned int numIndexs = 0);

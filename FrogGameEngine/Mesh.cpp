@@ -79,7 +79,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
     vector<Texture2D::Ptr> texture_ptrs;
     for (const auto& material : scene.materials()) {
         aiString aiPath(stringPath);
-        fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
+        fs::path texPath = fs::path(stringPath).parent_path() / fs::path(aiPath.C_Str()).filename();
         auto texture_ptr = make_shared<Texture2D>(texPath.string());
         texture_ptrs.push_back(texture_ptr);
     }
@@ -113,6 +113,15 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
     return mesh_ptrs;
 }
 
+void Mesh::loadTextureToMesh(const std::string& path) 
+{
+    aiString aiPath(path);
+    fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
+    auto texture_ptr = make_shared<Texture2D>(texPath.string());
+    texture = texture_ptr;
+
+    texture;
+}
 
 Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* index_data, unsigned int numIndexs) :
     _format(format),
