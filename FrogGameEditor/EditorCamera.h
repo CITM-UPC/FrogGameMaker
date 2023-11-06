@@ -161,7 +161,7 @@ public:
 		camera.eye = camera.center + ((glm::normalize(localZ)) * 10.0 /*distance*/);
 	}
 
-	float baseSpeed = 0.5;
+	float baseSpeed = 0.15;
 
 	Camera camera;
 };
