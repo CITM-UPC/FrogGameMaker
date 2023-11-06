@@ -153,6 +153,10 @@ public:
 		_mesh = mesh;
 	}
 
+	Mesh* getMesh() {
+		return _mesh;
+	}
+
 protected:
 
 private:

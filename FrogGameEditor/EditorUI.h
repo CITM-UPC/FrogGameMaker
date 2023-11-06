@@ -586,9 +586,17 @@ private:
 	void UIInspectorWriteMeshNode(Component* component) {
 		MeshComponent* meshComponent = (MeshComponent*)component;
 		if (ImGui::CollapsingHeader("Mesh")) {
-			ImGui::Text("Vertex: x");
-			ImGui::Text("Faces: x");
-		}
+			if (meshComponent->getMesh() != nullptr) {
+				ImGui::Text("Vertex: x");
+				ImGui::Text("Faces: x");
+				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
+
+				}
+			}
+			else {
+				ImGui::Text("Mesh not found");
+			}
+		}		
 	}
 
 	void UIInspectorWriteTextureNode(Component* component) {

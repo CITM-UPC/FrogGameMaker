@@ -51,7 +51,11 @@ static void drawGrid(int grid_size, int grid_step) {
 GameApp::GameApp()
 {
     ilInit();
+    AddLog("IL Init");
     actualCamera = new Camera();
+
+    scene = new Scene("TestScene");
+    scene->DebugStart();
 }
 
 GameApp::~GameApp()

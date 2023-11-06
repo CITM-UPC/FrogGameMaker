@@ -99,6 +99,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
 
         vector<unsigned int> index_data;
         for (const auto& face : mesh.faces()) {
+            // push back each vertex from the triangles
             index_data.push_back(face.mIndices[0]);
             index_data.push_back(face.mIndices[1]);
             index_data.push_back(face.mIndices[2]);

@@ -17,20 +17,40 @@ public:
 	
 	};
 
+	GameObject* AddGameObject(string name) {
+		GameObject* tempGO = new GameObject(name);
+		children.push_back(tempGO);
+		return tempGO;
+
+	}
+
+	GameObject* AddGameObject() {
+		string gameObjectName = "Game Object " + std::to_string(children.size());
+
+		GameObject* tempGO = new GameObject(gameObjectName);
+		children.push_back(tempGO);
+		return tempGO;
+	}
+
+	GameObject* AddGameObjectChildren(GameObject* parent) {
+		string gameObjectName = parent->name + " " + std::to_string(parent->children.size());
+
+		GameObject* tempGO = new GameObject(gameObjectName);
+		parent->addChild(tempGO);
+		return tempGO;
+
+	}
+
 	void DebugStart() {
 		{
-			GameObject* tempGO = new GameObject("GameObject 1");
-			children.push_back(tempGO);
+			AddGameObject();
 		}
 		{
-			GameObject* tempGO = new GameObject("GameObject 2");
-			children.push_back(tempGO);
-			GameObject* tempGO2 = new GameObject("GameObject 3");
-			tempGO->addChild(tempGO2);
+			GameObject* temp = AddGameObject();
+			AddGameObjectChildren(temp);
 		}
 		{
-			GameObject* tempGO = new GameObject("GameObject 4");
-			children.push_back(tempGO);
+			AddGameObject();
 		}
 	};
 
