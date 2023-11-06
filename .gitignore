@@ -8,3 +8,10 @@
 /x64/Debug
 /.vs
 /FrogGameEngine/x64/Debug
+
+/.vs/FrogGameMaker
+/FrogGameEditor/x64/Release
+*.user
+/x64/Release
+/.vs
+/FrogGameEngine/x64/Release
