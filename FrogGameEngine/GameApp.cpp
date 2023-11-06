@@ -81,7 +81,7 @@ void GameApp::Render(Camera camera) {
 
 #pragma region Draw Sandbox
     auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
-    AddLog("Loaded Assets/BakerHouse.fbx");
+    // AddLog("Loaded Assets/BakerHouse.fbx");
     //mesh_ptrs[0].get()->loadTextureToMesh("Assets/Baker_house.png");
 
     GraphicObject mesh1(mesh_ptrs.front());

@@ -47,7 +47,7 @@ public:
 		ImGui_ImplSDL2_InitForOpenGL(editor->editorWindow->window, editor->editorWindow->glContext);
 		ImGui_ImplOpenGL3_Init();
 
-		editor->AddLog("ImGui Initialized" + (string)IMGUI_VERSION);
+		editor->AddLog("ImGui Initialized " + (string)IMGUI_VERSION);
 
 		// Load Fonts
 		// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -572,21 +572,19 @@ private:
 	}
 
 	void UIInspectorWriteTransformNode(Component* component) {
-		void* tempComp = &component;
-		TransformComponent* transformComponent = (TransformComponent*)tempComp;
+		TransformComponent* transformComponent = (TransformComponent*)component;
 		if (ImGui::CollapsingHeader("Transform")) {
 			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
 			ImGui::InputFloat3("Position", vec3Position);
 			float vec3Rotation[3] = { (float)transformComponent->getRotation().x, (float)transformComponent->getRotation().y, (float)transformComponent->getRotation().z };
 			ImGui::InputFloat3("Rotation", vec3Rotation);
-			float vec3Scale[3] = { (float)transformComponent->getScale().x, (float)transformComponent->getScale().y, (float)transformComponent->getPosition().z };
+			float vec3Scale[3] = { (float)transformComponent->getScale().x, (float)transformComponent->getScale().y, (float)transformComponent->getScale().z };
 			ImGui::InputFloat3("Scale", vec3Scale);
 		}
 	}
 
 	void UIInspectorWriteMeshNode(Component* component) {
-		void* tempComp = &component;
-		MeshComponent* meshComponent = (MeshComponent*)tempComp;
+		MeshComponent* meshComponent = (MeshComponent*)component;
 		if (ImGui::CollapsingHeader("Mesh")) {
 			ImGui::Text("Vertex: x");
 			ImGui::Text("Faces: x");
@@ -594,8 +592,7 @@ private:
 	}
 
 	void UIInspectorWriteTextureNode(Component* component) {
-		void* tempComp = &component;
-		TextureComponent* textureComponent = (TextureComponent*)tempComp;
+		TextureComponent* textureComponent = (TextureComponent*)component;
 		if (ImGui::CollapsingHeader("Texture")) {
 			ImGui::Text("path");
 		}
@@ -638,6 +635,12 @@ private:
 
 	void UIConsoleWindow() {
 		ImGui::Begin("Console");
+
+		if (ImGui::Button("Clear")) {
+			editor->ClearLogs();
+		}
+
+		ImGui::Separator();
 
 		{
 			vector<string> editorLogs = editor->GetLogs();
