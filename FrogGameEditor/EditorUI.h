@@ -576,7 +576,7 @@ private:
 		if (ImGui::CollapsingHeader("Transform")) {
 			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
 			ImGui::InputFloat3("Position", vec3Position);
-			float vec3Rotation[3] = { (float)transformComponent->getRotation().x, (float)transformComponent->getRotation().y, (float)transformComponent->getRotation().z };
+			float vec3Rotation[3] = { glm::degrees((float)transformComponent->getRotation().x), glm::degrees((float)transformComponent->getRotation().y), glm::degrees((float)transformComponent->getRotation().z) };
 			ImGui::InputFloat3("Rotation", vec3Rotation);
 			float vec3Scale[3] = { (float)transformComponent->getScale().x, (float)transformComponent->getScale().y, (float)transformComponent->getScale().z };
 			ImGui::InputFloat3("Scale", vec3Scale);

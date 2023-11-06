@@ -73,6 +73,10 @@ void GameApp::Start() {
         houseMeshPart->setMesh(*i);
     }
 
+    TransformComponent* transformHouse = (TransformComponent*)house->GetComponent(TRANSFORM);
+    transformHouse->rotate(1, vec3(0, 1, 0));
+    transformHouse->translate(vec3(0, 0, 0));
+    transformHouse->scale(vec3(1, 1, 1));
 }
 
 void GameApp::Step(std::chrono::duration<double> dt)

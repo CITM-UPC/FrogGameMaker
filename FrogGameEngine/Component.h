@@ -131,7 +131,12 @@ public:
 		return scale;
 	}
 
+	inline void translate(vec3 translation) { _transform = glm::translate(_transform, translation); }
+
 	inline void rotate(double rads, const vec3& axis) { _transform = glm::rotate(_transform, rads, axis); }
+
+	inline void scale(vec3 scale) { _transform = glm::scale(_transform, scale); }
+
 
 protected:
 
@@ -168,16 +173,16 @@ public:
 		componentType = TEXTURE;
 	}
 
-	void setTexture(Texture2D* texture) {
+	void setTexture(Texture2D::Ptr texture) {
 		_texture = texture;
 	}
 
-	Texture2D* getTexture() {
+	Texture2D::Ptr getTexture() {
 		return _texture;
 	}
 
 protected:
 
 private:
-	Texture2D* _texture = nullptr;
+	Texture2D::Ptr _texture = nullptr;
 };
