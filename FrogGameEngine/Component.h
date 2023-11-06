@@ -18,6 +18,7 @@ class Component {
 public:
 	virtual void Start() {};
 	virtual void Update() {};
+	virtual void Render() {};
 
 	ComponentType componentType = NONE;
 };
@@ -30,6 +31,10 @@ public:
 	TransformComponent() {
 		_transform = mat4(1.0f);
 		componentType = TRANSFORM;
+	}
+
+	inline mat4 getTransform() {
+		return _transform;
 	}
 
 	inline vec3 getPosition() { 
@@ -49,7 +54,6 @@ public:
 		return n;
 	}
 
-	// not in the mood to do rotations --TODO--
 	inline vec3 getRotation() {
 
 		vec3 inverseScaleVec;
@@ -82,9 +86,6 @@ public:
 		rotEulerAngles.x = glm::acos(rotationMatrix[0][0]);
 		rotEulerAngles.z = glm::asin(rotationMatrix[2][0]);
 
-
-
-
 		if (toleranceCheckFix(-rotationMatrix[2][0] - 1) + 1 == 1) {
 			rotEulerAngles.y = 90;
 			rotEulerAngles.x = atan2(rotationMatrix[1][2], rotationMatrix[1][1]);
@@ -100,11 +101,6 @@ public:
 			rotEulerAngles.z = atan2(rotationMatrix[2][1], rotationMatrix[2][2]);
 			rotEulerAngles.x = atan2(rotationMatrix[1][0], rotationMatrix[0][0]);
 		}
-
-
-		
-
-
 
 		return rotEulerAngles;
 	}
@@ -135,6 +131,8 @@ public:
 		return scale;
 	}
 
+	inline void rotate(double rads, const vec3& axis) { _transform = glm::rotate(_transform, rads, axis); }
+
 protected:
 
 private:
@@ -149,18 +147,18 @@ public:
 		componentType = MESH;
 	}
 
-	void setMesh(Mesh* mesh) {
+	void setMesh(Mesh::Ptr mesh) {
 		_mesh = mesh;
 	}
 
-	Mesh* getMesh() {
+	Mesh::Ptr getMesh() {
 		return _mesh;
 	}
 
 protected:
 
 private:
-	Mesh* _mesh = nullptr;
+	Mesh::Ptr _mesh = nullptr;
 };
 
 class TextureComponent : public Component {
@@ -181,5 +179,5 @@ public:
 protected:
 
 private:
-	Texture2D* _texture;
+	Texture2D* _texture = nullptr;
 };

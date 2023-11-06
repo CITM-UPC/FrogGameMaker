@@ -72,6 +72,25 @@ public:
 		return nullptr;
 	}
 
+	void Render() {
+		// get necessary components
+		TransformComponent* transform = (TransformComponent*)GetComponent(TRANSFORM);
+		MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+
+		// render
+		glPushMatrix();
+		glMultMatrixd(&transform->getTransform()[0].x);
+
+		if (mesh->getMesh()) mesh->getMesh()->draw();
+
+		for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
+			(*childIt)->Render();
+		}
+
+		glPopMatrix();
+
+	}
+
 	// uuid id
 	string name;
 	// should be a list of uuids

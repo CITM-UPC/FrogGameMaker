@@ -19,6 +19,7 @@ public:
 
 	Camera* actualCamera;
 
+	void Start();
 	void Step(std::chrono::duration<double> dt);
 	void Render(Camera camera);
 

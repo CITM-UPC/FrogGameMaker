@@ -54,7 +54,7 @@ bool EditorApp::Start() {
 		}
 	}
 
-	
+	gameApp->Start();
 
 	return ret;
 }

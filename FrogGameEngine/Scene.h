@@ -60,6 +60,13 @@ public:
 	// --TODO--
 	void Update() {};
 
+	void Render() {
+		for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
+			(*gameObjectI)->Render();
+		}
+	
+	};
+
 	void CleanUp() {};
 
 	// uuid id

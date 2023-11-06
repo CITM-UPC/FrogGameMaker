@@ -55,12 +55,24 @@ GameApp::GameApp()
     actualCamera = new Camera();
 
     scene = new Scene("TestScene");
-    scene->DebugStart();
 }
 
 GameApp::~GameApp()
 {
     delete actualCamera;
+}
+
+void GameApp::Start() {
+    // scene->DebugStart();
+    GameObject* house = scene->AddGameObject();
+    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
+
+    for (auto i = mesh_ptrs.begin(); i != mesh_ptrs.end(); ++i) {
+        GameObject* housePart = scene->AddGameObjectChildren(house);
+        MeshComponent* houseMeshPart = (MeshComponent*)housePart->GetComponent(MESH);
+        houseMeshPart->setMesh(*i);
+    }
+
 }
 
 void GameApp::Step(std::chrono::duration<double> dt)
@@ -84,23 +96,25 @@ void GameApp::Render(Camera camera) {
     drawAxis();
 
 #pragma region Draw Sandbox
-    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
-    // AddLog("Loaded Assets/BakerHouse.fbx");
-    //mesh_ptrs[0].get()->loadTextureToMesh("Assets/Baker_house.png");
+    //auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
+    //// AddLog("Loaded Assets/BakerHouse.fbx");
+    ////mesh_ptrs[0].get()->loadTextureToMesh("Assets/Baker_house.png");
 
-    GraphicObject mesh1(mesh_ptrs.front());
-    GraphicObject mesh2(mesh_ptrs.back());
+    //GraphicObject mesh1(mesh_ptrs.front());
+    //GraphicObject mesh2(mesh_ptrs.back());
 
-    GraphicObject house;
+    //GraphicObject house;
 
-    
-    house.addChild(std::move(mesh1));
-    house.addChild(std::move(mesh2));
+    //
+    //house.addChild(std::move(mesh1));
+    //house.addChild(std::move(mesh2));
 
-    GraphicObject root;
-    root.addChild(std::move(house));
-    
-    root.paint();
+    //GraphicObject root;
+    //root.addChild(std::move(house));
+    //
+    //root.paint();
+
+    scene->Render();
 
 #pragma endregion
 
