@@ -15,6 +15,9 @@ private:
 public:
 	using Ptr = std::shared_ptr<Texture2D>;
 	explicit Texture2D(const std::string& path);
+
+	std::string path;
+
 	Texture2D(Texture2D&& tex) noexcept;
 	Texture2D();
 	void bind() const;
@@ -22,8 +25,6 @@ public:
 	
 
 	unsigned int getID() { return _id; };
-
-	std::string path;
 
 private:
 	Texture2D(const Texture2D&);

@@ -29,7 +29,7 @@ struct aiSceneExt : aiScene {
 
 std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
 
-    this->path = path;
+    
 
     const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
@@ -65,6 +65,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
 
         auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
+        mesh_sptr->path = path;
         mesh_ptrs.push_back(mesh_sptr);
     }
 
@@ -75,7 +76,6 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
 
 std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::string& stringPath) {
 
-    this->path = path;
 
     const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
@@ -111,6 +111,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
 
         auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
+        mesh_sptr->path = path;
         mesh_ptrs.push_back(mesh_sptr);
     }
 

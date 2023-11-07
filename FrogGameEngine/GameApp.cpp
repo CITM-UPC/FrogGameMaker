@@ -65,9 +65,9 @@ GameApp::~GameApp()
 void GameApp::Start() {
     // scene->DebugStart();
     GameObject* house = scene->AddGameObject();
-    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
+    std::vector<Mesh::Ptr> mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
 
-    for (auto i = mesh_ptrs.begin(); i != mesh_ptrs.end(); ++i) {
+    for (std::vector<Mesh::Ptr>::iterator i = mesh_ptrs.begin(); i != mesh_ptrs.end(); ++i) {
         GameObject* housePart = scene->AddGameObjectChildren(house);
         MeshComponent* houseMeshPart = (MeshComponent*)housePart->GetComponent(MESH);
         houseMeshPart->setMesh(*i);

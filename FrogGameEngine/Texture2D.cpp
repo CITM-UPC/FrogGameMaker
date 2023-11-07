@@ -8,7 +8,7 @@ using namespace std;
 
 Texture2D::Texture2D(const std::string& path) {
 
-    this->path = path;
+    this->path = path.c_str();
 
     //load image data using devil
     auto img = ilGenImage();
