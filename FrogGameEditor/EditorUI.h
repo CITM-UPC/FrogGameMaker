@@ -589,6 +589,7 @@ private:
 			if (meshComponent->getMesh() != nullptr) {
 				ImGui::Text("Vertex: x");
 				ImGui::Text("Faces: x");
+				ImGui::Text("Path: %s", meshComponent->getMesh()->path.c_str());
 				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
 
 				}
@@ -603,7 +604,7 @@ private:
 		TextureComponent* textureComponent = (TextureComponent*)component;
 		if (ImGui::CollapsingHeader("Texture")) {
 			if (textureComponent->getTexture() != nullptr) {
-				ImGui::Text("Path: %s", &textureComponent->getTexture()->path);
+				ImGui::Text("Path: %s", textureComponent->getTexture()->path.c_str());
 			}
 			else {
 				ImGui::Text("Texture not found");
