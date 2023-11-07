@@ -148,11 +148,18 @@ bool EditorInput::PreUpdate() {
 			if (dropped_filedir.ends_with(".fbx")) {
 				/*if (!dropped_filedir.starts_with("Assets/"))
 					filesystem::copy(dropped_filedir, "Assets");*/
+
+				GameObject* newMesh = editor->gameApp->scene->AddGameObject();
+				auto mesh_ptrs = Mesh::loadFromFile(dropped_filedir);
+
+				newMesh->AddMeshWithTexture(mesh_ptrs);
 				
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
 				/*if (!dropped_filedir.starts_with("Assets/"))
 					filesystem::copy(dropped_filedir, "Assets");*/
+
+
 			}
 			else {
 
