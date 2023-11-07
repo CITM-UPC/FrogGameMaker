@@ -146,10 +146,12 @@ bool EditorInput::PreUpdate() {
 			dropped_filedir = event.drop.file;
 
 			if (dropped_filedir.ends_with(".fbx")) {
-				filesystem::copy(dropped_filedir, "Assets");
+				if (!dropped_filedir.starts_with("Assets/"))
+					filesystem::copy(dropped_filedir, "Assets");
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
-				filesystem::copy(dropped_filedir, "Assets");
+				if (!dropped_filedir.starts_with("Assets/"))
+					filesystem::copy(dropped_filedir, "Assets");
 			}
 			else {
 
