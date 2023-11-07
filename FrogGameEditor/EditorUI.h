@@ -75,9 +75,7 @@ public:
 		/*showGameScene = true;
 		showEditorScene = true;*/
 		showFPSLog = true;
-		showConfigWindowWindow = false;
-		showConfigRendererWindow = false;
-		showConfigInputWindow = false;
+		showConfigWindow = false;
 
 		quitPressed = false;
 
@@ -186,18 +184,20 @@ public:
 			UIFPSLog();
 		}
 
-		if (showConfigWindowWindow) {
-			UIConfigWindowWindow();
-		}
+		if (showConfigWindow) {
+			ImGui::Begin("Configuration", &showConfigWindow);
+			if (ImGui::BeginTabBar("Configs")) {
+				UIConfigWindowWindow();
 
-		if (showConfigRendererWindow) {
-			UIConfigRendererWindow();
-		}
+				UIConfigRendererWindow();
 
-		if (showConfigInputWindow) {
-			UIConfigInputWindow();
-		}
+				UIConfigInputWindow();
 
+				ImGui::EndTabBar();
+			}
+			
+			ImGui::End();
+		}
 		if (showHierarchyWindow) {
 			UIHierarchyWindow();
 		}
@@ -243,9 +243,7 @@ public:
 	/*bool showGameScene;
 	bool showEditorScene;*/
 	bool showFPSLog;
-	bool showConfigWindowWindow;
-	bool showConfigRendererWindow;
-	bool showConfigInputWindow;
+	bool showConfigWindow;
 
 	bool quitPressed;
 
@@ -318,16 +316,8 @@ private:
 
 			if (ImGui::BeginMenu("Configuration")) {
 
-				if (ImGui::MenuItem("Window")) {
-					showConfigWindowWindow = !showConfigWindowWindow;
-				}
-
-				if (ImGui::MenuItem("Renderer")) {
-					showConfigRendererWindow = !showConfigRendererWindow;
-				}
-
-				if (ImGui::MenuItem("Input")) {
-					showConfigInputWindow = !showConfigInputWindow;
+				if (ImGui::MenuItem("Config")) {
+					showConfigWindow = !showConfigWindow;
 				}
 
 				ImGui::EndMenu();
@@ -497,45 +487,49 @@ private:
 	}
 
 	void UIConfigWindowWindow() {
-		ImGui::Begin("Window Configuration", &showConfigWindowWindow);
-		
-		ImGui::Text("Window Width:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->width);
+		if (ImGui::BeginTabItem("Window")) {
+			ImGui::Text("Window Width:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->width);
 
-		ImGui::Text("Window Height:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->height);
+			ImGui::Text("Window Height:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->height);
 
-		float aspectRatio = (float)editor->editorWindow->width / (float)editor->editorWindow->height;
+			float aspectRatio = (float)editor->editorWindow->width / (float)editor->editorWindow->height;
 
-		ImGui::Text("Aspect Ratio:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
+			ImGui::Text("Aspect Ratio:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
 
-		if (ImGui::Checkbox("Fullscreen", &editor->editorWindow->isFullscreen)) {
-			editor->editorWindow->UpdateFullscreen();
-		}
-		if (ImGui::Checkbox("Resizable", &editor->editorWindow->isResizable)) {
-			editor->editorWindow->UpdateResizable();
-		}
-		if (ImGui::Checkbox("Borderless", &editor->editorWindow->isBorderless)) {
-			editor->editorWindow->UpdateBorderless();
-		}
-		
-		ImGui::End();
+			if (ImGui::Checkbox("Fullscreen", &editor->editorWindow->isFullscreen)) {
+				editor->editorWindow->UpdateFullscreen();
+			}
+			if (ImGui::Checkbox("Resizable", &editor->editorWindow->isResizable)) {
+				editor->editorWindow->UpdateResizable();
+			}
+			if (ImGui::Checkbox("Borderless", &editor->editorWindow->isBorderless)) {
+				editor->editorWindow->UpdateBorderless();
+			}
+
+			ImGui::EndTabItem();
+		}		
 	}
 
 	void UIConfigRendererWindow() {
-		ImGui::Begin("Renderer Configuration", &showConfigRendererWindow);
-		
-		ImGui::End();
+		if (ImGui::BeginTabItem("Renderer")) {
+
+
+			ImGui::EndTabItem();
+		}
 	}
 
 	void UIConfigInputWindow() {
-		ImGui::Begin("Input Configuration", &showConfigInputWindow);
-		
-		ImGui::End();
+		if (ImGui::BeginTabItem("Input")) {
+
+
+			ImGui::EndTabItem();
+		}
 	}
 
 	void UIHierarchyNodeWrite(GameObject* GO) {
@@ -596,9 +590,16 @@ private:
 		MeshComponent* meshComponent = (MeshComponent*)component;
 		if (ImGui::CollapsingHeader("Mesh")) {
 			if (meshComponent->getMesh() != nullptr) {
-				ImGui::Text("Path: %s", meshComponent->getMesh()->path.c_str());
-				ImGui::Text("Vertex: x");
-				ImGui::Text("Faces: x");
+				string s = meshComponent->getMesh()->path;
+				if (auto n = s.find_last_of("\\"); n != s.npos) {
+					s.erase(0, n + 1);
+				}
+				ImGui::Text("File: %s", s.c_str());
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("%s", meshComponent->getMesh()->path.c_str());
+				}				
+				ImGui::Text("Vertex: x"/*, meshComponent->getMesh()->numVertex*/);
+				ImGui::Text("Faces: x"/*, meshComponent->getMesh()->numFaces*/);
 				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
 
 				}
@@ -613,7 +614,14 @@ private:
 		TextureComponent* textureComponent = (TextureComponent*)component;
 		if (ImGui::CollapsingHeader("Texture")) {
 			if (textureComponent->getTexture() != nullptr) {
-				ImGui::Text("Path: %s", textureComponent->getTexture()->path.c_str());
+				string s = textureComponent->getTexture()->path;
+				if (auto n = s.find_last_of("\\"); n != s.npos) {
+					s.erase(0, n + 1);
+				}
+				ImGui::Text("File: %s", s.c_str());
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("%s", textureComponent->getTexture()->path.c_str());
+				}
 				ImGui::Text("Size: %d px x %d px", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
 			}
 			else {
