@@ -472,6 +472,28 @@ private:
 
 		ImGui::Text("%s", renderer);
 
+		ImGui::Separator();
+
+		int vram;
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTION_COUNT_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM being used:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM total:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM available:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
 		ImGui::End();
 
 	}
