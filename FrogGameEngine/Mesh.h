@@ -27,8 +27,10 @@ private:
 public:
 	using Ptr = std::shared_ptr<Mesh>;
 
-	static std::vector<Ptr> loadFromFile(const std::string& path);
-	static std::vector<Ptr> loadFromFile(const std::string& path, const std::string& stringPath);
+	std::vector<Ptr> loadFromFile(const std::string& path);
+	std::vector<Ptr> loadFromFile(const std::string& path, const std::string& stringPath);
+
+	std::string path;
 	
 	void loadTextureToMesh(const std::string& path);
 	Texture2D::Ptr texture;
