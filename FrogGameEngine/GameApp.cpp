@@ -69,14 +69,6 @@ void GameApp::Start() {
 
     house->AddMeshWithTexture(mesh_ptrs);
 
-    /*for (auto i = mesh_ptrs.begin(); i != mesh_ptrs.end(); ++i) {
-        GameObject* housePart = scene->AddGameObjectChildren(house);
-        MeshComponent* houseMeshPart = (MeshComponent*)housePart->GetComponent(MESH);
-        houseMeshPart->setMesh(*i);
-        TextureComponent* houseTexture = (TextureComponent*)housePart->GetComponent(TEXTURE);
-        houseTexture->setTexture((*i)->texture);
-    }*/
-
     TransformComponent* transformHouse = (TransformComponent*)house->GetComponent(TRANSFORM);
     transformHouse->rotate(1, vec3(0, 1, 0));
     transformHouse->translate(vec3(0, 0, 0));

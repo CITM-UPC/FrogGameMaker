@@ -17,6 +17,8 @@ public:
 	explicit Texture2D(const std::string& path);
 
 	std::string path;
+	int width;
+	int height;
 
 	Texture2D(Texture2D&& tex) noexcept;
 	Texture2D();

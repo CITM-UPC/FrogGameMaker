@@ -605,6 +605,7 @@ private:
 		if (ImGui::CollapsingHeader("Texture")) {
 			if (textureComponent->getTexture() != nullptr) {
 				ImGui::Text("Path: %s", textureComponent->getTexture()->path.c_str());
+				ImGui::Text("Size: %d px x %d px", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
 			}
 			else {
 				ImGui::Text("Texture not found");

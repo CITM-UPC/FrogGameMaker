@@ -19,6 +19,9 @@ Texture2D::Texture2D(const std::string& path) {
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
     auto data = ilGetData();
 
+    this->width = width;
+    this->height = height;
+
     //load image as a texture in VRAM
     glGenTextures(1, &_id);
     glBindTexture(GL_TEXTURE_2D, _id);
