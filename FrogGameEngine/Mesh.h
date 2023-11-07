@@ -11,9 +11,9 @@ class Mesh :
 {
 public:
 	enum Formats { F_V3, F_V3C4, F_V3T2 };
-	struct V3 { vec3f v; };
-	struct V3C4 { vec3f v; vec4f c; };
-	struct V3T2 { vec3f v; vec2f t; };
+	struct V3 { vec3f v; }; //Vector 3 points
+	struct V3C4 { vec3f v; vec4f c; }; //Vector 3 points, color
+	struct V3T2 { vec3f v; vec2f t; }; //Vector 3 points, texture 2D
 
 private:
 	const enum Formats _format;
