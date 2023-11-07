@@ -650,6 +650,7 @@ private:
 
 		ImGui::Separator();
 
+		ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 		{
 			vector<string> editorLogs = editor->GetLogs();
 
@@ -657,6 +658,7 @@ private:
 				ImGui::Text((*it).c_str());
 			}
 		}
+		ImGui::EndChild();
 
 		ImGui::End();
 	}
