@@ -2,6 +2,8 @@
 
 #include "Types.h"
 #include "Graphic.h"
+#include "Texture2D.h"
+#include <array>
 
 struct Cube : Graphic
 {
@@ -26,4 +28,59 @@ struct Cube : Graphic
 	const vec3 black;
 
 	Cube();
+};
+
+struct CubeImmediateMode : public Cube
+{
+	Texture2D texture;
+	void draw();
+
+	CubeImmediateMode();
+};
+
+class CubeInterleavedVBO : public Cube
+{
+
+	unsigned int _buffer_id;
+
+public:
+	CubeInterleavedVBO();
+	void draw();
+
+	~CubeInterleavedVBO();
+
+};
+
+class CubeVertexArray : public Cube
+{
+	std::array<vec3, NUM_VERTEXS> _vertex_data;
+	std::array<vec3, NUM_VERTEXS> _color_data;
+
+public:
+	CubeVertexArray();
+	void draw();
+};
+
+class CubeVertexBuffer : public Cube
+{
+
+	unsigned int _vertex_buffer_id;
+	unsigned int _color_buffer_id;
+
+public:
+	CubeVertexBuffer();
+	void draw();
+
+};
+
+class CubeWireframeIVBO : public Cube
+{
+	unsigned int _buffer_id;
+	unsigned int _index_bufer_id;
+
+public:
+	CubeWireframeIVBO();
+	void draw();
+	~CubeWireframeIVBO();
+
 };
