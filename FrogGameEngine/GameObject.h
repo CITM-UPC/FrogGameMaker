@@ -24,6 +24,15 @@ public:
 		AddComponent(TEXTURE);
 	};
 
+	GameObject* AddNewChildren() {
+		string gameObjectName = name + " " + std::to_string(children.size());
+
+		GameObject* tempGO = new GameObject(gameObjectName);
+		addChild(tempGO);
+		return tempGO;
+
+	}
+
 	void addChild(GameObject* child) {
 		if (child->_parent == this) return;
 		if (child->_parent) child->_parent->removeChild(child);
@@ -70,6 +79,16 @@ public:
 			}
 		}
 		return nullptr;
+	}
+
+	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes) {
+		for (auto i = meshes.begin(); i != meshes.end(); ++i) {
+			GameObject* housePart = AddNewChildren();
+			MeshComponent* houseMeshPart = (MeshComponent*)housePart->GetComponent(MESH);
+			houseMeshPart->setMesh(*i);
+			TextureComponent* houseTexture = (TextureComponent*)housePart->GetComponent(TEXTURE);
+			houseTexture->setTexture((*i)->texture);
+		}
 	}
 
 	void Render() {

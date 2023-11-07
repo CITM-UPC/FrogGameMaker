@@ -587,9 +587,9 @@ private:
 		MeshComponent* meshComponent = (MeshComponent*)component;
 		if (ImGui::CollapsingHeader("Mesh")) {
 			if (meshComponent->getMesh() != nullptr) {
+				ImGui::Text("Path: %s", meshComponent->getMesh()->path.c_str());
 				ImGui::Text("Vertex: x");
 				ImGui::Text("Faces: x");
-				ImGui::Text("Path: %s", meshComponent->getMesh()->path.c_str());
 				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
 
 				}
