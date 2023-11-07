@@ -5,6 +5,7 @@
 #include "Graphic.h"
 #include "Texture2D.h"
 #include "Types.h"
+#include "Cube.h"
 
 class Mesh :
     public Graphic

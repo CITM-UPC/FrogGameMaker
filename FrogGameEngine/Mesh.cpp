@@ -226,6 +226,7 @@ void Mesh::draw() {
     glDisable(GL_TEXTURE_2D);
 }
 
+
 Mesh::~Mesh() {
     if (_vertex_buffer_id) glDeleteBuffers(1, &_vertex_buffer_id);
     if (_indexs_buffer_id) glDeleteBuffers(1, &_indexs_buffer_id);

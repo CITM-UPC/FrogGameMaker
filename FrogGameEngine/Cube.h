@@ -6,16 +6,6 @@
 #include <array>
 
 class Cube : public Graphic {
-	enum Format {
-		INMIDIATEMODE,
-		INTERLEAVEDVBO,
-		VERTEXBUFFER
-	};
-
-public:
-	static const int NUM_FACES = 6;
-	static const int NUM_TRIANGLES = NUM_FACES * 2;
-	static const int NUM_VERTEXS = NUM_TRIANGLES * 3;
 
 	const vec3 a;
 	const vec3 b;
@@ -33,38 +23,29 @@ public:
 	const vec3 white;
 	const vec3 black;
 
-	Cube();
-};
 
-class CubeImmediateMode : public Cube
-{
-	Texture2D texture;
-	void draw();
-
-	CubeImmediateMode();
-};
-
-class CubeInterleavedVBO : public Cube
-{
-
+public:
 	unsigned int _buffer_id;
 
-public:
-	CubeInterleavedVBO();
+	static const int NUM_FACES = 6;
+	static const int NUM_TRIANGLES = NUM_FACES * 2;
+	static const int NUM_VERTEXS = NUM_TRIANGLES * 3;
+
+
+	Cube();
+	Cube(const std::string& path);
+
+	void loadTextureToMesh(const std::string& path);
+	Texture2D::Ptr texture;
+
+	Texture2D::Ptr checkboard = std::shared_ptr<Texture2D>(new Texture2D);
+	bool drawChecker = false;
+
 	void draw();
 
-	~CubeInterleavedVBO();
+	~Cube();
+
 
 };
 
-class CubeVertexBuffer : public Cube
-{
 
-	unsigned int _vertex_buffer_id;
-	unsigned int _color_buffer_id;
-
-public:
-	CubeVertexBuffer();
-	void draw();
-
-};

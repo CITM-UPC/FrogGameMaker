@@ -5,6 +5,8 @@
 #include <IL/il.h>
 
 #include "Mesh.h"
+#include "Cube.h"
+#include "Pyramid.h"
 
 #include "GraphicObject.h"
 
@@ -73,6 +75,8 @@ void GameApp::Start() {
     transformHouse->rotate(1, vec3(0, 1, 0));
     transformHouse->translate(vec3(0, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
+
+
 }
 
 void GameApp::Step(std::chrono::duration<double> dt)
@@ -113,6 +117,10 @@ void GameApp::Render(Camera camera) {
     //root.addChild(std::move(house));
     //
     //root.paint();
+
+    Pyramid pyramid;
+
+    pyramid.draw();
 
     scene->Render();
 

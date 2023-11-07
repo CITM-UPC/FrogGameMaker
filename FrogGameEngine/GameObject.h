@@ -99,6 +99,13 @@ public:
 		}
 	}
 
+	void AddMeshWithTexture(Mesh::Ptr meshes) {
+		MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+		mesh->setMesh(meshes);
+		TextureComponent* texture = (TextureComponent*)GetComponent(TEXTURE);
+		texture->setTexture(meshes->texture);
+	}
+
 	void Render() {
 		// get necessary components
 		TransformComponent* transform = (TransformComponent*)GetComponent(TRANSFORM);
