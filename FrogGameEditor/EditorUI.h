@@ -602,7 +602,12 @@ private:
 	void UIInspectorWriteTextureNode(Component* component) {
 		TextureComponent* textureComponent = (TextureComponent*)component;
 		if (ImGui::CollapsingHeader("Texture")) {
-			ImGui::Text("path");
+			if (textureComponent->getTexture() != nullptr) {
+				ImGui::Text("Path: %s", &textureComponent->getTexture()->path);
+			}
+			else {
+				ImGui::Text("Texture not found");
+			}
 		}
 	}
 
