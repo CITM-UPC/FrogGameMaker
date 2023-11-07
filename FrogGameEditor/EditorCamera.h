@@ -84,7 +84,10 @@ public:
 			vec3 localZ = camera.eye - camera.center;
 			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.x) * sensibility), vec3(0, 1.0f, 0));
 
-			camera.eye = camera.center + newLocalZ;
+			if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y <= -0.99)) {
+				camera.eye = camera.center + newLocalZ;
+
+			}
 		}
 
 		if (motion.y != 0)
@@ -103,9 +106,10 @@ public:
 					newLocalZ.y = -newLocalZ.y;
 				}
 			}*/
+			if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y <= -0.99)) {
 
-			camera.eye = camera.center + newLocalZ;
-
+				camera.eye = camera.center + newLocalZ;
+			}
 		}
 	}
 
@@ -117,8 +121,10 @@ public:
 		{
 			vec3 localZ = camera.eye - camera.center;
 			vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.x)* sensibility), vec3(0, 1.0f, 0));
+			if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y <= -0.99)) {
 
-			camera.center = camera.eye - newLocalZ;
+				camera.center = camera.eye - newLocalZ;
+			}
 		}
 
 		if (motion.y != 0)
@@ -137,9 +143,10 @@ public:
 					newLocalZ.y = -newLocalZ.y;
 				}
 			}*/
+			if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y < -0.99)) {
 
-			camera.center = camera.eye - newLocalZ;
-
+				camera.center = camera.eye - newLocalZ;
+			}
 		}
 
 	}
