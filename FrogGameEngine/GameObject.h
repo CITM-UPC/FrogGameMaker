@@ -82,12 +82,20 @@ public:
 	}
 
 	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes) {
-		for (auto i = meshes.begin(); i != meshes.end(); ++i) {
-			GameObject* housePart = AddNewChildren();
-			MeshComponent* houseMeshPart = (MeshComponent*)housePart->GetComponent(MESH);
-			houseMeshPart->setMesh(*i);
-			TextureComponent* houseTexture = (TextureComponent*)housePart->GetComponent(TEXTURE);
-			houseTexture->setTexture((*i)->texture);
+		if (meshes.size() == 1) {
+			MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+			mesh->setMesh(*meshes.begin());
+			TextureComponent* texture = (TextureComponent*)GetComponent(TEXTURE);
+			texture->setTexture((*meshes.begin())->texture);
+		}
+		else {
+			for (auto i = meshes.begin(); i != meshes.end(); ++i) {
+				GameObject* GOPart = AddNewChildren();
+				MeshComponent* meshPart = (MeshComponent*)GOPart->GetComponent(MESH);
+				meshPart->setMesh(*i);
+				TextureComponent* texturePart = (TextureComponent*)GOPart->GetComponent(TEXTURE);
+				texturePart->setTexture((*i)->texture);
+			}
 		}
 	}
 
