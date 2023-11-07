@@ -5,8 +5,14 @@
 #include "Texture2D.h"
 #include <array>
 
-struct Cube : Graphic
-{
+class Cube : public Graphic {
+	enum Format {
+		INMIDIATEMODE,
+		INTERLEAVEDVBO,
+		VERTEXBUFFER
+	};
+
+public:
 	static const int NUM_FACES = 6;
 	static const int NUM_TRIANGLES = NUM_FACES * 2;
 	static const int NUM_VERTEXS = NUM_TRIANGLES * 3;
@@ -30,7 +36,7 @@ struct Cube : Graphic
 	Cube();
 };
 
-struct CubeImmediateMode : public Cube
+class CubeImmediateMode : public Cube
 {
 	Texture2D texture;
 	void draw();
@@ -51,16 +57,6 @@ public:
 
 };
 
-class CubeVertexArray : public Cube
-{
-	std::array<vec3, NUM_VERTEXS> _vertex_data;
-	std::array<vec3, NUM_VERTEXS> _color_data;
-
-public:
-	CubeVertexArray();
-	void draw();
-};
-
 class CubeVertexBuffer : public Cube
 {
 
@@ -70,17 +66,5 @@ class CubeVertexBuffer : public Cube
 public:
 	CubeVertexBuffer();
 	void draw();
-
-};
-
-class CubeWireframeIVBO : public Cube
-{
-	unsigned int _buffer_id;
-	unsigned int _index_bufer_id;
-
-public:
-	CubeWireframeIVBO();
-	void draw();
-	~CubeWireframeIVBO();
 
 };

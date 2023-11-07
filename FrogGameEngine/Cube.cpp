@@ -124,40 +124,6 @@ CubeInterleavedVBO::~CubeInterleavedVBO() {
     glDeleteBuffers(1, &_buffer_id);
 }
 
-//Cube Vertex Array
-
-CubeVertexArray::CubeVertexArray() :
-    Cube(),
-    _vertex_data({
-        a,b,c,c,d,a,
-        h,g,f,f,e,h,
-        e,a,d,d,h,e,
-        b,f,g,g,c,b,
-        d,c,g,g,h,d,
-        b,a,e,e,f,b
-        }),
-    _color_data({
-        red,red,red,red,red,red,
-        green,green,green,green,green,green,
-        blue,blue,blue,blue,blue,blue,
-        yellow,yellow,yellow,yellow,yellow,yellow,
-        white,white,white,white,white,white,
-        black,black,black,black,black,black
-        })
-{
-}
-
-void CubeVertexArray::draw() {
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_COLOR_ARRAY);
-    glBindBuffer(GL_VERTEX_ARRAY, 0);
-    glVertexPointer(3, GL_DOUBLE, 0, _vertex_data.data());
-    glColorPointer(3, GL_DOUBLE, 0, _color_data.data());
-    glDrawArrays(GL_TRIANGLES, 0, NUM_VERTEXS);
-    glDisableClientState(GL_COLOR_ARRAY);
-    glDisableClientState(GL_VERTEX_ARRAY);
-}
-
 //Cube Vertex Buffer
 
 CubeVertexBuffer::CubeVertexBuffer() :
@@ -203,47 +169,4 @@ void CubeVertexBuffer::draw() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-//Cube Wireframe IVBO
-
-CubeWireframeIVBO::CubeWireframeIVBO() :
-    Cube() {
-
-    glGenBuffers(1, &_buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * 8, &a, GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    const int NUM_EDGES = 12;
-    enum { A = 0, B, C, D, E, F, G, H };
-    array<unsigned int, NUM_EDGES * 2> lines_indexs = {
-       A,B,B,C,C,D,D,A,
-       E,F,F,G,G,H,H,E,
-       B,F,G,C,
-       A,E,H,D
-    };
-
-    glGenBuffers(1, &_index_bufer_id);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index_bufer_id);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * lines_indexs.size(), lines_indexs.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-void CubeWireframeIVBO::draw() {
-    glLineWidth(3);
-    glColor3ub(0, 0, 0);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
-    glVertexPointer(3, GL_DOUBLE, 0, nullptr);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _index_bufer_id);
-    glDrawElements(GL_LINES, 12 * 2, GL_UNSIGNED_INT, nullptr);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glDisableClientState(GL_VERTEX_ARRAY);
-}
-
-CubeWireframeIVBO::~CubeWireframeIVBO() {
-    glDeleteBuffers(1, &_buffer_id);
-    glDeleteBuffers(1, &_index_bufer_id);
 }
