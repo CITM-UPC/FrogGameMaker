@@ -10,7 +10,17 @@ public:
 
 	};
 
+	bool Start() {
+		camera.aspect = (double)editor->editorWindow->width / (double)editor->editorWindow->height;
+
+		return true;
+	}
+
 	bool Update() {
+
+		if (editor->editorInput->WindowSizeHasUpdated()) {
+			camera.aspect = (double)editor->editorWindow->width / (double)editor->editorWindow->height;
+		}
 
 		// Holding SHIFT duplicates movement speed
 		float speed = baseSpeed;

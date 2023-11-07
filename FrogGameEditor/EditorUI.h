@@ -501,19 +501,28 @@ private:
 		
 		ImGui::Text("Window Width:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_WIDTH);
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->width);
 
 		ImGui::Text("Window Height:");
 		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_HEIGHT);
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->height);
 
-		float aspectRatio = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;
+		float aspectRatio = (float)editor->editorWindow->width / (float)editor->editorWindow->height;
 
 		ImGui::Text("Aspect Ratio:");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
 
-
+		if (ImGui::Checkbox("Fullscreen", &editor->editorWindow->isFullscreen)) {
+			editor->editorWindow->UpdateFullscreen();
+		}
+		if (ImGui::Checkbox("Resizable", &editor->editorWindow->isResizable)) {
+			editor->editorWindow->UpdateResizable();
+		}
+		if (ImGui::Checkbox("Borderless", &editor->editorWindow->isBorderless)) {
+			editor->editorWindow->UpdateBorderless();
+		}
+		
 		ImGui::End();
 	}
 

@@ -7,12 +7,8 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_opengl.h"
 
-static const unsigned int WINDOW_WIDTH = 720 * 16 / 9;
-static const unsigned int WINDOW_HEIGHT = 720;
-
 using namespace std;
 using namespace chrono;
-
 
 class EditorWindow : public EditorModule
 {
@@ -32,10 +28,39 @@ public:
 
 	void Render();
 
+	void UpdateFullscreen() {
+		if (isFullscreen) {
+			SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+		}
+		else {
+			SDL_SetWindowFullscreen(window, 0);
+		}
+	}
+
+	void UpdateResizable() {
+		SDL_SetWindowResizable(window, (SDL_bool)isResizable);
+	}
+
+	void UpdateBorderless() {
+		SDL_SetWindowBordered(window, (SDL_bool)!isBorderless);
+	}
+
+	void UpdateSizes(int newWidth, int newHeight) {
+		width = newWidth;
+		height = newHeight;
+		glViewport(0, 0, width, height);
+	}
+
 	SDL_Window* window = nullptr;
 
 	SDL_GLContext glContext = nullptr;
 
+	bool isFullscreen = false;
+	bool isResizable = true;
+	bool isBorderless = false;
+
+	int width = 720 * 16 / 9;
+	int height = 720;
 };
 
 EditorWindow::EditorWindow(EditorApp* editor) : EditorModule(editor)
@@ -59,7 +84,14 @@ bool EditorWindow::Start() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-	window = SDL_CreateWindow("SDL+OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
+	Uint32 flags;
+	flags = SDL_WINDOW_OPENGL;
+	if (isFullscreen) { flags |= SDL_WINDOW_FULLSCREEN; }
+	if (isResizable) { flags |= SDL_WINDOW_RESIZABLE; }
+	if (isBorderless) { flags |= SDL_WINDOW_BORDERLESS; }
+
+	window = SDL_CreateWindow("SDL+OpenGL Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+
 	if (!window) 
 		throw exception(SDL_GetError());
 
@@ -84,7 +116,7 @@ bool EditorWindow::Start() {
 
 	editor->AddLog("GLEW Compiled with " + (string)(const char*)glewGetString(GLEW_VERSION));
 
-	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+	glViewport(0, 0, width, height);
 	glClearColor(1, 1, 1, 1);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
