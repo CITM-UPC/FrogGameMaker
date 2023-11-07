@@ -65,7 +65,7 @@ GameApp::~GameApp()
 void GameApp::Start() {
     // scene->DebugStart();
     GameObject* house = scene->AddGameObject();
-    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
+    auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
 
     house->AddMeshWithTexture(mesh_ptrs);
 
