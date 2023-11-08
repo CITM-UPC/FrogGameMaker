@@ -658,15 +658,22 @@ private:
 				if (auto n = s.find_last_of("\\"); n != s.npos) {
 					s.erase(0, n + 1);
 				}
-				ImGui::Text("File: %s", s.c_str());
+				ImGui::Text("File:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
 				if (ImGui::IsItemHovered()) {
 					ImGui::SetTooltip("%s", meshComponent->getMesh()->path.c_str());
 				}				
-				ImGui::Text("Vertex: x"/*, meshComponent->getMesh()->numVertex*/);
-				ImGui::Text("Faces: x"/*, meshComponent->getMesh()->numFaces*/);
-				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
+				ImGui::Text("Vertex:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getVertsNum());
+				ImGui::Text("Faces:", meshComponent->getMesh()->getFacesNum());
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getFacesNum());
+				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) { }
+				if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawChecker)) {}
+				if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawChecker)) {}
 
-				}
 			}
 			else {
 				ImGui::Text("Mesh not found");
@@ -683,11 +690,15 @@ private:
 				if (auto n = s.find_last_of("\\"); n != s.npos) {
 					s.erase(0, n + 1);
 				}
-				ImGui::Text("File: %s", s.c_str());
+				ImGui::Text("File:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
 				if (ImGui::IsItemHovered()) {
 					ImGui::SetTooltip("%s", textureComponent->getTexture()->path.c_str());
 				}
-				ImGui::Text("Size: %d px x %d px", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
+				ImGui::Text("Size:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dpx x %dpx", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
 			}
 			else {
 				ImGui::Text("Texture not found");
