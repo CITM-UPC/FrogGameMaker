@@ -671,8 +671,8 @@ private:
 				ImGui::SameLine();
 				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getFacesNum());
 				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) { }
-				if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawChecker)) {}
-				if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawChecker)) {}
+				if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawNormalsVerts)) {}
+				if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawNormalsFaces)) {}
 
 			}
 			else {
