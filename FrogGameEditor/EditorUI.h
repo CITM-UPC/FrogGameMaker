@@ -298,13 +298,16 @@ private:
 			if (ImGui::BeginMenu("Create")) {
 				if (ImGui::BeginMenu("Basic Shapes")) {
 					if (ImGui::MenuItem("Cube --TODO--")) {
-
+						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cube");
 					}
 					if (ImGui::MenuItem("Sphere --TODO--")) {
-
+						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Sphere");
 					}
 					if (ImGui::MenuItem("Pyramid --TODO--")) {
-
+						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Pyramid");
+					}
+					if (ImGui::MenuItem("Cylinder --TODO--")) {
+						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cylinder");
 					}
 
 					ImGui::EndMenu();
