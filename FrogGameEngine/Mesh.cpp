@@ -284,15 +284,15 @@ void Mesh::draw() {
     }
 
     if (drawNormalsVerts && !meshVerts.empty() && !meshNorms.empty()) {
-        glLineWidth(4.0f);
+        glLineWidth(normalLineWidth);
         glBegin(GL_LINES);
         glColor3f(0.0f, 1.0f, 0.0f);
 
         for (int i = 0; i < _numVerts; i++) {
             glVertex3f(meshVerts[i].x, meshVerts[i].y, meshVerts[i].z);
-            glVertex3f(meshVerts[i].x + meshNorms[i].x * 0.1f,
-                meshVerts[i].y + meshNorms[i].y * 0.1f,
-                meshVerts[i].z + meshNorms[i].z * 0.1f);
+            glVertex3f(meshVerts[i].x + meshNorms[i].x * normalLineLength,
+                meshVerts[i].y + meshNorms[i].y * normalLineLength,
+                meshVerts[i].z + meshNorms[i].z * normalLineLength);
         }
 
         glColor3f(1.0f, 1.0f, 0.0f);
@@ -300,12 +300,12 @@ void Mesh::draw() {
     }
 
     if (drawNormalsFaces && !meshFaceCenters.empty() && !meshFaceNorms.empty()) {
-        glLineWidth(4.0f);
+        glLineWidth(normalLineWidth);
         glBegin(GL_LINES);
         glColor3f(1.0f, 0.0f, 0.0f);
 
         for (int i = 0; i < _numFaces; i++) {
-            glm::vec3 endPoint = meshFaceCenters[i] + 0.1f * meshFaceNorms[i];
+            glm::vec3 endPoint = meshFaceCenters[i] + normalLineLength * meshFaceNorms[i];
             glVertex3f(meshFaceCenters[i].x, meshFaceCenters[i].y, meshFaceCenters[i].z);
             glVertex3f(endPoint.x, endPoint.y, endPoint.z);
         }

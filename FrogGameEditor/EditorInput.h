@@ -172,7 +172,7 @@ bool EditorInput::PreUpdate() {
 					if (meshComponent->getMesh() != nullptr) {
 						meshComponent->getMesh()->loadTextureToMesh(dropped_filedir);
 						textureComponent->setTexture(meshComponent->getMesh()->texture);
-						editor->AddLog("Texture loaded from " + dropped_filedir + " to " + meshComponent->getMesh()->path);
+						editor->AddLog("Texture " + dropped_filedir + " applied to " + editor->editorUI->gameObjectSelected->name);
 					}
 					
 				}

@@ -674,6 +674,10 @@ private:
 				if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawNormalsVerts)) {}
 				if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawNormalsFaces)) {}
 
+				ImGui::SliderFloat("Normal's Length", &meshComponent->getMesh()->normalLineLength, 0.1f, 2.0f);
+				ImGui::SliderInt("Normal's Width", &meshComponent->getMesh()->normalLineWidth, 1, 4);
+
+
 			}
 			else {
 				ImGui::Text("Mesh not found");

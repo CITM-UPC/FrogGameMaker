@@ -60,6 +60,8 @@ public:
 	const unsigned int getVertsNum();
 	//const unsigned int getNormNum();
 
+	int normalLineWidth = 1;
+	float normalLineLength = 0.1f;
 
 private:
 	Mesh(const Mesh& cpy);
