@@ -188,6 +188,33 @@ void Mesh::loadTextureToMesh(const std::string& path)
 
 }
 
+/*Mesh::Mesh(Cube cube) :
+    _format(F_V3C4),
+    _vertex_buffer_id(cube._vertex_buffer_id),
+    _numVerts(cube.NUM_VERTEXS),
+    _indexs_buffer_id(NULL),
+    _numIndexs(0)
+{
+    cube._vertex_buffer_id = 0;
+}
+
+Mesh::Mesh(Pyramid pyramid) :
+    _format(F_V3C4),
+    _vertex_buffer_id(pyramid._vertex_buffer_id),
+    _numVerts(pyramid.NUM_VERTEXS),
+    _indexs_buffer_id(NULL),
+    _numIndexs(0)
+{
+}
+
+Mesh::Mesh(Cylinder cylinder) :
+    _format(F_V3C4),
+    _vertex_buffer_id(cylinder._vertex_buffer_id),
+    _numVerts(cylinder.NUM_VERTEXS),
+    _indexs_buffer_id(NULL),
+    _numIndexs(0)
+{
+}*/
 
 Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsigned int numFaces, const unsigned int* index_data, unsigned int numIndexs) :
     _format(format),
@@ -323,6 +350,7 @@ void Mesh::draw() {
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisable(GL_TEXTURE_2D);
 }
+
 
 Mesh::~Mesh() {
     if (_vertex_buffer_id) glDeleteBuffers(1, &_vertex_buffer_id);

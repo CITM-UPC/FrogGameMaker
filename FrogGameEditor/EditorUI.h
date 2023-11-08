@@ -16,6 +16,11 @@
 
 #include "IL/il.h"
 
+#include "../FrogGameEngine/Mesh.h"
+#include "../FrogGameEngine/Cube.h"
+#include "../FrogGameEngine/Pyramid.h"
+#include "../FrogGameEngine/Cylinder.h"
+
 
 class EditorUI : public EditorModule
 {
