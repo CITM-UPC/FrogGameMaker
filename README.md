@@ -1,6 +1,6 @@
 # FrogGameMaker
 
-Frog Engine is a game engine: 
+Frog Game Maker is a game engine: 
 Github: https://github.com/CITM-UPC/FrogGameMaker
 
 ### Made by: 

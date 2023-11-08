@@ -4,11 +4,6 @@
 #include <vector>
 #include <IL/il.h>
 
-#include "Mesh.h"
-#include "Cube.h"
-#include "Pyramid.h"
-#include "Cylinder.h"
-//#include "Sphere.h"
 
 #include "GraphicObject.h"
 
@@ -106,26 +101,6 @@ void GameApp::Render(Camera camera) {
     drawAxis();
 
 #pragma region Draw Sandbox
-    //auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
-    //// AddLog("Loaded Assets/BakerHouse.fbx");
-    ////mesh_ptrs[0].get()->loadTextureToMesh("Assets/Baker_house.png");
-
-    //GraphicObject mesh1(mesh_ptrs.front());
-    //GraphicObject mesh2(mesh_ptrs.back());
-
-    //GraphicObject house;
-
-    //
-    //house.addChild(std::move(mesh1));
-    //house.addChild(std::move(mesh2));
-
-    //GraphicObject root;
-    //root.addChild(std::move(house));
-    //
-    //root.paint();
-
-    //Cylinder cylinder;
-    //cylinder.draw();
 
     scene->Render();
 
