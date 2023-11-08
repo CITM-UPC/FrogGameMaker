@@ -61,12 +61,41 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
             index_data.push_back(face.mIndices[0]);
             index_data.push_back(face.mIndices[1]);
             index_data.push_back(face.mIndices[2]);
-        }
 
+        }
 
         auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), mesh.mNumFaces, index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
         mesh_sptr->path = path;
+
+        for (size_t i = 0; i < mesh.mNumVertices; i++) {
+            aiVector3D normal = mesh.mNormals[i];
+            vec3f glmNormal(normal.x, normal.y, normal.z);
+            mesh_sptr->meshNorms.push_back(glmNormal);
+        }
+
+        for (size_t i = 0; i < mesh.mNumVertices; i++) {
+            aiVector3D vert = mesh.mVertices[i];
+            vec3f glmNormal(vert.x, vert.y, vert.z);
+            mesh_sptr->meshVerts.push_back(glmNormal);
+        }
+
+        for (size_t i = 0; i < mesh.mNumFaces; i++) {
+            aiFace face = mesh.mFaces[i];
+
+            vec3f v0(mesh.mVertices[face.mIndices[0]].x, mesh.mVertices[face.mIndices[0]].y, mesh.mVertices[face.mIndices[0]].z);
+            vec3f v1(mesh.mVertices[face.mIndices[1]].x, mesh.mVertices[face.mIndices[1]].y, mesh.mVertices[face.mIndices[1]].z);
+            vec3f v2(mesh.mVertices[face.mIndices[2]].x, mesh.mVertices[face.mIndices[2]].y, mesh.mVertices[face.mIndices[2]].z);
+
+            vec3f faceNormal = glm::cross(v1 - v0, v2 - v0);
+            faceNormal = glm::normalize(faceNormal);
+            mesh_sptr->meshFaceNorms.push_back(faceNormal);
+
+            vec3f faceCenter = (v0 + v1 + v2) / 3.0f;
+            mesh_sptr->meshFaceCenters.push_back(faceCenter);
+        }
+
+
         mesh_ptrs.push_back(mesh_sptr);
     }
 
@@ -113,6 +142,35 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
         auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), mesh.mNumFaces, index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
         mesh_sptr->path = path;
+
+        for (size_t i = 0; i < mesh.mNumVertices; i++) {
+            aiVector3D normal = mesh.mNormals[i];
+            vec3f glmNormal(normal.x, normal.y, normal.z);
+            mesh_sptr->meshNorms.push_back(glmNormal);
+        }
+
+        for (size_t i = 0; i < mesh.mNumVertices; i++) {
+            aiVector3D vert = mesh.mVertices[i];
+            vec3f glmNormal(vert.x, vert.y, vert.z);
+            mesh_sptr->meshVerts.push_back(glmNormal);
+        }
+
+        for (size_t i = 0; i < mesh.mNumFaces; i++) {
+            aiFace face = mesh.mFaces[i];
+
+            vec3f v0(mesh.mVertices[face.mIndices[0]].x, mesh.mVertices[face.mIndices[0]].y, mesh.mVertices[face.mIndices[0]].z);
+            vec3f v1(mesh.mVertices[face.mIndices[1]].x, mesh.mVertices[face.mIndices[1]].y, mesh.mVertices[face.mIndices[1]].z);
+            vec3f v2(mesh.mVertices[face.mIndices[2]].x, mesh.mVertices[face.mIndices[2]].y, mesh.mVertices[face.mIndices[2]].z);
+
+            vec3f faceNormal = glm::cross(v1 - v0, v2 - v0);
+            faceNormal = glm::normalize(faceNormal);
+            mesh_sptr->meshFaceNorms.push_back(faceNormal);
+
+            vec3f faceCenter = (v0 + v1 + v2) / 3.0f;
+            mesh_sptr->meshFaceCenters.push_back(faceCenter);
+        }
+
+
         mesh_ptrs.push_back(mesh_sptr);
     }
 
@@ -175,6 +233,11 @@ Mesh::Mesh(Mesh&& b) noexcept :
     _numFaces(b._numFaces),
     texture(b.texture)
 {
+    meshVerts = b.meshVerts;
+    meshNorms = b.meshNorms;
+    meshFaceCenters = b.meshFaceCenters;
+    meshFaceNorms = b.meshFaceNorms;
+
 
     b._vertex_buffer_id = 0;
     b._indexs_buffer_id = 0;
@@ -219,6 +282,38 @@ void Mesh::draw() {
     else {
         glDrawArrays(GL_TRIANGLES, 0, _numVerts);
     }
+
+    if (drawNormalsVerts && !meshVerts.empty() && !meshNorms.empty()) {
+        glLineWidth(4.0f);
+        glBegin(GL_LINES);
+        glColor3f(0.0f, 1.0f, 0.0f);
+
+        for (int i = 0; i < _numVerts; i++) {
+            glVertex3f(meshVerts[i].x, meshVerts[i].y, meshVerts[i].z);
+            glVertex3f(meshVerts[i].x + meshNorms[i].x * 0.1f,
+                meshVerts[i].y + meshNorms[i].y * 0.1f,
+                meshVerts[i].z + meshNorms[i].z * 0.1f);
+        }
+
+        glColor3f(1.0f, 1.0f, 0.0f);
+        glEnd();
+    }
+
+    if (drawNormalsFaces && !meshFaceCenters.empty() && !meshFaceNorms.empty()) {
+        glLineWidth(4.0f);
+        glBegin(GL_LINES);
+        glColor3f(1.0f, 0.0f, 0.0f);
+
+        for (int i = 0; i < _numFaces; i++) {
+            glm::vec3 endPoint = meshFaceCenters[i] + 0.1f * meshFaceNorms[i];
+            glVertex3f(meshFaceCenters[i].x, meshFaceCenters[i].y, meshFaceCenters[i].z);
+            glVertex3f(endPoint.x, endPoint.y, endPoint.z);
+        }
+
+        glColor3f(0.0f, 1.0f, 1.0f);
+        glEnd();
+    }
+
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
