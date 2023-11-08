@@ -7,6 +7,8 @@
 #include "Mesh.h"
 #include "Cube.h"
 #include "Pyramid.h"
+#include "Cylinder.h"
+//#include "Sphere.h"
 
 #include "GraphicObject.h"
 
@@ -118,9 +120,8 @@ void GameApp::Render(Camera camera) {
     //
     //root.paint();
 
-    Pyramid pyramid;
-
-    pyramid.draw();
+    Cylinder cylinder;
+    cylinder.draw();
 
     scene->Render();
 
