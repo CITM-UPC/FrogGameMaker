@@ -63,7 +63,8 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
             index_data.push_back(face.mIndices[2]);
         }
 
-        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), index_data.data(), index_data.size());
+
+        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), mesh.mNumFaces, index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
         mesh_sptr->path = path;
         mesh_ptrs.push_back(mesh_sptr);
@@ -109,7 +110,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
             index_data.push_back(face.mIndices[2]);
         }
 
-        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), index_data.data(), index_data.size());
+        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), mesh.mNumFaces, index_data.data(), index_data.size());
         mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
         mesh_sptr->path = path;
         mesh_ptrs.push_back(mesh_sptr);
@@ -130,10 +131,11 @@ void Mesh::loadTextureToMesh(const std::string& path)
 }
 
 
-Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* index_data, unsigned int numIndexs) :
+Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsigned int numFaces, const unsigned int* index_data, unsigned int numIndexs) :
     _format(format),
     _numVerts(numVerts),
-    _numIndexs(numIndexs)
+    _numIndexs(numIndexs),
+    _numFaces(numFaces)
 {
 
     glGenBuffers(1, &_vertex_buffer_id);
@@ -170,6 +172,7 @@ Mesh::Mesh(Mesh&& b) noexcept :
     _numVerts(b._numVerts),
     _indexs_buffer_id(b._indexs_buffer_id),
     _numIndexs(b._numIndexs),
+    _numFaces(b._numFaces),
     texture(b.texture)
 {
 
@@ -229,4 +232,14 @@ void Mesh::draw() {
 Mesh::~Mesh() {
     if (_vertex_buffer_id) glDeleteBuffers(1, &_vertex_buffer_id);
     if (_indexs_buffer_id) glDeleteBuffers(1, &_indexs_buffer_id);
+}
+
+const unsigned int Mesh::getFacesNum()
+{
+    return _numFaces;
+}
+
+const unsigned int Mesh::getVertsNum()
+{
+    return _numVerts;
 }
