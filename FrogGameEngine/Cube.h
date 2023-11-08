@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Types.h"
-#include "Graphic.h"
+#include "Mesh.h"
 #include "Texture2D.h"
 #include <array>
 
-class Cube : public Graphic {
+class Cube : public Mesh {
 
 	const vec3 a;
 	const vec3 b;
@@ -24,13 +24,19 @@ class Cube : public Graphic {
 	const vec3 black;
 
 
-public:
-	unsigned int _buffer_id;
+
+	const enum Formats _format;
+
+	unsigned int _vertex_buffer_id;
+	unsigned int _color_buffer_id;
 
 	static const int NUM_FACES = 6;
 	static const int NUM_TRIANGLES = NUM_FACES * 2;
 	static const int NUM_VERTEXS = NUM_TRIANGLES * 3;
 
+	const unsigned int _numVerts = NUM_VERTEXS;
+
+public:
 
 	Cube();
 	Cube(const std::string& path);

@@ -120,8 +120,8 @@ void GameApp::Render(Camera camera) {
     //
     //root.paint();
 
-    Cylinder cylinder;
-    cylinder.draw();
+    //Cylinder cylinder;
+    //cylinder.draw();
 
     scene->Render();
 

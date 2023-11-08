@@ -6,6 +6,8 @@
 #include "Texture2D.h"
 #include "Types.h"
 #include "Cube.h"
+#include "Pyramid.h"
+#include "Cylinder.h"
 
 class Mesh :
     public Graphic
@@ -39,6 +41,7 @@ public:
 	Texture2D::Ptr checkboard = std::shared_ptr<Texture2D>(new Texture2D);
 	bool drawChecker = false;
 
+	virtual Mesh();
 	Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* indexs_data = nullptr, unsigned int numIndexs = 0);
 	Mesh(Mesh&& b) noexcept;
 	void draw();

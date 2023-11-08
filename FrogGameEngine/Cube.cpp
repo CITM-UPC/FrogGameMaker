@@ -43,7 +43,8 @@ Cube::Cube() :
     blue(0, 0, 1),
     yellow(1, 1, 0),
     white(0, 1, 1),
-    black(1, 0, 1) 
+    black(1, 0, 1),
+    _format(Mesh::F_V3C4)
 {
     array<vec3, NUM_VERTEXS> vertex_data = {
     a,b,c,c,d,a,
@@ -54,6 +55,11 @@ Cube::Cube() :
     b,a,e,e,f,b
     };
 
+    glGenBuffers(1, &_vertex_buffer_id);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * vertex_data.size(), vertex_data.data(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     array<vec3, NUM_VERTEXS> color_data = {
         red,red,red,red,red,red,
         green,green,green,green,green,green,
@@ -63,15 +69,9 @@ Cube::Cube() :
         black,black,black,black,black,black,
     };
 
-    vector<vec3> interleaved_data;
-    for (size_t i = 0; i < vertex_data.size(); ++i) {
-        interleaved_data.push_back(vertex_data[i]);
-        interleaved_data.push_back(color_data[i]);
-    }
-
-    glGenBuffers(1, &_buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * interleaved_data.size(), interleaved_data.data(), GL_STATIC_DRAW);
+    glGenBuffers(1, &_color_buffer_id);
+    glBindBuffer(GL_ARRAY_BUFFER, _color_buffer_id);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vec3) * color_data.size(), color_data.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
@@ -89,7 +89,8 @@ Cube::Cube(const std::string& path) :
     blue(0, 0, 1),
     yellow(1, 1, 0),
     white(0, 1, 1),
-    black(1, 0, 1)
+    black(1, 0, 1),
+    _format(Mesh::F_V3T2)
 {
     aiString aiPath(path);
     fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
@@ -118,10 +119,11 @@ void Cube::draw()
     else {
         glEnableClientState(GL_VERTEX_ARRAY);
         glEnableClientState(GL_COLOR_ARRAY);
-        glBindBuffer(GL_ARRAY_BUFFER, _buffer_id);
-        glVertexPointer(3, GL_DOUBLE, sizeof(vec3) * 2, nullptr);
-        glColorPointer(3, GL_DOUBLE, sizeof(vec3) * 2, (void*)sizeof(vec3));
-        glDrawArrays(GL_TRIANGLES, 0, NUM_VERTEXS);
+        glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
+        glVertexPointer(3, GL_DOUBLE, 0, nullptr);
+        glBindBuffer(GL_ARRAY_BUFFER, _color_buffer_id);
+        glColorPointer(3, GL_DOUBLE, 0, nullptr);
+        glDrawArrays(GL_TRIANGLES, 0, 3 * 2 * 6);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDisableClientState(GL_COLOR_ARRAY);
         glDisableClientState(GL_VERTEX_ARRAY);
@@ -149,7 +151,7 @@ void Cube::draw()
 
 Cube::~Cube()
 {
-    glDeleteBuffers(1, &_buffer_id);
+
 }
 
 

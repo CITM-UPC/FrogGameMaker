@@ -16,6 +16,11 @@
 
 #include "IL/il.h"
 
+#include "../FrogGameEngine/Mesh.h"
+#include "../FrogGameEngine/Cube.h"
+#include "../FrogGameEngine/Pyramid.h"
+#include "../FrogGameEngine/Cylinder.h"
+
 
 class EditorUI : public EditorModule
 {
@@ -301,9 +306,14 @@ private:
 			if (ImGui::BeginMenu("Create")) {
 				if (ImGui::BeginMenu("Basic Shapes")) {
 					if (ImGui::MenuItem("Cube --TODO--")) {
+						Cube cube;
 
+						auto cubePtr = make_shared<Mesh>(cube);
+
+						GameObject* newCube = editor->gameApp->scene->AddGameObject("Cube");
+						newCube->AddMeshWithTexture(cubePtr);
 					}
-					if (ImGui::MenuItem("Sphere --TODO--")) {
+					if (ImGui::MenuItem("Cylinder --TODO--")) {
 
 					}
 					if (ImGui::MenuItem("Pyramid --TODO--")) {
