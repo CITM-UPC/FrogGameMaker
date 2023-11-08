@@ -741,11 +741,11 @@ private:
 
 		ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
 		{
-			/*vector<string> editorLogs = editor->GetLogs();
+			vector<string> editorLogs = editor->GetLogs();
 
 			for (auto it = editorLogs.begin(); it != editorLogs.end(); ++it) {
 				ImGui::Text((*it).c_str());
-			}*/
+			}
 		}
 		ImGui::EndChild();
 
