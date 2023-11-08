@@ -626,6 +626,7 @@ private:
 		Scene* sceneToUI = editor->gameApp->scene;
 		// unity style: 
 		// get the scene that has as children the rest of game objects
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader(sceneToUI->name.c_str())) {
 			
 			for (std::list<GameObject*>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
@@ -638,6 +639,7 @@ private:
 
 	void UIInspectorWriteTransformNode(Component* component) {
 		TransformComponent* transformComponent = (TransformComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Transform")) {
 			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
 			ImGui::InputFloat3("Position", vec3Position);
@@ -650,6 +652,7 @@ private:
 
 	void UIInspectorWriteMeshNode(Component* component) {
 		MeshComponent* meshComponent = (MeshComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Mesh")) {
 			if (meshComponent->getMesh() != nullptr) {
 				string s = meshComponent->getMesh()->path;
@@ -674,6 +677,7 @@ private:
 
 	void UIInspectorWriteTextureNode(Component* component) {
 		TextureComponent* textureComponent = (TextureComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Texture")) {
 			if (textureComponent->getTexture() != nullptr) {
 				string s = textureComponent->getTexture()->path;
