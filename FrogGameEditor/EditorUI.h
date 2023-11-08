@@ -23,7 +23,6 @@ class EditorUI : public EditorModule
 public:
 	EditorUI(EditorApp* editor) : EditorModule(editor) {
 
-
 	};
 
 	// TODO: change window and gl_context to pick it from app
@@ -68,7 +67,7 @@ public:
 		clear_color = ImVec4(0.039f, 0.039f, 0.039f, 1.00f);
 
 		show_demo_window = true;
-		show_another_window = true;
+		show_another_window = false;
 		dockSpaceEnabled = true;
 		showHardwareWindow = false;
 		showAboutPopup = false;
@@ -206,12 +205,12 @@ public:
 			UIInspectorWindow();
 		}
 		
-		if (showConsoleWindow) {
-			UIConsoleWindow();
-		}
-
 		if (showAssetsWindow) {
 			UIAssetsWindow();
+		}
+
+		if (showConsoleWindow) {
+			UIConsoleWindow();
 		}
 
 		return true;
@@ -327,6 +326,9 @@ private:
 
 				if (ImGui::MenuItem("Hardware Information")) {
 					showHardwareWindow = !showHardwareWindow;
+				}
+				if (ImGui::MenuItem("FPS Log")) {
+					showFPSLog = !showFPSLog;
 				}
 
 				ImGui::EndMenu();
@@ -549,11 +551,49 @@ private:
 	void UIConfigInputWindow() {
 		if (ImGui::BeginTabItem("Input")) {
 
+			// from ImGui manual
+			ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+			if (ImGui::TreeNode("Inputs"))
+			{
+				if (ImGui::IsMousePosValid())
+					ImGui::Text("Mouse pos: (%g, %g)", ImGui::GetIO().MousePos.x, ImGui::GetIO().MousePos.y);
+				else
+					ImGui::Text("Mouse pos: <INVALID>");
+				ImGui::Text("Mouse delta: (%g, %g)", ImGui::GetIO().MouseDelta.x, ImGui::GetIO().MouseDelta.y);
+				ImGui::Text("Mouse down:");
+				for (int i = 0; i < IM_ARRAYSIZE(ImGui::GetIO().MouseDown); i++) if (ImGui::IsMouseDown(i)) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, ImGui::GetIO().MouseDownDuration[i]); }
+				ImGui::Text("Mouse wheel: %.1f", ImGui::GetIO().MouseWheel);
 
-			ImGui::EndTabItem();
+				// We iterate both legacy native range and named ImGuiKey ranges, which is a little odd but this allows displaying the data for old/new backends.
+				// User code should never have to go through such hoops! You can generally iterate between ImGuiKey_NamedKey_BEGIN and ImGuiKey_NamedKey_END.
+				#ifdef IMGUI_DISABLE_OBSOLETE_KEYIO
+				struct funcs { static bool IsLegacyNativeDupe(ImGuiKey) { return false; } };
+				ImGuiKey start_key = ImGuiKey_NamedKey_BEGIN;
+				#else
+				struct funcs { static bool IsLegacyNativeDupe(ImGuiKey key) { return key < 512 && ImGui::GetIO().KeyMap[key] != -1; } }; // Hide Native<>ImGuiKey duplicates when both exists in the array
+				ImGuiKey start_key = (ImGuiKey)0;
+				#endif
+				ImGui::Text("Keys down:");         for (ImGuiKey key = start_key; key < ImGuiKey_NamedKey_END; key = (ImGuiKey)(key + 1)) { if (funcs::IsLegacyNativeDupe(key) || !ImGui::IsKeyDown(key)) continue; ImGui::SameLine(); ImGui::Text((key < ImGuiKey_NamedKey_BEGIN) ? "\"%s\"" : "\"%s\" %d", ImGui::GetKeyName(key), key); }
+				ImGui::Text("Keys mods: %s%s%s%s", ImGui::GetIO().KeyCtrl ? "CTRL " : "", ImGui::GetIO().KeyShift ? "SHIFT " : "", ImGui::GetIO().KeyAlt ? "ALT " : "", ImGui::GetIO().KeySuper ? "SUPER " : "");
+				ImGui::Text("Chars queue:");       for (int i = 0; i < ImGui::GetIO().InputQueueCharacters.Size; i++) { ImWchar c = ImGui::GetIO().InputQueueCharacters[i]; ImGui::SameLine();  ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); } // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
+
+				ImGui::TreePop();
+			}
+
+			// Display ImGuiIO output flags
+			ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+			if (ImGui::TreeNode("Outputs"))
+			{
+				ImGui::Text("io.WantCaptureMouse: %d", ImGui::GetIO().WantCaptureMouse);
+				ImGui::Text("io.WantCaptureMouseUnlessPopupClose: %d", ImGui::GetIO().WantCaptureMouseUnlessPopupClose);
+				ImGui::Text("io.WantCaptureKeyboard: %d", ImGui::GetIO().WantCaptureKeyboard);
+				ImGui::Text("io.WantTextInput: %d", ImGui::GetIO().WantTextInput);
+				ImGui::Text("io.WantSetMousePos: %d", ImGui::GetIO().WantSetMousePos);
+				ImGui::Text("io.NavActive: %d, io.NavVisible: %d", ImGui::GetIO().NavActive, ImGui::GetIO().NavVisible);
+				ImGui::EndTabItem();
+			}
 		}
 	}
-
 	void UIHierarchyNodeWrite(GameObject* GO) {
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 		if (GO->children.empty()) {
