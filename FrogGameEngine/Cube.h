@@ -5,7 +5,7 @@
 #include "Texture2D.h"
 #include <array>
 
-struct Cube : Graphic
+struct Cube : public Graphic
 {
 	static const int NUM_FACES = 6;
 	static const int NUM_TRIANGLES = NUM_FACES * 2;

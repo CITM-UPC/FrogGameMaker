@@ -297,17 +297,25 @@ private:
 
 			if (ImGui::BeginMenu("Create")) {
 				if (ImGui::BeginMenu("Basic Shapes")) {
-					if (ImGui::MenuItem("Cube --TODO--")) {
+					if (ImGui::MenuItem("Cube")) {
 						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cube");
+						auto mesh_ptrs = Mesh::loadFromFile("Cube.fbx");
+						newMesh->AddMeshWithTexture(mesh_ptrs);
 					}
-					if (ImGui::MenuItem("Sphere --TODO--")) {
+					if (ImGui::MenuItem("Sphere")) {
 						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Sphere");
+						auto mesh_ptrs = Mesh::loadFromFile("Sphere.fbx");
+						newMesh->AddMeshWithTexture(mesh_ptrs);
 					}
-					if (ImGui::MenuItem("Pyramid --TODO--")) {
-						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Pyramid");
+					if (ImGui::MenuItem("Cone")) {
+						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cone");
+						auto mesh_ptrs = Mesh::loadFromFile("Cone.fbx");
+						newMesh->AddMeshWithTexture(mesh_ptrs);
 					}
-					if (ImGui::MenuItem("Cylinder --TODO--")) {
+					if (ImGui::MenuItem("Cylinder")) {
 						GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cylinder");
+						auto mesh_ptrs = Mesh::loadFromFile("Cylinder.fbx");
+						newMesh->AddMeshWithTexture(mesh_ptrs);
 					}
 
 					ImGui::EndMenu();

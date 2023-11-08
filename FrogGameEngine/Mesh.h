@@ -26,8 +26,6 @@ private:
 
 	const unsigned int _numFaces;
 
-	//const unsigned int _numNormals = 0;
-
 public:
 	using Ptr = std::shared_ptr<Mesh>;
 
