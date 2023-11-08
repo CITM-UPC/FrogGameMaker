@@ -1,11 +1,11 @@
 #pragma once
 
 #include "Types.h"
-#include "Mesh.h"
+#include "Graphic.h"
 #include "Texture2D.h"
 #include <array>
 
-class Cube : public Mesh {
+class Cube : public Graphic {
 
 	const vec3 a;
 	const vec3 b;
@@ -22,10 +22,6 @@ class Cube : public Mesh {
 	const vec3 yellow;
 	const vec3 white;
 	const vec3 black;
-
-
-
-	const enum Formats _format;
 
 	unsigned int _vertex_buffer_id;
 	unsigned int _color_buffer_id;

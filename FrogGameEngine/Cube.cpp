@@ -43,8 +43,7 @@ Cube::Cube() :
     blue(0, 0, 1),
     yellow(1, 1, 0),
     white(0, 1, 1),
-    black(1, 0, 1),
-    _format(Mesh::F_V3C4)
+    black(1, 0, 1)
 {
     array<vec3, NUM_VERTEXS> vertex_data = {
     a,b,c,c,d,a,
@@ -89,8 +88,7 @@ Cube::Cube(const std::string& path) :
     blue(0, 0, 1),
     yellow(1, 1, 0),
     white(0, 1, 1),
-    black(1, 0, 1),
-    _format(Mesh::F_V3T2)
+    black(1, 0, 1)
 {
     aiString aiPath(path);
     fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();

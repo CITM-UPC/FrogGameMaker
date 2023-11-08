@@ -306,12 +306,7 @@ private:
 			if (ImGui::BeginMenu("Create")) {
 				if (ImGui::BeginMenu("Basic Shapes")) {
 					if (ImGui::MenuItem("Cube --TODO--")) {
-						Cube cube;
 
-						auto cubePtr = make_shared<Mesh>(cube);
-
-						GameObject* newCube = editor->gameApp->scene->AddGameObject("Cube");
-						newCube->AddMeshWithTexture(cubePtr);
 					}
 					if (ImGui::MenuItem("Cylinder --TODO--")) {
 
