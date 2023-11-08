@@ -3,27 +3,28 @@
 Frog Engine is a game engine: 
     Github: https://github.com/CITM-UPC/FrogGameMaker
 
-Made by: 
+### Made by: 
     Victor Martin (Github: VicMarBall (https://github.com/VicMarBall))
     Ari Sevcik (Github: AriSevcik (https://github.com/AriSevcik))
 
-How To Use: 
-    Move Camera: 
+## How To Use: 
+### Move Camera: 
         Right Click and WASD to move
         Shift to move faster
         Right Click and move the mouse to look around
         Alt + Left Click and move the mouse to orbit around
         F to Focus on the selected object
-    Drag & Drop: 
+### Drag & Drop: 
         Drag and drop .FBX files to create a Game Object and load the mesh
         Drag and drop .PNG and .DDS to apply a texture to the selected Game Object
 
-Hierarchy Window: 
+## Windows
+### Hierarchy Window: 
     You can see the scene with all the Game Objects in it
     You can select a game object and see its properties in the Inspector
     Press the arrows to see the children of the Game Object
 
-Inspector Window: 
+### Inspector Window: 
     You can see the Transform, Mesh and Texture of the Game Object
     Transform: 
         You can see the Position, Rotation and Scale
@@ -35,18 +36,18 @@ Inspector Window:
         You can see the file name and its path
         You can see the file size
 
-Console Window:
+### Console Window:
     See console logs
 
-General Menu: 
+### General Menu: 
     Activate/Deactivate Editor
     Go To GitHub
     Quit
 
-Create Menu: 
+### Create Menu: 
     Create Basic Shapes
 
-Configuration Menu: 
+### Configuration Menu: 
     Configuration of:
     Window: 
         Screen size and aspect ratio
@@ -55,7 +56,7 @@ Configuration Menu:
     Input:
         Inputs and Outputs
 
-Info Menu: 
+### Info Menu: 
     Hardware Information: 
         CPU's Cores
         System RAM
@@ -63,7 +64,7 @@ Info Menu:
         VRAM information
     FPS Log
 
-Help Menu: 
+### Help Menu: 
     Demo Window: ImGui Demo Window
     About: 
         Information about Frog Engine
