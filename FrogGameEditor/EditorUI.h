@@ -28,7 +28,6 @@ class EditorUI : public EditorModule
 public:
 	EditorUI(EditorApp* editor) : EditorModule(editor) {
 
-
 	};
 
 	// TODO: change window and gl_context to pick it from app
@@ -73,16 +72,14 @@ public:
 		clear_color = ImVec4(0.039f, 0.039f, 0.039f, 1.00f);
 
 		show_demo_window = true;
-		show_another_window = true;
+		show_another_window = false;
 		dockSpaceEnabled = true;
 		showHardwareWindow = false;
 		showAboutPopup = false;
 		/*showGameScene = true;
 		showEditorScene = true;*/
 		showFPSLog = true;
-		showConfigWindowWindow = false;
-		showConfigRendererWindow = false;
-		showConfigInputWindow = false;
+		showConfigWindow = false;
 
 		quitPressed = false;
 
@@ -191,18 +188,20 @@ public:
 			UIFPSLog();
 		}
 
-		if (showConfigWindowWindow) {
-			UIConfigWindowWindow();
-		}
+		if (showConfigWindow) {
+			ImGui::Begin("Configuration", &showConfigWindow);
+			if (ImGui::BeginTabBar("Configs")) {
+				UIConfigWindowWindow();
 
-		if (showConfigRendererWindow) {
-			UIConfigRendererWindow();
-		}
+				UIConfigRendererWindow();
 
-		if (showConfigInputWindow) {
-			UIConfigInputWindow();
-		}
+				UIConfigInputWindow();
 
+				ImGui::EndTabBar();
+			}
+			
+			ImGui::End();
+		}
 		if (showHierarchyWindow) {
 			UIHierarchyWindow();
 		}
@@ -211,12 +210,12 @@ public:
 			UIInspectorWindow();
 		}
 		
-		if (showConsoleWindow) {
-			UIConsoleWindow();
-		}
-
 		if (showAssetsWindow) {
 			UIAssetsWindow();
+		}
+
+		if (showConsoleWindow) {
+			UIConsoleWindow();
 		}
 
 		return true;
@@ -248,9 +247,7 @@ public:
 	/*bool showGameScene;
 	bool showEditorScene;*/
 	bool showFPSLog;
-	bool showConfigWindowWindow;
-	bool showConfigRendererWindow;
-	bool showConfigInputWindow;
+	bool showConfigWindow;
 
 	bool quitPressed;
 
@@ -323,16 +320,8 @@ private:
 
 			if (ImGui::BeginMenu("Configuration")) {
 
-				if (ImGui::MenuItem("Window")) {
-					showConfigWindowWindow = !showConfigWindowWindow;
-				}
-
-				if (ImGui::MenuItem("Renderer")) {
-					showConfigRendererWindow = !showConfigRendererWindow;
-				}
-
-				if (ImGui::MenuItem("Input")) {
-					showConfigInputWindow = !showConfigInputWindow;
+				if (ImGui::MenuItem("Config")) {
+					showConfigWindow = !showConfigWindow;
 				}
 
 				ImGui::EndMenu();
@@ -342,6 +331,9 @@ private:
 
 				if (ImGui::MenuItem("Hardware Information")) {
 					showHardwareWindow = !showHardwareWindow;
+				}
+				if (ImGui::MenuItem("FPS Log")) {
+					showFPSLog = !showFPSLog;
 				}
 
 				ImGui::EndMenu();
@@ -424,8 +416,7 @@ private:
 
 					// devil
 					{
-
-						ImGui::Bullet(); ImGui::Text("DevIL --TODO--");
+						ImGui::Bullet(); ImGui::Text("DevIL %s", ilGetString(IL_VERSION_NUM));
 					}
 
 					// assimp
@@ -487,6 +478,28 @@ private:
 
 		ImGui::Text("%s", renderer);
 
+		ImGui::Separator();
+
+		int vram;
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_EVICTION_COUNT_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM being used:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_TOTAL_AVAILABLE_MEMORY_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM total:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
+		glGetIntegerv(GL_GPU_MEMORY_INFO_CURRENT_AVAILABLE_VIDMEM_NVX, &vram);
+		vram *= 0.001f;
+		ImGui::Text("VRAM available:");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d MB", vram);
+
 		ImGui::End();
 
 	}
@@ -502,38 +515,89 @@ private:
 	}
 
 	void UIConfigWindowWindow() {
-		ImGui::Begin("Window Configuration", &showConfigWindowWindow);
-		
-		ImGui::Text("Window Width:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_WIDTH);
+		if (ImGui::BeginTabItem("Window")) {
+			ImGui::Text("Window Width:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->width);
 
-		ImGui::Text("Window Height:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", WINDOW_HEIGHT);
+			ImGui::Text("Window Height:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", editor->editorWindow->height);
 
-		float aspectRatio = (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT;
+			float aspectRatio = (float)editor->editorWindow->width / (float)editor->editorWindow->height;
 
-		ImGui::Text("Aspect Ratio:");
-		ImGui::SameLine();
-		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
+			ImGui::Text("Aspect Ratio:");
+			ImGui::SameLine();
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%f", aspectRatio);
 
+			if (ImGui::Checkbox("Fullscreen", &editor->editorWindow->isFullscreen)) {
+				editor->editorWindow->UpdateFullscreen();
+			}
+			if (ImGui::Checkbox("Resizable", &editor->editorWindow->isResizable)) {
+				editor->editorWindow->UpdateResizable();
+			}
+			if (ImGui::Checkbox("Borderless", &editor->editorWindow->isBorderless)) {
+				editor->editorWindow->UpdateBorderless();
+			}
 
-		ImGui::End();
+			ImGui::EndTabItem();
+		}		
 	}
 
 	void UIConfigRendererWindow() {
-		ImGui::Begin("Renderer Configuration", &showConfigRendererWindow);
-		
-		ImGui::End();
+		if (ImGui::BeginTabItem("Renderer")) {
+
+
+			ImGui::EndTabItem();
+		}
 	}
 
 	void UIConfigInputWindow() {
-		ImGui::Begin("Input Configuration", &showConfigInputWindow);
-		
-		ImGui::End();
-	}
+		if (ImGui::BeginTabItem("Input")) {
 
+			// from ImGui manual
+			ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+			if (ImGui::TreeNode("Inputs"))
+			{
+				if (ImGui::IsMousePosValid())
+					ImGui::Text("Mouse pos: (%g, %g)", ImGui::GetIO().MousePos.x, ImGui::GetIO().MousePos.y);
+				else
+					ImGui::Text("Mouse pos: <INVALID>");
+				ImGui::Text("Mouse delta: (%g, %g)", ImGui::GetIO().MouseDelta.x, ImGui::GetIO().MouseDelta.y);
+				ImGui::Text("Mouse down:");
+				for (int i = 0; i < IM_ARRAYSIZE(ImGui::GetIO().MouseDown); i++) if (ImGui::IsMouseDown(i)) { ImGui::SameLine(); ImGui::Text("b%d (%.02f secs)", i, ImGui::GetIO().MouseDownDuration[i]); }
+				ImGui::Text("Mouse wheel: %.1f", ImGui::GetIO().MouseWheel);
+
+				// We iterate both legacy native range and named ImGuiKey ranges, which is a little odd but this allows displaying the data for old/new backends.
+				// User code should never have to go through such hoops! You can generally iterate between ImGuiKey_NamedKey_BEGIN and ImGuiKey_NamedKey_END.
+				#ifdef IMGUI_DISABLE_OBSOLETE_KEYIO
+				struct funcs { static bool IsLegacyNativeDupe(ImGuiKey) { return false; } };
+				ImGuiKey start_key = ImGuiKey_NamedKey_BEGIN;
+				#else
+				struct funcs { static bool IsLegacyNativeDupe(ImGuiKey key) { return key < 512 && ImGui::GetIO().KeyMap[key] != -1; } }; // Hide Native<>ImGuiKey duplicates when both exists in the array
+				ImGuiKey start_key = (ImGuiKey)0;
+				#endif
+				ImGui::Text("Keys down:");         for (ImGuiKey key = start_key; key < ImGuiKey_NamedKey_END; key = (ImGuiKey)(key + 1)) { if (funcs::IsLegacyNativeDupe(key) || !ImGui::IsKeyDown(key)) continue; ImGui::SameLine(); ImGui::Text((key < ImGuiKey_NamedKey_BEGIN) ? "\"%s\"" : "\"%s\" %d", ImGui::GetKeyName(key), key); }
+				ImGui::Text("Keys mods: %s%s%s%s", ImGui::GetIO().KeyCtrl ? "CTRL " : "", ImGui::GetIO().KeyShift ? "SHIFT " : "", ImGui::GetIO().KeyAlt ? "ALT " : "", ImGui::GetIO().KeySuper ? "SUPER " : "");
+				ImGui::Text("Chars queue:");       for (int i = 0; i < ImGui::GetIO().InputQueueCharacters.Size; i++) { ImWchar c = ImGui::GetIO().InputQueueCharacters[i]; ImGui::SameLine();  ImGui::Text("\'%c\' (0x%04X)", (c > ' ' && c <= 255) ? (char)c : '?', c); } // FIXME: We should convert 'c' to UTF-8 here but the functions are not public.
+
+				ImGui::TreePop();
+			}
+
+			// Display ImGuiIO output flags
+			ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+			if (ImGui::TreeNode("Outputs"))
+			{
+				ImGui::Text("io.WantCaptureMouse: %d", ImGui::GetIO().WantCaptureMouse);
+				ImGui::Text("io.WantCaptureMouseUnlessPopupClose: %d", ImGui::GetIO().WantCaptureMouseUnlessPopupClose);
+				ImGui::Text("io.WantCaptureKeyboard: %d", ImGui::GetIO().WantCaptureKeyboard);
+				ImGui::Text("io.WantTextInput: %d", ImGui::GetIO().WantTextInput);
+				ImGui::Text("io.WantSetMousePos: %d", ImGui::GetIO().WantSetMousePos);
+				ImGui::Text("io.NavActive: %d, io.NavVisible: %d", ImGui::GetIO().NavActive, ImGui::GetIO().NavVisible);
+				ImGui::EndTabItem();
+			}
+		}
+	}
 	void UIHierarchyNodeWrite(GameObject* GO) {
 		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
 		if (GO->children.empty()) {
@@ -566,6 +630,7 @@ private:
 		Scene* sceneToUI = editor->gameApp->scene;
 		// unity style: 
 		// get the scene that has as children the rest of game objects
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader(sceneToUI->name.c_str())) {
 			
 			for (std::list<GameObject*>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
@@ -578,6 +643,7 @@ private:
 
 	void UIInspectorWriteTransformNode(Component* component) {
 		TransformComponent* transformComponent = (TransformComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Transform")) {
 			float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
 			ImGui::InputFloat3("Position", vec3Position);
@@ -590,14 +656,29 @@ private:
 
 	void UIInspectorWriteMeshNode(Component* component) {
 		MeshComponent* meshComponent = (MeshComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Mesh")) {
 			if (meshComponent->getMesh() != nullptr) {
-				ImGui::Text("Path: %s", meshComponent->getMesh()->path.c_str());
-				ImGui::Text("Vertex: x");
-				ImGui::Text("Faces: x");
-				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {
-
+				string s = meshComponent->getMesh()->path;
+				if (auto n = s.find_last_of("\\"); n != s.npos) {
+					s.erase(0, n + 1);
 				}
+				ImGui::Text("File:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("%s", meshComponent->getMesh()->path.c_str());
+				}				
+				ImGui::Text("Vertex:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getVertsNum());
+				ImGui::Text("Faces:", meshComponent->getMesh()->getFacesNum());
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getFacesNum());
+				if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) { }
+				if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawNormalsVerts)) {}
+				if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawNormalsFaces)) {}
+
 			}
 			else {
 				ImGui::Text("Mesh not found");
@@ -607,10 +688,22 @@ private:
 
 	void UIInspectorWriteTextureNode(Component* component) {
 		TextureComponent* textureComponent = (TextureComponent*)component;
+		ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 		if (ImGui::CollapsingHeader("Texture")) {
 			if (textureComponent->getTexture() != nullptr) {
-				ImGui::Text("Path: %s", textureComponent->getTexture()->path.c_str());
-				ImGui::Text("Size: %d px x %d px", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
+				string s = textureComponent->getTexture()->path;
+				if (auto n = s.find_last_of("\\"); n != s.npos) {
+					s.erase(0, n + 1);
+				}
+				ImGui::Text("File:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
+				if (ImGui::IsItemHovered()) {
+					ImGui::SetTooltip("%s", textureComponent->getTexture()->path.c_str());
+				}
+				ImGui::Text("Size:");
+				ImGui::SameLine();
+				ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dpx x %dpx", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
 			}
 			else {
 				ImGui::Text("Texture not found");

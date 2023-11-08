@@ -55,6 +55,10 @@ public:
 		return mouseWheelScroll;
 	}
 
+	bool WindowSizeHasUpdated() {
+		return windowSizeHasUpdated;
+	}
+
 private:
 
 	KeyState* keyboard;
@@ -64,6 +68,8 @@ private:
 	int mouseMotionY;
 
 	int	mouseWheelScroll;
+
+	bool windowSizeHasUpdated;
 };
 
 EditorInput::EditorInput(EditorApp* editor) : EditorModule(editor)
@@ -88,6 +94,8 @@ bool EditorInput::PreUpdate() {
 	string dropped_filedir;
 
 	SDL_Event event;
+
+	windowSizeHasUpdated = false;
 
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
@@ -151,7 +159,7 @@ bool EditorInput::PreUpdate() {
 
 				GameObject* newMesh = editor->gameApp->scene->AddGameObject();
 				auto mesh_ptrs = Mesh::loadFromFile(dropped_filedir);
-
+				editor->AddLog("Mesh loaded from " + dropped_filedir);
 				newMesh->AddMeshWithTexture(mesh_ptrs);
 				
 			}
@@ -164,6 +172,7 @@ bool EditorInput::PreUpdate() {
 					if (meshComponent->getMesh() != nullptr) {
 						meshComponent->getMesh()->loadTextureToMesh(dropped_filedir);
 						textureComponent->setTexture(meshComponent->getMesh()->texture);
+						editor->AddLog("Texture loaded from " + dropped_filedir + " to " + meshComponent->getMesh()->path);
 					}
 					
 				}
@@ -188,6 +197,12 @@ bool EditorInput::PreUpdate() {
 			break;
 		case SDL_MOUSEWHEEL:
 			mouseWheelScroll = event.wheel.y;
+			break;
+		case SDL_WINDOWEVENT:
+			if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+				windowSizeHasUpdated = true;
+				editor->editorWindow->UpdateSizes(event.window.data1, event.window.data2);
+			}
 			break;
 		}
 	}

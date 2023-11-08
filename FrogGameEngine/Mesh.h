@@ -21,11 +21,15 @@ public:
 private:
 	const enum Formats _format;
 
-	unsigned int _vertex_buffer_id;
+	unsigned int _vertex_buffer_id = 0;
 	const unsigned int _numVerts;
 
-	unsigned int _indexs_buffer_id;
+	unsigned int _indexs_buffer_id = 0;
 	const unsigned int _numIndexs;
+
+	const unsigned int _numFaces;
+
+	//const unsigned int _numNormals = 0;
 
 public:
 	using Ptr = std::shared_ptr<Mesh>;
@@ -41,10 +45,24 @@ public:
 	Texture2D::Ptr checkboard = std::shared_ptr<Texture2D>(new Texture2D);
 	bool drawChecker = false;
 
-	Mesh(Formats format, const void* vertex_data, unsigned int numVerts, const unsigned int* indexs_data = nullptr, unsigned int numIndexs = 0);
+	std::vector<vec3f> meshVerts;
+	std::vector<vec3f> meshNorms;
+	std::vector<vec3f> meshFaceCenters;
+	std::vector<vec3f> meshFaceNorms;
+	
+	bool drawNormalsVerts = false;
+	bool drawNormalsFaces = false;
+
+	Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsigned int numFaces, const unsigned int* index_data = nullptr, unsigned int numIndexs = 0);
 	Mesh(Mesh&& b) noexcept;
 	void draw();
 	~Mesh();
+
+
+	const unsigned int getFacesNum();
+	const unsigned int getVertsNum();
+	//const unsigned int getNormNum();
+
 
 private:
 	Mesh(const Mesh& cpy);

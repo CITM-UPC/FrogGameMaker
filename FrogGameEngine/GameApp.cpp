@@ -69,9 +69,13 @@ GameApp::~GameApp()
 void GameApp::Start() {
     // scene->DebugStart();
     GameObject* house = scene->AddGameObject();
-    auto mesh_ptrs = Mesh::loadFromFile("Assets/BakerHouse.fbx", "Assets/Baker_house.png");
-
+    auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
     house->AddMeshWithTexture(mesh_ptrs);
+
+    MeshComponent* meshComp = (MeshComponent*)house->GetComponent(MESH);
+
+    AddLog("BakerHouse.fbx loaded");
+
 
     TransformComponent* transformHouse = (TransformComponent*)house->GetComponent(TRANSFORM);
     transformHouse->rotate(1, vec3(0, 1, 0));

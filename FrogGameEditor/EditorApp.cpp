@@ -151,7 +151,8 @@ bool EditorApp::Cleanup() {
 
 void EditorApp::WebRequest(const char* url)
 {
-	ShellExecute(0, 0, url, 0, 0, SW_SHOW);
+	//ShellExecute(0, 0, url, 0, 0, SW_SHOW);
+	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
 void EditorApp::AddLog(string l)
