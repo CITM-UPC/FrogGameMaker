@@ -5,12 +5,12 @@
 #include "EditorUI.h"
 #include "EditorCamera.h"
 
-EditorApp::EditorApp()
-{
-	editorInput = new EditorInput(this);
-	editorWindow = new EditorWindow(this);
-	editorUI = new EditorUI(this);
-	editorCamera = new EditorCamera(this);
+EditorApp::EditorApp() {
+
+	editorInput = new EditorInput();
+	editorWindow = new EditorWindow();
+	editorUI = new EditorUI();
+	editorCamera = new EditorCamera();
 
 	modules.push_back(editorInput);
 	modules.push_back(editorWindow);
@@ -89,9 +89,7 @@ bool EditorApp::Update() {
 
 	// post update
 	{
-		//PreGameAppRender();
 		gameApp->Render(editorCamera->camera);
-		//PostGameAppRender();
 
 		auto item = modules.begin();
 
@@ -113,11 +111,6 @@ bool EditorApp::Update() {
 
 		gameApp->ClearLogs();
 	}
-
-
-
-
-
 
 	const auto frame_end = steady_clock::now();
 	const auto frame_duration = frame_end - frame_start;
@@ -149,48 +142,20 @@ bool EditorApp::Cleanup() {
 	return true;
 }
 
-void EditorApp::WebRequest(const char* url)
-{
+void EditorApp::WebRequest(const char* url) {
+
 	//ShellExecute(0, 0, url, 0, 0, SW_SHOW);
 	ShellExecuteA(NULL, "open", url, NULL, NULL, SW_SHOWNORMAL);
 }
 
-void EditorApp::AddLog(string l)
-{
-	logs.push_back(l);
+void EditorApp::AddLog(string l) { 
+	logs.push_back(l); 
 }
 
-vector<string> EditorApp::GetLogs()
-{
-	return logs;
+vector<string> EditorApp::GetLogs() { 
+	return logs; 
 }
 
-void EditorApp::ClearLogs()
-{
-	logs.clear();
+void EditorApp::ClearLogs() { 
+	logs.clear(); 
 }
-
-
-
-//void EditorApp::PreGameAppRender()
-//{
-//	glGenFramebuffers(1, &gameAppRenderFBO);
-//
-//	glBindFramebuffer(GL_FRAMEBUFFER, gameAppRenderFBO);
-//}
-//
-//void EditorApp::PostGameAppRender()
-//{
-//	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//	glDeleteFramebuffers(1, &gameAppRenderFBO);
-//
-//	glGenTextures(1, &gameAppRenderTexture);
-//	glBindTexture(GL_TEXTURE_2D, gameAppRenderTexture);
-//
-//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-//
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//
-//	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gameAppRenderTexture, 0);
-//}

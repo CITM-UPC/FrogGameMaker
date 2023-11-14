@@ -168,7 +168,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EditorApp.cpp" />
+    <ClCompile Include="EditorCamera.cpp" />
+    <ClCompile Include="EditorInput.cpp" />
     <ClCompile Include="EditorMain.cpp" />
+    <ClCompile Include="EditorUI.cpp" />
+    <ClCompile Include="EditorWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h" />

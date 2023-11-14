@@ -28,48 +28,34 @@ class EditorWindow;
 class EditorUI;
 class EditorCamera;
 
-class EditorApp
-{
+class EditorApp {
 public:
 	EditorApp();
 	~EditorApp();
 
 	bool Start();
-
 	bool Update();
-
 	bool Cleanup();
 
 	void WebRequest(const char* url);
-
-	//// use this before the game render to get all the info into the BFO to then pass it to the UI
-	//void PreGameAppRender();
-
-	//// use this after the game render to finish the BFO
-	//void PostGameAppRender();
 
 	EditorInput* editorInput;
 	EditorWindow* editorWindow;
 	EditorUI* editorUI;
 	EditorCamera* editorCamera;
 
-	list<EditorModule*> modules;
-
-	vector<float> FPS_Log;
-
 	GameApp* gameApp;
 
+	list<EditorModule*> modules;
+
 	void AddLog(string l);
-
 	vector<string> GetLogs();
-
 	void ClearLogs();
 
-	/*GLuint gameAppRenderFBO;
-
-	GLuint gameAppRenderTexture;*/
-
+public: 
+	vector<float> FPS_Log;
 private:
 	vector<string> logs;
-
 };
+
+extern EditorApp* editor;

@@ -1,20 +1,22 @@
 #include <iostream>
 #include "EditorApp.h"
 
+EditorApp* editor = NULL;
+
 int main(int argc, char* args[]) {
 
-	EditorApp* editorApp = new EditorApp();
+	editor = new EditorApp();
 
 	// start
 	bool toContinue = true;
-	toContinue = editorApp->Start();
+	toContinue = editor->Start();
 	if (toContinue) {
 
 		while (toContinue) {
-			toContinue = editorApp->Update();
+			toContinue = editor->Update();
 		}
 
-		editorApp->Cleanup();
+		editor->Cleanup();
 
 		return 1;
 	}
