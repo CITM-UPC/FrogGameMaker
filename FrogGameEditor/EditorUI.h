@@ -52,8 +52,6 @@ public:
 	bool showConsoleWindow;
 	bool showAssetsWindow;
 	
-	GameObject* gameObjectSelected = nullptr;
-
 	ImVec4 clearColor;
 
 private:

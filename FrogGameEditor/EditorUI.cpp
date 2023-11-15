@@ -1,4 +1,7 @@
 #include "EditorApp.h"
+
+#include "EditorObjectSelector.h"
+
 #include "EditorUI.h"
 
 EditorUI::EditorUI() : EditorModule() {
@@ -544,13 +547,13 @@ void EditorUI::UIHierarchyNodeWrite(GameObject* GO) {
 	if (GO->children.empty()) {
 		flags |= ImGuiTreeNodeFlags_Leaf;
 	}
-	if (gameObjectSelected != NULL && gameObjectSelected == GO) {
+	if (editor->editorObjectSelector->GetGameObjectSelected() != NULL && editor->editorObjectSelector->GetGameObjectSelected() == GO) {
 		flags |= ImGuiTreeNodeFlags_Selected;
 	}
 	bool nodeIsOpen = ImGui::TreeNodeEx(GO->name.c_str(), flags);
 
 	if (ImGui::IsItemClicked() && !ImGui::IsItemToggledOpen()) {
-		gameObjectSelected = GO;
+		editor->editorObjectSelector->SetGameObjectSelected(GO);
 	}
 
 	if (nodeIsOpen) {
@@ -684,14 +687,14 @@ void EditorUI::UIInspectorWindow() {
 
 	ImGui::Begin("Inspector");
 
-	if (gameObjectSelected == nullptr) {
+	if (editor->editorObjectSelector->GetGameObjectSelected() == nullptr) {
 		ImGui::End();
 		return;
 	}
 
 	// unity style: 
 	// get the scene that has as children the rest of game objects
-	for (auto iComponent = gameObjectSelected->components.begin(); iComponent != gameObjectSelected->components.end(); ++iComponent) {
+	for (auto iComponent = editor->editorObjectSelector->GetGameObjectSelected()->components.begin(); iComponent != editor->editorObjectSelector->GetGameObjectSelected()->components.end(); ++iComponent) {
 		UIInspectorNodeWrite(*iComponent);
 	}
 

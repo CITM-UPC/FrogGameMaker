@@ -39,6 +39,9 @@
     <ClCompile Include="EditorWindow.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="EditorObjectSelector.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h">
@@ -57,6 +60,9 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="EditorWindow.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorObjectSelector.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>

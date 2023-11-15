@@ -1,6 +1,7 @@
 #include "EditorApp.h"
 
 #include "EditorInput.h"
+#include "EditorObjectSelector.h"
 
 #include "EditorCamera.h"
 
@@ -59,9 +60,9 @@ bool EditorCamera::Update() {
 
 	// Pressing “f” should focus the camera around the geometry
 	if (editor->editorInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
-		if (editor->editorUI->gameObjectSelected != nullptr) {
-			if (editor->editorUI->gameObjectSelected->GetComponent(TRANSFORM) != nullptr) {
-				TransformComponent* gameObjectTransform = (TransformComponent*)editor->editorUI->gameObjectSelected->GetComponent(TRANSFORM);
+		if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
+			if (editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(TRANSFORM) != nullptr) {
+				TransformComponent* gameObjectTransform = (TransformComponent*)editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(TRANSFORM);
 				vec3 focusPoint = gameObjectTransform->getPosition();
 				FocusOn(focusPoint);
 			}

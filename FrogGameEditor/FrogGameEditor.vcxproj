@@ -171,6 +171,7 @@
     <ClCompile Include="EditorCamera.cpp" />
     <ClCompile Include="EditorInput.cpp" />
     <ClCompile Include="EditorMain.cpp" />
+    <ClCompile Include="EditorObjectSelector.cpp" />
     <ClCompile Include="EditorUI.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="EditorCamera.h" />
     <ClInclude Include="EditorInput.h" />
     <ClInclude Include="EditorModule.h" />
+    <ClInclude Include="EditorObjectSelector.h" />
     <ClInclude Include="EditorUI.h" />
     <ClInclude Include="EditorWindow.h" />
   </ItemGroup>

@@ -27,6 +27,7 @@ class EditorInput;
 class EditorWindow;
 class EditorUI;
 class EditorCamera;
+class EditorObjectSelector;
 
 class EditorApp {
 public:
@@ -41,8 +42,9 @@ public:
 
 	EditorInput* editorInput;
 	EditorWindow* editorWindow;
-	EditorUI* editorUI;
 	EditorCamera* editorCamera;
+	EditorObjectSelector* editorObjectSelector;
+	EditorUI* editorUI;
 
 	GameApp* gameApp;
 

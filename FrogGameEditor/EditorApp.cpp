@@ -4,18 +4,22 @@
 #include "EditorInput.h"
 #include "EditorUI.h"
 #include "EditorCamera.h"
+#include "EditorObjectSelector.h"
 
 EditorApp::EditorApp() {
 
 	editorInput = new EditorInput();
 	editorWindow = new EditorWindow();
-	editorUI = new EditorUI();
 	editorCamera = new EditorCamera();
+	editorObjectSelector = new EditorObjectSelector();
+	editorUI = new EditorUI();
 
 	modules.push_back(editorInput);
 	modules.push_back(editorWindow);
-	modules.push_back(editorUI);
 	modules.push_back(editorCamera);
+	modules.push_back(editorObjectSelector);
+	modules.push_back(editorUI);
+
 
 	FPS_Log.push_back(0.0f);
 
