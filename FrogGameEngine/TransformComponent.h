@@ -85,7 +85,6 @@ public:
 		return vec3(x, y, z);
 	}
 
-	// translate locally
 	inline void translate(vec3 translation, ReferenceAxis ref = LOCAL) { 
 		switch (ref)
 		{
