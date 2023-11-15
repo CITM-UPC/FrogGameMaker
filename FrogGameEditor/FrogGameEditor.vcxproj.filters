@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Modules">
       <UniqueIdentifier>{8f74f5ce-332c-4d96-ac60-206b28a731f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{546ab73c-a875-4551-bc94-6445636262d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorMain.cpp">
@@ -41,20 +44,20 @@
     <ClInclude Include="EditorApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EditorWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorInput.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EditorModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EditorCamera.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorInput.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorUI.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorWindow.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
