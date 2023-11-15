@@ -4,9 +4,6 @@
 #include <vector>
 #include <IL/il.h>
 
-
-#include "GraphicObject.h"
-
 using namespace std;
 
 static double angle = 0.0;

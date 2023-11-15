@@ -22,12 +22,12 @@
     <Filter Include="Source Files\Shapes">
       <UniqueIdentifier>{89613a74-8753-42f8-9098-4d211a441e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameObject\Components">
+      <UniqueIdentifier>{fecd7c04-1e13-4fff-bc5f-de6805e48f54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
@@ -62,9 +62,6 @@
     <ClInclude Include="Graphic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -91,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Header Files\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

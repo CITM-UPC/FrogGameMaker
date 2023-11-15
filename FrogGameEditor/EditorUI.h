@@ -10,8 +10,6 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
-#include "../FrogGameEngine/GraphicObject.h"
-
 #include "assimp/version.h"
 
 #include "IL/il.h"
@@ -20,7 +18,6 @@
 #include "../FrogGameEngine/Cube.h"
 #include "../FrogGameEngine/Pyramid.h"
 #include "../FrogGameEngine/Cylinder.h"
-
 
 class EditorUI : public EditorModule {
 public:

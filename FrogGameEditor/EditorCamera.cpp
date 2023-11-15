@@ -4,6 +4,8 @@
 
 #include "EditorCamera.h"
 
+#include "../FrogGameEngine/TransformComponent.h"
+
 EditorCamera::EditorCamera() : EditorModule() { }
 
 bool EditorCamera::Start() {

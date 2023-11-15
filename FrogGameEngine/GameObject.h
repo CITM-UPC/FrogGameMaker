@@ -1,7 +1,10 @@
 #pragma once
 #include <string>
 #include <list>
-#include "Component.h"
+
+#include "TransformComponent.h"
+#include "MeshComponent.h"
+#include "TextureComponent.h"
 
 using namespace std;
 
