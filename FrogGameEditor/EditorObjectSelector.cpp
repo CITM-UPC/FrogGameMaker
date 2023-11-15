@@ -26,7 +26,6 @@ bool EditorObjectSelector::Update()
 	glVertex3f(transform->getPosition().x, transform->getPosition().y, transform->getPosition().z);
 	glEnd();
 
-
 	return true;
 }
 
