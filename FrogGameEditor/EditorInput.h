@@ -1,14 +1,5 @@
 #pragma once
-#include <iostream>
-
 #include "EditorModule.h"
-
-#include "GL/glew.h"
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_opengl.h"
-
-#include "EditorUI.h"
-#include <filesystem>
 
 #define MAX_KEYS 300
 #define NUM_MOUSE_BUTTONS 5

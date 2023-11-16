@@ -1,8 +1,8 @@
 #include "EditorApp.h"
 
-#include "EditorObjectSelector.h"
-
 #include <GL/glew.h>
+
+#include "EditorObjectSelector.h"
 
 EditorObjectSelector::EditorObjectSelector()
 {

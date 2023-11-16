@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-
 #include "EditorModule.h"
 
 #include "GL/glew.h"

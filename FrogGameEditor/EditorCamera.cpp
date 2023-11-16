@@ -1,11 +1,12 @@
 #include "EditorApp.h"
 
 #include "EditorInput.h"
+#include "EditorWindow.h"
 #include "EditorObjectSelector.h"
 
 #include "EditorCamera.h"
 
-#include "../FrogGameEngine/TransformComponent.h"
+#include "../FrogGameEngine/GameObject.h"
 
 EditorCamera::EditorCamera() : EditorModule() { }
 

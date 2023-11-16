@@ -1,23 +1,11 @@
 #pragma once
-
 #include "EditorModule.h"
 
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
 
-#include "EditorWindow.h"
-
-#include "../FrogGameEngine/GameApp.h"
-
-#include "assimp/version.h"
-
-#include "IL/il.h"
-
-#include "../FrogGameEngine/Mesh.h"
-#include "../FrogGameEngine/Cube.h"
-#include "../FrogGameEngine/Pyramid.h"
-#include "../FrogGameEngine/Cylinder.h"
+#include "../FrogGameEngine/GameObject.h"
 
 class EditorUI : public EditorModule {
 public:

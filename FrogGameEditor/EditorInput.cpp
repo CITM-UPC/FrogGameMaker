@@ -1,5 +1,14 @@
 #include "EditorApp.h"
 
+#include <filesystem>
+
+#include "GL/glew.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_opengl.h"
+
+#include "EditorWindow.h"
+#include "EditorUI.h"
+
 #include "EditorObjectSelector.h"
 
 #include "EditorInput.h"

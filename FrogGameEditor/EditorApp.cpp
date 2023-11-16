@@ -20,7 +20,6 @@ EditorApp::EditorApp() {
 	modules.push_back(editorObjectSelector);
 	modules.push_back(editorUI);
 
-
 	FPS_Log.push_back(0.0f);
 
 	gameApp = new GameApp();
