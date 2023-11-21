@@ -57,7 +57,7 @@ bool EditorApp::Start() {
 		}
 	}
 
-	gameApp->Start();
+	gameApp->EditorStart();
 
 	return ret;
 }
@@ -87,7 +87,10 @@ bool EditorApp::Update() {
 			++item;
 		}
 
-		gameApp->Step(FDT);
+		gameApp->EditorStep(FDT);
+		if (gameIsOn) {
+			gameApp->GameStep(FDT);
+		}
 	}
 
 	// post update
@@ -136,9 +139,19 @@ bool EditorApp::Update() {
 
 bool EditorApp::Cleanup() {
 
-	editorUI->CleanUp();
-	editorInput->CleanUp();
-	editorWindow->CleanUp();
+	bool ret = true;
+
+	gameApp->CleanUp();
+
+	// clean up is made in reverse
+	modules.reverse();
+
+	auto item = modules.begin();
+
+	while (item != modules.end() && ret == true) {
+		ret = (*item)->CleanUp();
+		++item;
+	}
 
 	SDL_Quit();
 

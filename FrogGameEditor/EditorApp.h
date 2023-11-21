@@ -56,6 +56,8 @@ public:
 
 public: 
 	vector<float> FPS_Log;
+
+	bool gameIsOn;
 private:
 	vector<string> logs;
 };

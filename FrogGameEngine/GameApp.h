@@ -19,9 +19,12 @@ public:
 
 	Camera* actualCamera;
 
-	void Start();
-	void Step(std::chrono::duration<double> dt);
+	void EditorStart();
+	void EditorStep(std::chrono::duration<double> dt);
+	void GameStart();
+	void GameStep(std::chrono::duration<double> dt);
 	void Render(Camera camera);
+	void CleanUp();
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };
 

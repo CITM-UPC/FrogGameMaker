@@ -58,7 +58,7 @@ GameApp::~GameApp()
     delete actualCamera;
 }
 
-void GameApp::Start() {
+void GameApp::EditorStart() {
     // scene->DebugStart();
     GameObject* house = scene->AddGameObject();
     auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
@@ -68,16 +68,24 @@ void GameApp::Start() {
 
     AddLog("BakerHouse.fbx loaded");
 
-
     TransformComponent* transformHouse = (TransformComponent*)house->GetComponent(TRANSFORM);
     transformHouse->rotate(1, vec3(0, 1, 0));
     transformHouse->translate(vec3(0, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
 
+}
+
+void GameApp::EditorStep(std::chrono::duration<double> dt)
+{
 
 }
 
-void GameApp::Step(std::chrono::duration<double> dt)
+void GameApp::GameStart()
+{
+
+}
+
+void GameApp::GameStep(std::chrono::duration<double> dt)
 {
     const double angle_vel = 90.0; // degrees per second
     angle += angle_vel * dt.count();
@@ -105,6 +113,11 @@ void GameApp::Render(Camera camera) {
 
 
     assert(glGetError() == GL_NONE);
+}
+
+void GameApp::CleanUp()
+{
+
 }
 
 void GameApp::AddLog(string l)
