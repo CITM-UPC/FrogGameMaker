@@ -29,6 +29,10 @@ bool EditorCamera::Update() {
 		speed = speed * 2.0 /*multiplying factor*/;
 	}
 
+	if (mouseOnUI) {
+		return true;
+	}
+
 	// Alt+Left click should orbit the object
 	if (editor->editorInput->GetKey(SDL_SCANCODE_LALT)) {
 		if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_LEFT)) {
@@ -54,11 +58,11 @@ bool EditorCamera::Update() {
 		LookAround(editor->editorInput->GetMouseMotion());
 	}
 
+	
+
 	// Mouse wheel should zoom in and out
-	if (canZoom) {
-		if (editor->editorInput->GetMouseWheelScroll() != 0) {
-			CameraZoom(-editor->editorInput->GetMouseWheelScroll());
-		}
+	if (editor->editorInput->GetMouseWheelScroll() != 0) {
+		CameraZoom(-editor->editorInput->GetMouseWheelScroll());
 	}
 
 	// Pressing “f” should focus the camera around the geometry

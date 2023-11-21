@@ -18,7 +18,8 @@ public:
 
 	float baseSpeed = 0.15;
 
-	bool canZoom;
+	// if the mouse pressed is drag to ui this still is false
+	bool mouseOnUI;
 
 	Camera camera;
 };

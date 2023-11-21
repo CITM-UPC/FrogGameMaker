@@ -90,7 +90,7 @@ bool EditorUI::PreUpdate() {
 		ImGui::DockSpaceOverViewport(0, dock_flags);
 	}
 
-	editor->editorCamera->canZoom = !ImGui::GetIO().WantCaptureMouse;
+	editor->editorCamera->mouseOnUI = ImGui::GetIO().WantCaptureMouse;
 
 	return true;
 }
