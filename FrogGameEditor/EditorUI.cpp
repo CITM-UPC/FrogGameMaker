@@ -6,6 +6,7 @@
 #include "EditorWindow.h"
 #include "EditorObjectSelector.h"
 #include "EditorUI.h"
+#include "EditorCamera.h"
 
 #include "../FrogGameEngine/GameApp.h"
 
@@ -88,6 +89,8 @@ bool EditorUI::PreUpdate() {
 		dock_flags |= ImGuiDockNodeFlags_PassthruCentralNode;
 		ImGui::DockSpaceOverViewport(0, dock_flags);
 	}
+
+	editor->editorCamera->canZoom = !ImGui::GetIO().WantCaptureMouse;
 
 	return true;
 }

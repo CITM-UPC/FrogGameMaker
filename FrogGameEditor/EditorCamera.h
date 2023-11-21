@@ -18,5 +18,7 @@ public:
 
 	float baseSpeed = 0.15;
 
+	bool canZoom;
+
 	Camera camera;
 };

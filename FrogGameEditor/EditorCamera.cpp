@@ -55,8 +55,10 @@ bool EditorCamera::Update() {
 	}
 
 	// Mouse wheel should zoom in and out
-	if (editor->editorInput->GetMouseWheelScroll() != 0) {
-		CameraZoom(-editor->editorInput->GetMouseWheelScroll());
+	if (canZoom) {
+		if (editor->editorInput->GetMouseWheelScroll() != 0) {
+			CameraZoom(-editor->editorInput->GetMouseWheelScroll());
+		}
 	}
 
 	// Pressing “f” should focus the camera around the geometry
