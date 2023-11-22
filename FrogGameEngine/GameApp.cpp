@@ -60,11 +60,9 @@ GameApp::~GameApp()
 
 void GameApp::EditorStart() {
     // scene->DebugStart();
-    GameObject* house = scene->AddGameObject();
+    house = scene->AddGameObject();
     auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
     house->AddMeshWithTexture(mesh_ptrs);
-
-    MeshComponent* meshComp = (MeshComponent*)house->GetComponent(MESH);
 
     AddLog("BakerHouse.fbx loaded");
 
@@ -87,8 +85,9 @@ void GameApp::GameStart()
 
 void GameApp::GameStep(std::chrono::duration<double> dt)
 {
-    const double angle_vel = 90.0; // degrees per second
-    angle += angle_vel * dt.count();
+    TransformComponent* transformHouse = (TransformComponent*)house->GetComponent(TRANSFORM);
+    transformHouse->rotate(1, vec3(0, 1, 0));
+
 }
 
 void GameApp::Render(Camera camera) {
@@ -117,7 +116,8 @@ void GameApp::Render(Camera camera) {
 
 void GameApp::CleanUp()
 {
-
+    // memory leaks --TODO--
+    scene->CleanUp();
 }
 
 void GameApp::AddLog(string l)

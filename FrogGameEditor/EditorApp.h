@@ -38,6 +38,9 @@ public:
 	bool Update();
 	bool Cleanup();
 
+	void PlayGame();
+	void StopGame();
+
 	void WebRequest(const char* url);
 
 	EditorInput* editorInput;
@@ -57,7 +60,7 @@ public:
 public: 
 	vector<float> FPS_Log;
 
-	bool gameIsOn;
+	bool gameIsOn = false;
 private:
 	vector<string> logs;
 };

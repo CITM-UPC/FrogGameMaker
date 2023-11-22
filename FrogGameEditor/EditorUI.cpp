@@ -228,6 +228,19 @@ void EditorUI::UIMainMenuBar() {
 
 			}
 
+			if (editor->gameIsOn) {
+				if (ImGui::MenuItem("STOP")) {
+					editor->StopGame();
+					editor->editorObjectSelector->SetGameObjectSelected(nullptr);
+				}
+			}
+			else {
+				if (ImGui::MenuItem("PLAY")) {
+					editor->PlayGame();
+				}
+			}
+			
+
 			ImGui::Separator();
 
 			if (editorActivated) {

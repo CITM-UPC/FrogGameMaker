@@ -17,19 +17,19 @@ public:
 	
 	};
 
-	GameObject* AddGameObject(string name) {
-		GameObject* tempGO = new GameObject(name);
-		children.push_back(tempGO);
-		return tempGO;
-
-	}
-
 	GameObject* AddGameObject() {
 		string gameObjectName = "Game Object " + std::to_string(children.size());
 
 		GameObject* tempGO = new GameObject(gameObjectName);
 		children.push_back(tempGO);
 		return tempGO;
+	}
+
+	GameObject* AddGameObject(string name) {
+		GameObject* tempGO = new GameObject(name);
+		children.push_back(tempGO);
+		return tempGO;
+
 	}
 
 	GameObject* AddGameObjectChildren(GameObject* parent) {
@@ -67,13 +67,13 @@ public:
 	
 	};
 
-	void CleanUp() {};
+	void CleanUp() {
+		children.clear();
+	};
 
 	// uuid id
 	string name;
 	// should be a list of uuids
 	list<GameObject*> children;
-	
-
 
 };

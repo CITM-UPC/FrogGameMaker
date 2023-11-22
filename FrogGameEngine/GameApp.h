@@ -31,6 +31,8 @@ public:
 
 	Scene* scene = nullptr;
 	
+	GameObject* house = nullptr;
+
 	void AddLog(string l);
 
 	vector<string> GetLogs();

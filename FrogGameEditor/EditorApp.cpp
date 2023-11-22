@@ -158,6 +158,19 @@ bool EditorApp::Cleanup() {
 	return true;
 }
 
+void EditorApp::PlayGame()
+{
+	gameApp->GameStart();
+	gameIsOn = true;
+}
+
+void EditorApp::StopGame()
+{
+	gameApp->CleanUp();
+	gameIsOn = false;
+	gameApp->EditorStart();
+}
+
 void EditorApp::WebRequest(const char* url) {
 
 	//ShellExecute(0, 0, url, 0, 0, SW_SHOW);
