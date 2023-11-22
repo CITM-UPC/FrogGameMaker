@@ -9,7 +9,8 @@ enum ComponentType {
 	NONE = 0,
 	TRANSFORM,
 	MESH,
-	TEXTURE
+	TEXTURE,
+	CAMERA
 
 };
 

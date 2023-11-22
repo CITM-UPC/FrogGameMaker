@@ -678,6 +678,15 @@ void EditorUI::UIInspectorWriteTextureNode(Component* component) {
 	}
 }
 
+void EditorUI::UIInspectorWriteCameraNode(Component* component) {
+
+	CameraComponent* textureComponent = (CameraComponent*)component;
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::CollapsingHeader("Camera")) {
+		
+	}
+}
+
 void EditorUI::UIInspectorNodeWrite(Component* component) {
 
 	switch (component->componentType)
@@ -690,6 +699,9 @@ void EditorUI::UIInspectorNodeWrite(Component* component) {
 		break;
 	case ComponentType::TEXTURE:
 		UIInspectorWriteTextureNode(component);
+		break;
+	case ComponentType::CAMERA:
+		UIInspectorWriteCameraNode(component);
 		break;
 	default:
 		break;

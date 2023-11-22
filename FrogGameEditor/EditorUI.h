@@ -59,6 +59,7 @@ private:
 	void UIInspectorWriteTransformNode(Component* component);
 	void UIInspectorWriteMeshNode(Component* component);
 	void UIInspectorWriteTextureNode(Component* component);
+	void UIInspectorWriteCameraNode(Component* component);
 	void UIInspectorNodeWrite(Component* component);
 	void UIInspectorWindow();
 
