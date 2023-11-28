@@ -1,20 +1,15 @@
 #pragma once
 #include "Component.h"
+#include "Texture2D.h"
 
 class TextureComponent : public Component {
 public:
 
-	TextureComponent() {
-		componentType = TEXTURE;
-	}
+	TextureComponent();
 
-	void setTexture(Texture2D::Ptr texture) {
-		_texture = texture;
-	}
+	void setTexture(Texture2D::Ptr texture);
 
-	Texture2D::Ptr getTexture() {
-		return _texture;
-	}
+	Texture2D::Ptr getTexture();
 
 protected:
 

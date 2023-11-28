@@ -1,20 +1,14 @@
 #pragma once
 #include "Component.h"
+#include "Mesh.h"
 
 class MeshComponent : public Component {
 public:
 
-	MeshComponent() {
-		componentType = MESH;
-	}
+	MeshComponent();
 
-	void setMesh(Mesh::Ptr mesh) {
-		_mesh = mesh;
-	}
-
-	Mesh::Ptr getMesh() {
-		return _mesh;
-	}
+	void setMesh(Mesh::Ptr mesh);
+	Mesh::Ptr getMesh();
 
 protected:
 

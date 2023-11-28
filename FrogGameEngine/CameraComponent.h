@@ -5,17 +5,10 @@
 class CameraComponent : public Component {
 public:
 
-	CameraComponent() {
-		componentType = CAMERA;
-	}
+	CameraComponent();
 
-	void setCamera(Camera camera) {
-		_camera = camera;
-	}
-
-	Camera getCamera() {
-		return _camera;
-	}
+	void setCamera(Camera camera);
+	Camera getCamera();
 
 protected:
 

@@ -28,6 +28,9 @@
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{f351c8bd-68b8-4435-9d71-0ba65d54553b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObject\Components">
+      <UniqueIdentifier>{85bb32a2-4e7d-4d2b-9b86-18618501ae25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -53,6 +56,21 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraComponent.cpp">
+      <Filter>Source Files\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Source Files\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp">
+      <Filter>Source Files\GameObject\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
