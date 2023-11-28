@@ -6,6 +6,7 @@
 #include "MeshComponent.h"
 #include "TextureComponent.h"
 #include "CameraComponent.h"
+#include <GL/glew.h>
 
 using namespace std;
 

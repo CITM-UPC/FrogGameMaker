@@ -18,7 +18,6 @@ class Component {
 public:
 	virtual void Start() {};
 	virtual void Update() {};
-	virtual void Render() {};
 
 	ComponentType componentType = NONE;
 };

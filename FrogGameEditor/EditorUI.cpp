@@ -10,6 +10,8 @@
 
 #include "../FrogGameEngine/GameApp.h"
 
+#include "../FrogGameEngine/Scene.h"
+
 #include "../FrogGameEngine/Mesh.h"
 #include "../FrogGameEngine/Cube.h"
 #include "../FrogGameEngine/Pyramid.h"
