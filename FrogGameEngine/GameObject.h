@@ -2,6 +2,8 @@
 #include <string>
 #include <list>
 
+#include <memory>
+
 #include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "TextureComponent.h"
@@ -21,19 +23,21 @@ public:
 	GameObject(string name);
 	GameObject(GameObjectTypes type, string name);
 
-	GameObject* AddNewChildren();
+	~GameObject();
 
+	GameObject* AddNewChildren();
 	GameObject* AddNewChildren(GameObjectTypes GOType);
 
-	void addChild(GameObject* child);
-	void removeChild(GameObject* child);
+	void AddChild(unique_ptr<GameObject> child);
+	void RemoveChild(unique_ptr<GameObject> child);
+
+	//void MoveTo(GameObject* newParent);
 
 	Component* AddComponent(ComponentType type);
 
 	Component* GetComponent(ComponentType type);
 
 	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes);
-
 	void AddMeshWithTexture(Mesh::Ptr meshes);
 
 	void Render();
@@ -41,8 +45,8 @@ public:
 	// uuid id
 	string name;
 	// should be a list of uuids
-	list<GameObject*> children;
-	GameObject* _parent;
+	list<unique_ptr<GameObject>> children;
+	GameObject* _parent = nullptr;
 	
-	list<Component*> components;
+	list<unique_ptr<Component>> components;
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 enum ComponentType {
-	NONE = 0,
 	TRANSFORM,
 	MESH,
 	TEXTURE,
@@ -11,8 +10,10 @@ enum ComponentType {
 
 class Component {
 public:
+	Component() {};
+	~Component() {};
 	virtual void Start() {};
 	virtual void Update() {};
 
-	ComponentType componentType = NONE;
+	ComponentType componentType;
 };

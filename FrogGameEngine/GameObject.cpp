@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include <GL/glew.h>
+#include <memory>
 
 GameObject::GameObject()
 {
@@ -43,91 +44,90 @@ GameObject::GameObject(GameObjectTypes type, string name)
 	}
 }
 
+GameObject::~GameObject()
+{
+}
+
 GameObject* GameObject::AddNewChildren()
 {
-	string gameObjectName = name + " " + std::to_string(children.size());
+	string gameObjectName = name + " " + to_string(children.size());
 
-	GameObject* tempGO = new GameObject(gameObjectName);
-	addChild(tempGO);
-	return tempGO;
+	unique_ptr<GameObject> newGameObject = make_unique<GameObject>(gameObjectName);
+	GameObject* retGOCopy = newGameObject.get();
 
+	AddChild(move(newGameObject));
+
+	return retGOCopy;
 }
 
 GameObject* GameObject::AddNewChildren(GameObjectTypes GOType)
 {
-	string gameObjectName = name + " " + std::to_string(children.size());
+	string gameObjectName = name + " " + to_string(children.size());
 
-	GameObject* tempGO = nullptr;
+	unique_ptr<GameObject> newGameObject = make_unique<GameObject>(GOType, gameObjectName);
+	GameObject* retGOCopy = newGameObject.get();
 
-	switch (GOType)
-	{
-	case EMPTY:
-		tempGO = new GameObject(EMPTY, gameObjectName);
-		break;
-	case OBJECT:
-		tempGO = new GameObject(OBJECT, gameObjectName);
-		break;
-	case CAMERA_OBJECT:
-		tempGO = new GameObject(CAMERA_OBJECT, gameObjectName);
-		break;
-	default:
-		break;
-	}
+	AddChild(move(newGameObject));
 
-	addChild(tempGO);
-	return tempGO;
-
+	return retGOCopy;
 }
 
-void GameObject::addChild(GameObject* child)
+void GameObject::AddChild(unique_ptr<GameObject> child)
 {
 	if (child->_parent == this) return;
-	if (child->_parent) child->_parent->removeChild(child);
-	children.push_back(child);
+
 	child->_parent = this;
+	children.push_back(move(child));
 }
 
-void GameObject::removeChild(GameObject* child)
+void GameObject::RemoveChild(unique_ptr<GameObject> child)
 {
-	children.remove(child);
 	child->_parent = nullptr;
+	children.remove(child);
 }
+
+//void GameObject::MoveTo(GameObject* newParent)
+//{
+//	if (_parent != nullptr) {
+//		_parent->RemoveChild(this);
+//	}
+//	newParent->AddChild(this);
+//}
 
 Component* GameObject::AddComponent(ComponentType type)
 {
-	Component* newComponent = nullptr;
+	unique_ptr<Component> newComponent;
 
 	switch (type)
 	{
-	case ComponentType::NONE:
-		break;
 	case ComponentType::TRANSFORM:
-		newComponent = new TransformComponent();
+		newComponent = make_unique<TransformComponent>();
 		break;
 	case ComponentType::MESH:
-		newComponent = new MeshComponent();
+		newComponent = make_unique<MeshComponent>();
 		break;
 	case ComponentType::TEXTURE:
-		newComponent = new TextureComponent();
+		newComponent = make_unique<TextureComponent>();
 		break;
 	case ComponentType::CAMERA:
-		newComponent = new CameraComponent();
+		newComponent = make_unique<CameraComponent>();
 		break;
 	default:
 		break;
 	}
 
-	components.push_back(newComponent);
+	Component* retComponent = newComponent.get();
 
-	return newComponent;
+	components.push_back(move(newComponent));
 
+	return retComponent;
 }
 
 Component* GameObject::GetComponent(ComponentType type)
 {
 	for (auto i = components.begin(); i != components.end(); ++i) {
 		if ((*i)->componentType == type) {
-			return *i;
+			return (*i).get();
 		}
 	}
 	return nullptr;

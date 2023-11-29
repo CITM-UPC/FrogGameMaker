@@ -585,8 +585,8 @@ void EditorUI::UIHierarchyNodeWrite(GameObject* GO) {
 	}
 
 	if (nodeIsOpen) {
-		for (std::list<GameObject*>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
-			UIHierarchyNodeWrite(*it);
+		for (std::list<unique_ptr<GameObject>>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
+			UIHierarchyNodeWrite((*it).get());
 		}
 		ImGui::TreePop();
 	}
@@ -606,8 +606,8 @@ void EditorUI::UIHierarchyWindow() {
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader(sceneToUI->name.c_str())) {
 
-		for (std::list<GameObject*>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
-			UIHierarchyNodeWrite(*it);
+		for (std::list<unique_ptr<GameObject>>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
+			UIHierarchyNodeWrite((*it).get());
 		}
 	}
 
@@ -735,7 +735,7 @@ void EditorUI::UIInspectorWindow() {
 	// unity style: 
 	// get the scene that has as children the rest of game objects
 	for (auto iComponent = editor->editorObjectSelector->GetGameObjectSelected()->components.begin(); iComponent != editor->editorObjectSelector->GetGameObjectSelected()->components.end(); ++iComponent) {
-		UIInspectorNodeWrite(*iComponent);
+		UIInspectorNodeWrite((*iComponent).get());
 	}
 
 	ImGui::End();

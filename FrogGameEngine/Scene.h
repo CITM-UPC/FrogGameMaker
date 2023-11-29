@@ -31,6 +31,6 @@ public:
 	// uuid id
 	string name;
 	// should be a list of uuids
-	list<GameObject*> children;
+	list<unique_ptr<GameObject>> children;
 
 };

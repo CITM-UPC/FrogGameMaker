@@ -17,26 +17,22 @@ GameObject* Scene::AddGameObject()
 {
 	string gameObjectName = "Game Object " + std::to_string(children.size());
 
-	GameObject* tempGO = new GameObject(gameObjectName);
-	children.push_back(tempGO);
-	return tempGO;
+	children.push_back(make_unique<GameObject>(gameObjectName));
+	return children.back().get();
 }
 
 GameObject* Scene::AddGameObject(string name)
 {
-	GameObject* tempGO = new GameObject(name);
-	children.push_back(tempGO);
-	return tempGO;
-
+	children.push_back(make_unique<GameObject>(name));
+	return children.back().get();
 }
 
 GameObject* Scene::AddGameObjectChildren(GameObject* parent)
 {
 	string gameObjectName = parent->name + " " + std::to_string(parent->children.size());
 
-	GameObject* tempGO = new GameObject(gameObjectName);
-	parent->addChild(tempGO);
-	return tempGO;
+	parent->AddChild(make_unique<GameObject>(gameObjectName));
+	return parent->children.back().get();
 
 }
 
