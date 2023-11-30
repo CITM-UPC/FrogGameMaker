@@ -36,7 +36,7 @@ public:
 
 	Component* AddComponent(ComponentType type);
 
-	Component* GetComponent(ComponentType type);
+	template <typename T> T* GetComponent();
 
 	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes);
 	void AddMeshWithTexture(Mesh::Ptr meshes);
@@ -51,3 +51,15 @@ public:
 	
 	list<unique_ptr<Component>> components;
 };
+
+template<typename T>
+inline T* GameObject::GetComponent()
+{
+	for (auto component = components.begin(); component != components.end(); ++component) {
+		T* returnComponent = dynamic_cast<T*>((*component).get());
+		if (returnComponent) {
+			return returnComponent;
+		}
+	}
+	return nullptr;
+}

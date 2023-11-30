@@ -21,7 +21,7 @@ bool EditorObjectSelector::Update()
 	glColor3ub(255, 0, 0);
 	glPointSize(12);
 
-	TransformComponent* transform = (TransformComponent*)gameObjectSelected->GetComponent(TRANSFORM);
+	TransformComponent* transform = gameObjectSelected->GetComponent<TransformComponent>();
 	glBegin(GL_POINTS);
 	glVertex3f(transform->getPosition().x, transform->getPosition().y, transform->getPosition().z);
 	glEnd();

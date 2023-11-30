@@ -131,36 +131,26 @@ Component* GameObject::AddComponent(ComponentType type)
 	return retComponent;
 }
 
-Component* GameObject::GetComponent(ComponentType type)
-{
-	for (auto i = components.begin(); i != components.end(); ++i) {
-		if ((*i)->componentType == type) {
-			return (*i).get();
-		}
-	}
-	return nullptr;
-}
-
 void GameObject::AddMeshWithTexture(std::vector<Mesh::Ptr> meshes)
 {
 	if (meshes.size() == 1) {
-		if (GetComponent(MESH) == nullptr) {
+		if (GetComponent<MeshComponent>() == nullptr) {
 			AddComponent(MESH);
 		}
-		if (GetComponent(TEXTURE) == nullptr) {
+		if (GetComponent<TextureComponent>() == nullptr) {
 			AddComponent(TEXTURE);
 		}
-		MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+		MeshComponent* mesh = GetComponent<MeshComponent>();
 		mesh->setMesh(*meshes.begin());
-		TextureComponent* texture = (TextureComponent*)GetComponent(TEXTURE);
+		TextureComponent* texture = GetComponent<TextureComponent>();
 		texture->setTexture((*meshes.begin())->texture);
 	}
 	else {
 		for (auto i = meshes.begin(); i != meshes.end(); ++i) {
 			GameObject* GOPart = AddNewChildren(OBJECT);
-			MeshComponent* meshPart = (MeshComponent*)GOPart->GetComponent(MESH);
+			MeshComponent* meshPart = GOPart->GetComponent<MeshComponent>();
 			meshPart->setMesh(*i);
-			TextureComponent* texturePart = (TextureComponent*)GOPart->GetComponent(TEXTURE);
+			TextureComponent* texturePart = GOPart->GetComponent<TextureComponent>();
 			texturePart->setTexture((*i)->texture);
 		}
 	}
@@ -168,15 +158,15 @@ void GameObject::AddMeshWithTexture(std::vector<Mesh::Ptr> meshes)
 
 void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 {
-	if (GetComponent(MESH) == nullptr) {
+	if (GetComponent<MeshComponent>() == nullptr) {
 		AddComponent(MESH);
 	}
-	if (GetComponent(TEXTURE) == nullptr) {
+	if (GetComponent<TextureComponent>() == nullptr) {
 		AddComponent(TEXTURE);
 	}
-	MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+	MeshComponent* mesh = GetComponent<MeshComponent>();
 	mesh->setMesh(meshes);
-	TextureComponent* texture = (TextureComponent*)GetComponent(TEXTURE);
+	TextureComponent* texture = GetComponent<TextureComponent>();
 	texture->setTexture(meshes->texture);
 }
 
@@ -184,8 +174,8 @@ void GameObject::Render()
 {
 	bool toRender = true;
 	// get necessary components
-	TransformComponent* transform = (TransformComponent*)GetComponent(TRANSFORM);
-	if (GetComponent(MESH) == nullptr) {
+	TransformComponent* transform = GetComponent<TransformComponent>();
+	if (GetComponent<MeshComponent>() == nullptr) {
 		toRender = false;
 	}
 
@@ -193,7 +183,7 @@ void GameObject::Render()
 	glMultMatrixd(&transform->getTransform()[0].x);
 
 	if (toRender) {
-		MeshComponent* mesh = (MeshComponent*)GetComponent(MESH);
+		MeshComponent* mesh = GetComponent<MeshComponent>();
 		if (mesh->getMesh()) mesh->getMesh()->draw();
 	}
 

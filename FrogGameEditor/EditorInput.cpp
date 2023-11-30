@@ -108,8 +108,8 @@ bool EditorInput::PreUpdate() {
 				/*if (!dropped_filedir.starts_with("Assets/"))
 					filesystem::copy(dropped_filedir, "Assets");*/
 				if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
-					TextureComponent* textureComponent = (TextureComponent*)editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(TEXTURE);
-					MeshComponent* meshComponent = (MeshComponent*)editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(MESH);
+					TextureComponent* textureComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TextureComponent>();
+					MeshComponent* meshComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<MeshComponent>();
 					if (meshComponent->getMesh() != nullptr) {
 						meshComponent->getMesh()->loadTextureToMesh(dropped_filedir);
 						textureComponent->setTexture(meshComponent->getMesh()->texture);

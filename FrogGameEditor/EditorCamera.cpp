@@ -68,8 +68,8 @@ bool EditorCamera::Update() {
 	// Pressing “f” should focus the camera around the geometry
 	if (editor->editorInput->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
-			if (editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(TRANSFORM) != nullptr) {
-				TransformComponent* gameObjectTransform = (TransformComponent*)editor->editorObjectSelector->GetGameObjectSelected()->GetComponent(TRANSFORM);
+			if (editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TransformComponent>() != nullptr) {
+				TransformComponent* gameObjectTransform = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TransformComponent>();
 				vec3 focusPoint = gameObjectTransform->getPosition();
 				FocusOn(focusPoint);
 			}
