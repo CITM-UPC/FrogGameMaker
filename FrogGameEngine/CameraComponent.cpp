@@ -6,6 +6,10 @@ CameraComponent::CameraComponent()
 	
 }
 
+CameraComponent::~CameraComponent()
+{
+}
+
 void CameraComponent::setCamera(Camera camera)
 {
 	_camera = camera;

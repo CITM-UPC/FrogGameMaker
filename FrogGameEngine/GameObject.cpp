@@ -46,6 +46,8 @@ GameObject::GameObject(GameObjectTypes type, string name)
 
 GameObject::~GameObject()
 {
+	children.clear();
+	components.clear();
 }
 
 GameObject* GameObject::AddNewChildren()

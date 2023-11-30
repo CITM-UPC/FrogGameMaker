@@ -6,6 +6,7 @@ class CameraComponent : public Component {
 public:
 
 	CameraComponent();
+	~CameraComponent();
 
 	void setCamera(Camera camera);
 	Camera getCamera();

@@ -6,6 +6,7 @@ class TextureComponent : public Component {
 public:
 
 	TextureComponent();
+	~TextureComponent();
 
 	void setTexture(Texture2D::Ptr texture);
 

@@ -6,6 +6,7 @@ class MeshComponent : public Component {
 public:
 
 	MeshComponent();
+	~MeshComponent();
 
 	void setMesh(Mesh::Ptr mesh);
 	Mesh::Ptr getMesh();

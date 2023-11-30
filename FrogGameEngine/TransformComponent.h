@@ -13,6 +13,8 @@ public:
 
 	TransformComponent();
 
+	~TransformComponent();
+
 	mat4& getTransform();
 
 	vec3& getPosition();

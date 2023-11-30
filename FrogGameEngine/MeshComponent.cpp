@@ -6,6 +6,10 @@ MeshComponent::MeshComponent()
 
 }
 
+MeshComponent::~MeshComponent()
+{
+}
+
 void MeshComponent::setMesh(Mesh::Ptr mesh)
 {
 	_mesh = mesh;

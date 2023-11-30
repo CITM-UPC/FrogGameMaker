@@ -6,6 +6,11 @@ TransformComponent::TransformComponent()
 	componentType = TRANSFORM;
 }
 
+TransformComponent::~TransformComponent()
+{
+
+}
+
 mat4& TransformComponent::getTransform()
 {
 	return _transform;
