@@ -66,7 +66,7 @@ void GameApp::EditorStart() {
 
     AddLog("BakerHouse.fbx loaded");
 
-    TransformComponent* transformHouse = house->GetComponent<TransformComponent>();
+    auto transformHouse = house->GetComponent<TransformComponent>();
     transformHouse->rotate(1, vec3(0, 1, 0));
     transformHouse->translate(vec3(0, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
@@ -85,8 +85,7 @@ void GameApp::GameStart()
 
 void GameApp::GameStep(std::chrono::duration<double> dt)
 {
-    TransformComponent* transformHouse = house->GetComponent<TransformComponent>();
-    transformHouse->rotate(1, vec3(0, 1, 0));
+    house->GetComponent<TransformComponent>()->rotate(1, vec3(0, 1, 0));
 
 }
 
