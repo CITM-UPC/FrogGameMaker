@@ -16,6 +16,11 @@ public:
 
 	GameObject* AddGameObjectChildren(GameObject* parent);
 
+	unique_ptr<GameObject> FindChild(GameObject* child);
+
+	// if toParent is nullptr the child goes to the scene
+	void MoveChildToAnotherParent(GameObject* child, GameObject* toParent = nullptr);
+
 	void DebugStart();
 
 	// --TODO--

@@ -3,6 +3,7 @@
 #include "assimp/version.h"
 #include "IL/il.h"
 
+#include "EditorInput.h"
 #include "EditorWindow.h"
 #include "EditorObjectSelector.h"
 #include "EditorUI.h"
@@ -114,6 +115,15 @@ bool EditorUI::Update() {
 		}
 		UIAboutPopup();
 	}
+
+
+	if (editor->editorInput->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		if (editor->editorObjectSelector->gameObjectSelected != nullptr) {
+			editor->gameApp->scene->MoveChildToAnotherParent(editor->editorObjectSelector->gameObjectSelected);
+		}
+	}
+
+
 
 	// windows
 	if (showHardwareWindow) {

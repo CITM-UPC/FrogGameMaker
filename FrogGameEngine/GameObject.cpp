@@ -80,19 +80,25 @@ void GameObject::AddChild(unique_ptr<GameObject> child)
 	children.push_back(move(child));
 }
 
-void GameObject::RemoveChild(unique_ptr<GameObject> child)
+unique_ptr<GameObject> GameObject::RemoveChild(GameObject* child)
 {
-	child->_parent = nullptr;
-	children.remove(child);
+	unique_ptr<GameObject> ptrChild = FindChild(child);
+	ptrChild->_parent = nullptr;
+	children.remove(ptrChild);
+
+	return move(ptrChild);
 }
 
-//void GameObject::MoveTo(GameObject* newParent)
-//{
-//	if (_parent != nullptr) {
-//		_parent->RemoveChild(this);
-//	}
-//	newParent->AddChild(this);
-//}
+unique_ptr<GameObject> GameObject::FindChild(GameObject* child)
+{
+	for (auto GO = children.begin(); GO != children.end(); ++GO) {
+		if ((*GO).get() == child) {
+			return move(*GO);
+		}
+	}
+
+	return nullptr;
+}
 
 Component* GameObject::AddComponent(ComponentType type)
 {

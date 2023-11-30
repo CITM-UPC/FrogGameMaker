@@ -36,6 +36,56 @@ GameObject* Scene::AddGameObjectChildren(GameObject* parent)
 
 }
 
+unique_ptr<GameObject> Scene::FindChild(GameObject* child)
+{
+	for (auto GO = children.begin(); GO != children.end(); ++GO) {
+		if ((*GO).get() == child) {
+			return move(*GO);
+		}
+	}
+
+	return nullptr;
+}
+
+void Scene::MoveChildToAnotherParent(GameObject* child, GameObject* toParent)
+{
+	list<unique_ptr<GameObject>>::iterator GO;
+	
+	if (child->_parent != nullptr) {
+		for (GO = child->_parent->children.begin(); GO != child->_parent->children.end(); ++GO) {
+			if ((*GO).get() == child) {
+				break;
+			}
+		}
+		if (toParent != nullptr) {
+			toParent->children.splice(toParent->children.begin(), child->_parent->children, GO);
+			child->_parent = toParent;
+		}
+		else {
+			children.splice(children.begin(), child->_parent->children, GO);
+			child->_parent = nullptr;
+		}
+	}
+	else {
+		for (GO = children.begin(); GO != children.end(); ++GO) {
+			if ((*GO).get() == child) {
+				break;
+			}
+		}
+		if (toParent != nullptr) {
+			toParent->children.splice(toParent->children.begin(), children, GO);
+			child->_parent = toParent;
+		}
+		else {
+			children.splice(children.begin(), children, GO);
+			child->_parent = nullptr;
+		}
+	}
+
+
+	
+}
+
 void Scene::DebugStart()
 {
 	{

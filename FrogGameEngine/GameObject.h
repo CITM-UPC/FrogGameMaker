@@ -29,9 +29,10 @@ public:
 	GameObject* AddNewChildren(GameObjectTypes GOType);
 
 	void AddChild(unique_ptr<GameObject> child);
-	void RemoveChild(unique_ptr<GameObject> child);
+	unique_ptr<GameObject> RemoveChild(GameObject* child);
 
-	//void MoveTo(GameObject* newParent);
+	// THE CHILD IS MOVED, THE REFERENCE IS LOST, THE CHILD HAS TO BE MOVED AGAIN
+	unique_ptr<GameObject> FindChild(GameObject* child);
 
 	Component* AddComponent(ComponentType type);
 
