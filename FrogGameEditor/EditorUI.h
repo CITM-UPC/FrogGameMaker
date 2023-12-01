@@ -56,10 +56,10 @@ private:
 	void UIHierarchyNodeWrite(GameObject* GO);
 	void UIHierarchyWindow();
 
-	void UIInspectorWriteTransformNode(Component* component);
-	void UIInspectorWriteMeshNode(Component* component);
-	void UIInspectorWriteTextureNode(Component* component);
-	void UIInspectorWriteCameraNode(Component* component);
+	void UIInspectorWriteTransformNode(TransformComponent* component);
+	void UIInspectorWriteMeshNode(MeshComponent* component);
+	void UIInspectorWriteTextureNode(TextureComponent* component);
+	void UIInspectorWriteCameraNode(CameraComponent* component);
 	void UIInspectorNodeWrite(Component* component);
 	void UIInspectorWindow();
 

@@ -624,27 +624,25 @@ void EditorUI::UIHierarchyWindow() {
 	ImGui::End();
 }
 
-void EditorUI::UIInspectorWriteTransformNode(Component* component) {
+void EditorUI::UIInspectorWriteTransformNode(TransformComponent* component) {
 
-	TransformComponent* transformComponent = (TransformComponent*)component;
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform")) {
-		float vec3Position[3] = { (float)transformComponent->getPosition().x, (float)transformComponent->getPosition().y, (float)transformComponent->getPosition().z };
+		float vec3Position[3] = { (float)component->getPosition().x, (float)component->getPosition().y, (float)component->getPosition().z };
 		ImGui::InputFloat3("Position", vec3Position);
-		float vec3Rotation[3] = { glm::degrees((float)transformComponent->getRotation().x), glm::degrees((float)transformComponent->getRotation().y), glm::degrees((float)transformComponent->getRotation().z) };
+		float vec3Rotation[3] = { glm::degrees((float)component->getRotation().x), glm::degrees((float)component->getRotation().y), glm::degrees((float)component->getRotation().z) };
 		ImGui::InputFloat3("Rotation", vec3Rotation);
-		float vec3Scale[3] = { (float)transformComponent->getScale().x, (float)transformComponent->getScale().y, (float)transformComponent->getScale().z };
+		float vec3Scale[3] = { (float)component->getScale().x, (float)component->getScale().y, (float)component->getScale().z };
 		ImGui::InputFloat3("Scale", vec3Scale);
 	}
 }
 
-void EditorUI::UIInspectorWriteMeshNode(Component* component) {
+void EditorUI::UIInspectorWriteMeshNode(MeshComponent* component) {
 
-	MeshComponent* meshComponent = (MeshComponent*)component;
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Mesh")) {
-		if (meshComponent->getMesh() != nullptr) {
-			string s = meshComponent->getMesh()->path;
+		if (component->getMesh() != nullptr) {
+			string s = component->getMesh()->path;
 			if (auto n = s.find_last_of("\\"); n != s.npos) {
 				s.erase(0, n + 1);
 			}
@@ -652,23 +650,23 @@ void EditorUI::UIInspectorWriteMeshNode(Component* component) {
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
 			if (ImGui::IsItemHovered()) {
-				ImGui::SetTooltip("%s", meshComponent->getMesh()->path.c_str());
+				ImGui::SetTooltip("%s", component->getMesh()->path.c_str());
 			}
 
 			ImGui::Text("Vertex:");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getVertsNum());
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", component->getMesh()->getVertsNum());
 
-			ImGui::Text("Faces:", meshComponent->getMesh()->getFacesNum());
+			ImGui::Text("Faces:", component->getMesh()->getFacesNum());
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", meshComponent->getMesh()->getFacesNum());
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", component->getMesh()->getFacesNum());
 
-			if (ImGui::Checkbox("Use Checkers Texture", &meshComponent->getMesh()->drawChecker)) {}
-			if (ImGui::Checkbox("See Vertex Normals", &meshComponent->getMesh()->drawNormalsVerts)) {}
-			if (ImGui::Checkbox("See Face Normals", &meshComponent->getMesh()->drawNormalsFaces)) {}
+			if (ImGui::Checkbox("Use Checkers Texture", &component->getMesh()->drawChecker)) {}
+			if (ImGui::Checkbox("See Vertex Normals", &component->getMesh()->drawNormalsVerts)) {}
+			if (ImGui::Checkbox("See Face Normals", &component->getMesh()->drawNormalsFaces)) {}
 
-			ImGui::SliderFloat("Normal's Length", &meshComponent->getMesh()->normalLineLength, 0.1f, 2.0f);
-			ImGui::SliderInt("Normal's Width", &meshComponent->getMesh()->normalLineWidth, 1, 4);
+			ImGui::SliderFloat("Normal's Length", &component->getMesh()->normalLineLength, 0.1f, 2.0f);
+			ImGui::SliderInt("Normal's Width", &component->getMesh()->normalLineWidth, 1, 4);
 		}
 		else {
 			ImGui::Text("Mesh not found");
@@ -676,13 +674,12 @@ void EditorUI::UIInspectorWriteMeshNode(Component* component) {
 	}
 }
 
-void EditorUI::UIInspectorWriteTextureNode(Component* component) {
+void EditorUI::UIInspectorWriteTextureNode(TextureComponent* component) {
 
-	TextureComponent* textureComponent = (TextureComponent*)component;
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Texture")) {
-		if (textureComponent->getTexture() != nullptr) {
-			string s = textureComponent->getTexture()->path;
+		if (component->getTexture() != nullptr) {
+			string s = component->getTexture()->path;
 			if (auto n = s.find_last_of("\\"); n != s.npos) {
 				s.erase(0, n + 1);
 			}
@@ -690,12 +687,12 @@ void EditorUI::UIInspectorWriteTextureNode(Component* component) {
 			ImGui::SameLine();
 			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%s", s.c_str());
 			if (ImGui::IsItemHovered()) {
-				ImGui::SetTooltip("%s", textureComponent->getTexture()->path.c_str());
+				ImGui::SetTooltip("%s", component->getTexture()->path.c_str());
 			}
 
 			ImGui::Text("Size:");
 			ImGui::SameLine();
-			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dpx x %dpx", textureComponent->getTexture()->width, textureComponent->getTexture()->height);
+			ImGui::TextColored(ImVec4(1, 1, 0, 1), "%dpx x %dpx", component->getTexture()->width, component->getTexture()->height);
 		}
 		else {
 			ImGui::Text("Texture not found");
@@ -703,9 +700,8 @@ void EditorUI::UIInspectorWriteTextureNode(Component* component) {
 	}
 }
 
-void EditorUI::UIInspectorWriteCameraNode(Component* component) {
+void EditorUI::UIInspectorWriteCameraNode(CameraComponent* component) {
 
-	CameraComponent* textureComponent = (CameraComponent*)component;
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Camera")) {
 		
@@ -717,16 +713,16 @@ void EditorUI::UIInspectorNodeWrite(Component* component) {
 	switch (component->componentType)
 	{
 	case ComponentType::TRANSFORM:
-		UIInspectorWriteTransformNode(component);
+		UIInspectorWriteTransformNode((TransformComponent*)component);
 		break;
 	case ComponentType::MESH:
-		UIInspectorWriteMeshNode(component);
+		UIInspectorWriteMeshNode((MeshComponent*)component);
 		break;
 	case ComponentType::TEXTURE:
-		UIInspectorWriteTextureNode(component);
+		UIInspectorWriteTextureNode((TextureComponent*)component);
 		break;
 	case ComponentType::CAMERA:
-		UIInspectorWriteCameraNode(component);
+		UIInspectorWriteCameraNode((CameraComponent*)component);
 		break;
 	default:
 		break;
