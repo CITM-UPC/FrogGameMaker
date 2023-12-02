@@ -58,22 +58,7 @@ bool EditorUI::Start() {
 	//ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
 	//IM_ASSERT(font != NULL);
 
-	dockSpaceEnabled = true;
-	editorActivated = true;
-	quitPressed = false;
-
-	showDemoWindow = true;
-	showAnotherWindow = false;
-
-	showHardwareWindow = false;
-	showAboutPopup = false;
-	showFPSLog = true;
-	showConfigWindow = false;
-
-	showHierarchyWindow = true;
-	showInspectorWindow = true;
-	showConsoleWindow = true;
-	showAssetsWindow = true;
+	ImGuizmo::Enable(true);
 
 	clearColor = ImVec4(0.039f, 0.039f, 0.039f, 1.00f);
 
@@ -86,6 +71,7 @@ bool EditorUI::PreUpdate() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 
 	if (dockSpaceEnabled) {
 		ImGuiDockNodeFlags dock_flags = 0;
@@ -123,7 +109,35 @@ bool EditorUI::Update() {
 		}
 	}
 
+	if (editor->editorInput->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		usingGuizmo = false;
+	}
+	if (editor->editorInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		usingGuizmo = true;
+		currentGuizmoOperation = ImGuizmo::TRANSLATE;
+	}
+	if (editor->editorInput->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		usingGuizmo = true;
+		currentGuizmoOperation = ImGuizmo::ROTATE;
+	}
+	if (editor->editorInput->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		usingGuizmo = true;
+		currentGuizmoOperation = ImGuizmo::SCALE;
+	}
 
+	if (usingGuizmo) {
+		if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
+			const float* viewMatrix = (float*)&editor->editorCamera->camera.computeLookAt()[0][0];
+			const float* projectionMatrix = (float*)&glm::perspective(editor->editorCamera->camera.fov, editor->editorCamera->camera.aspect, editor->editorCamera->camera.zNear, editor->editorCamera->camera.zFar)[0][0];
+
+
+
+			float* transformMatrix = (float*)&glm::transpose(editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TransformComponent>()->getTransform())[0][0];
+
+			ImGuizmo::Manipulate(viewMatrix, projectionMatrix, currentGuizmoOperation, currentGuizmoMode, transformMatrix);
+
+		}
+	}
 
 	// windows
 	if (showHardwareWindow) {
