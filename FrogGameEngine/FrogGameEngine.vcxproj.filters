@@ -125,5 +125,8 @@
     <ClInclude Include="CameraComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
     </ClInclude>
+    <ClInclude Include="BoundingBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

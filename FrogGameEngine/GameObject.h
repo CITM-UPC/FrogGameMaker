@@ -4,10 +4,14 @@
 
 #include <memory>
 
+#include "Types.h"
+
 #include "TransformComponent.h"
 #include "MeshComponent.h"
 #include "TextureComponent.h"
 #include "CameraComponent.h"
+
+#include "BoundingBox.h"
 
 using namespace std;
 
@@ -42,6 +46,9 @@ public:
 	void AddMeshWithTexture(Mesh::Ptr meshes);
 
 	void Render();
+
+	void DrawBoundingBox(const AABBox& aabb);
+	AABBox GetBoundingBox();
 
 	// uuid id
 	string name;

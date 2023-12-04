@@ -182,6 +182,7 @@ copy "$(SolutionDir)vcpkg\installed\x64-windows\bin\*.*" "$(OutDir)"</Command>
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoundingBox.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cube.h" />

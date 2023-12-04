@@ -15,5 +15,5 @@ public:
 	virtual void Start() {};
 	virtual void Update() {};
 
-	ComponentType componentType;
+	ComponentType componentType = TRANSFORM;
 };
