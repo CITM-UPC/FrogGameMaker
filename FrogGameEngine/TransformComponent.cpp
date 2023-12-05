@@ -23,48 +23,32 @@ vec3& TransformComponent::getPosition()
 
 vec3& TransformComponent::getRotation()
 {
-
-	vec3 inverseScaleVec;
-	inverseScaleVec.x = 1.0 / getScale().x;
-	inverseScaleVec.y = 1.0 / getScale().y;
-	inverseScaleVec.z = 1.0 / getScale().z;
-
-	// get rotation matrix
-	glm::dmat3 rotationMatrix;
-	rotationMatrix[0][0] = _right[0] * inverseScaleVec.x;
-	rotationMatrix[0][1] = _up[0] * inverseScaleVec.x;
-	rotationMatrix[0][2] = _forward[0] * inverseScaleVec.x;
-
-	rotationMatrix[1][0] = _right[1] * inverseScaleVec.y;
-	rotationMatrix[1][1] = _up[1] * inverseScaleVec.y;
-	rotationMatrix[1][2] = _forward[1] * inverseScaleVec.y;
-
-	rotationMatrix[2][0] = _right[2] * inverseScaleVec.z;
-	rotationMatrix[2][1] = _up[2] * inverseScaleVec.z;
-	rotationMatrix[2][2] = _forward[2] * inverseScaleVec.z;
-
-	// get rotation euler angles
 	vec3 rotEulerAngles;
-	rotEulerAngles.y = -glm::asin(rotationMatrix[2][0]);
+	double Yaw, Pitch, Roll;
+	if (toleranceCheckFix(_transform[2][0], 1) == 1)
+	{
+		Yaw = glm::half_pi<float>();
+		Pitch = atan2(_transform[1][2], _transform[1][1]);
+		Roll = 0;
 
-	rotEulerAngles.x = glm::acos(rotationMatrix[0][0]);
-	rotEulerAngles.z = glm::asin(rotationMatrix[2][0]);
+	}
+	else if (toleranceCheckFix(_transform[2][0], -1) == -1)
+	{
+		Yaw = 3 * glm::half_pi<float>();
+		Pitch = atan2(_transform[1][2], _transform[1][1]);
+		Roll = 0;
+	}
+	else
+	{
 
-	if (toleranceCheckFix(-rotationMatrix[2][0] - 1) + 1 == 1) {
-		rotEulerAngles.y = 90;
-		rotEulerAngles.x = atan2(rotationMatrix[1][2], rotationMatrix[1][1]);
-		rotEulerAngles.z = 0;
+		Yaw = asin(-_transform[2][0]);
+		Pitch = atan2(_transform[2][1], _transform[2][2]);
+		Roll = atan2(_transform[1][0], _transform[0][0]);
 	}
-	else if (toleranceCheckFix(-rotationMatrix[2][0] + 1) - 1 == -1) {
-		rotEulerAngles.y = 3 * 90;
-		rotEulerAngles.x = atan2(rotationMatrix[1][2], rotationMatrix[1][1]);
-		rotEulerAngles.z = 0;
-	}
-	else {
-		rotEulerAngles.y = asin(-rotationMatrix[2][0]);
-		rotEulerAngles.z = atan2(rotationMatrix[2][1], rotationMatrix[2][2]);
-		rotEulerAngles.x = atan2(rotationMatrix[1][0], rotationMatrix[0][0]);
-	}
+
+	rotEulerAngles.x = Pitch;
+	rotEulerAngles.y = Yaw;
+	rotEulerAngles.z = Roll;
 
 	return rotEulerAngles;
 }

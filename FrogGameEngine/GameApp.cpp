@@ -67,7 +67,7 @@ void GameApp::EditorStart() {
     AddLog("BakerHouse.fbx loaded");
 
     auto transformHouse = house->GetComponent<TransformComponent>();
-    transformHouse->rotate(1, vec3(0, 1, 0));
+    transformHouse->rotate(90, vec3(0, 0, 1));
     transformHouse->translate(vec3(0, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
 
@@ -76,7 +76,6 @@ void GameApp::EditorStart() {
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)
 {
-    house->DrawBoundingBox(house->GetBoundingBox());
 
 }
 

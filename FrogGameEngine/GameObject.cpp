@@ -183,6 +183,9 @@ void GameObject::Render()
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
 
+	glColor3ub(128, 0, 0);
+	DrawBoundingBox(GetBoundingBox());
+
 	if (toRender) {
 		MeshComponent* mesh = GetComponent<MeshComponent>();
 		if (mesh->getMesh()) mesh->getMesh()->draw();
@@ -227,7 +230,7 @@ void GameObject::DrawBoundingBox(const AABBox& aabb)
 	glEnd();
 }
 
-AABBox GameObject::GetBoundingBox()
+AABBox GameObject::GetBoundingBox() 
 {
 	AABBox aabbox;
 	if (GetComponent<MeshComponent>() != nullptr) aabbox = GetComponent<MeshComponent>()->getMesh()->aabb;
@@ -237,9 +240,9 @@ AABBox GameObject::GetBoundingBox()
 	}
 
 	for (auto i = children.begin(); i != children.end(); ++i) {
-		const auto child_aabb = ((*i).get()->GetComponent<TransformComponent>()->getTransform() * (*i).get()->GetComponent<MeshComponent>()->getMesh()->aabb);
-		aabbox.min = glm::min(aabbox.min, child_aabb.AABB().min);
-		aabbox.max = glm::max(aabbox.max, child_aabb.AABB().max);
+		const auto child_aabb = ((*i).get()->GetComponent<TransformComponent>()->getTransform() * (*i).get()->GetBoundingBox()).AABB();
+		aabbox.min = glm::min(aabbox.min, child_aabb.min);
+		aabbox.max = glm::max(aabbox.max, child_aabb.max);
 	}
 
 	return aabbox;
