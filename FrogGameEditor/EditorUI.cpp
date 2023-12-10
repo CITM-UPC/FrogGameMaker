@@ -1,5 +1,7 @@
 #include "EditorApp.h"
 
+#include <filesystem>
+
 #include "assimp/version.h"
 #include "IL/il.h"
 
@@ -17,6 +19,8 @@
 #include "../FrogGameEngine/Cube.h"
 #include "../FrogGameEngine/Pyramid.h"
 #include "../FrogGameEngine/Cylinder.h"
+
+namespace fs = std::filesystem;
 
 EditorUI::EditorUI() : EditorModule() {
 
@@ -773,5 +777,15 @@ void EditorUI::UIConsoleWindow() {
 void EditorUI::UIAssetsWindow() {
 
 	ImGui::Begin("Assets");
+
+	std::string path = "../FrogGameEditor/Assets";
+	for (const auto& entry : fs::directory_iterator(path)) {
+
+		ImGui::Button(entry.path().string().c_str());
+		//std::cout << entry.path() << std::endl;
+	}
+		
+
+
 	ImGui::End();
 }
