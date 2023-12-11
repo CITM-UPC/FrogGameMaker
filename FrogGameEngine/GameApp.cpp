@@ -134,7 +134,7 @@ void GameApp::GameRender(Camera camera)
 
 #pragma region Draw Sandbox
 
-    scene->Render(true);
+    scene->Render(false);
 
 #pragma endregion
 
