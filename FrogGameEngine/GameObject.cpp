@@ -171,7 +171,7 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
-void GameObject::Render()
+void GameObject::Render(bool drawBoundingBox)
 {
 	bool toRender = true;
 	// get necessary components
@@ -184,7 +184,9 @@ void GameObject::Render()
 	glMultMatrixd(&transform->getTransform()[0].x);
 
 	glColor3ub(128, 0, 0);
-	DrawBoundingBox(GetBoundingBox());
+	if (drawBoundingBox) {
+		DrawBoundingBox(GetBoundingBox());
+	}
 
 	if (toRender) {
 		MeshComponent* mesh = GetComponent<MeshComponent>();
@@ -193,7 +195,7 @@ void GameObject::Render()
 
 	// render
 	for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
-		(*childIt)->Render();
+		(*childIt)->Render(drawBoundingBox);
 	}
 
 	glPopMatrix();

@@ -23,7 +23,8 @@ public:
 	void EditorStep(std::chrono::duration<double> dt);
 	void GameStart();
 	void GameStep(std::chrono::duration<double> dt);
-	void Render(Camera camera);
+	void EditorRender(Camera camera);
+	void GameRender(Camera camera);
 	void CleanUp();
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };

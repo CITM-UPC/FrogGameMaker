@@ -45,7 +45,7 @@ public:
 	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes);
 	void AddMeshWithTexture(Mesh::Ptr meshes);
 
-	void Render();
+	void Render(bool drawBoundingBox = false);
 
 	void DrawBoundingBox(const AABBox& aabb);
 	AABBox GetBoundingBox();

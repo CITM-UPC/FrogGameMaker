@@ -95,7 +95,13 @@ bool EditorApp::Update() {
 
 	// post update
 	{
-		gameApp->Render(editorCamera->camera);
+		if (gameIsOn) {
+			gameApp->GameRender(editorCamera->camera);
+		}
+		else {
+			gameApp->EditorRender(editorCamera->camera);
+
+		}
 
 		auto item = modules.begin();
 
