@@ -94,9 +94,13 @@ bool EditorInput::PreUpdate() {
 		case (SDL_DROPFILE): {      // In case if dropped file
 			dropped_filedir = event.drop.file;
 
+			filesystem::path path("Assets");
+			path = std::filesystem::absolute(path);
+			filesystem::path droppedPath(dropped_filedir);
+
 			if (dropped_filedir.ends_with(".fbx")) {
-				/*if (!dropped_filedir.starts_with("Assets/"))
-					filesystem::copy(dropped_filedir, "Assets");*/
+				if (droppedPath.parent_path() != path)
+					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
 
 				GameObject* newMesh = editor->gameApp->scene->AddGameObject();
 				auto mesh_ptrs = Mesh::loadFromFile(dropped_filedir);
@@ -105,8 +109,8 @@ bool EditorInput::PreUpdate() {
 
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
-				/*if (!dropped_filedir.starts_with("Assets/"))
-					filesystem::copy(dropped_filedir, "Assets");*/
+				if (droppedPath.parent_path() != path)
+					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
 				if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
 					TextureComponent* textureComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TextureComponent>();
 					MeshComponent* meshComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<MeshComponent>();

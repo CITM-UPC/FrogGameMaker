@@ -782,7 +782,6 @@ void EditorUI::UIAssetsWindow() {
 	for (const auto& entry : fs::directory_iterator(path)) {
 
 		ImGui::Button(entry.path().string().c_str());
-		//std::cout << entry.path() << std::endl;
 	}
 		
 
