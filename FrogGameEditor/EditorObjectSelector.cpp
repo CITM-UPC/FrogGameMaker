@@ -46,7 +46,7 @@ void EditorObjectSelector::SearchObject(int x, int y)
 	}
 
 	for (auto i = editor->gameApp->scene->children.begin(); i != editor->gameApp->scene->children.end(); ++i) {
-		if (RayHitsAABB(x, y, (*i).get()->GetBoundingBox())) {
+		if (RayHitsAABB(x, y, (*i)->GetBoundingBox())) {
 			CheckRayHitParent(x, y, (*i).get(), hitted, distances);
 		}
 	}
@@ -56,7 +56,7 @@ void EditorObjectSelector::SearchObject(int x, int y)
 	}
 
 	float smallestDistance = distances[0];
-	float smallestDistanceIndex;
+	float smallestDistanceIndex = 0;
 	for (auto i = 0; i < distances.size(); ++i) {
 		if (distances[i] < smallestDistance) {
 			smallestDistance = distances[i];
@@ -71,7 +71,7 @@ void EditorObjectSelector::SearchObject(int x, int y)
 void EditorObjectSelector::CheckRayHitParent(int x, int y, GameObject* parent, vector<GameObject*> hitted, vector<float> distances)
 {
 	float distance;
-	if (RayHitsGameObject(x, y, *parent, distance)) {
+	if (RayHitsGameObject(x, y, parent, distance)) {
 		hitted.push_back(parent);
 		distances.push_back(distance);
 
@@ -80,7 +80,7 @@ void EditorObjectSelector::CheckRayHitParent(int x, int y, GameObject* parent, v
 		}
 
 		for (auto i = parent->children.begin(); i != parent->children.end(); ++i) {
-			if (RayHitsAABB(x, y, (*i).get()->GetBoundingBox())) {
+			if (RayHitsAABB(x, y, (*i)->GetBoundingBox())) {
 				CheckRayHitParent(x, y, (*i).get(), hitted, distances);
 			}
 		}
@@ -92,9 +92,9 @@ bool EditorObjectSelector::RayHitsAABB(int x, int y, AABBox aabb)
 	return false;
 }
 
-bool EditorObjectSelector::RayHitsGameObject(int x, int y, GameObject go, float& distance)
+bool EditorObjectSelector::RayHitsGameObject(int x, int y, GameObject* go, float& distance)
 {
-	if (go.GetComponent<MeshComponent>() == nullptr) {
+	if (go->GetComponent<MeshComponent>() == nullptr) {
 		return false;
 	}
 
