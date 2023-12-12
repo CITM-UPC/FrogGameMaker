@@ -781,10 +781,23 @@ void EditorUI::UIAssetsWindow() {
 	std::string path = "../FrogGameEditor/Assets";
 	for (const auto& entry : fs::directory_iterator(path)) {
 
-		ImGui::Button(entry.path().string().c_str());
+		if (ImGui::Button(entry.path().string().c_str())) {
+			//ImGui::OpenPopup("assets_popup");
+
+
+		}
+		
 	}
 		
+	/*if (ImGui::BeginPopup("assets_popup")) {
+		if (ImGui::Selectable("Add to scene")) {
 
+		}
+		if (ImGui::Selectable("Delete")) {
+			std::remove(entry.path().string().c_str());
+		}
+		ImGui::EndPopup();
+	}*/
 
 	ImGui::End();
 }

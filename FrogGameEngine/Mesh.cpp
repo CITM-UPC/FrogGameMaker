@@ -4,6 +4,7 @@
 #include <assimp/postprocess.h>
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
+#include <assimp/cfileio.h>
 
 #include <span>
 
