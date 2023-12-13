@@ -37,30 +37,9 @@ struct Camera
 	vec3 center;
 	vec3 up;
 
-	/*Frustum createFrustum()	{
-		Frustum     frustum;
+	Frustum createFrustum();
 
-		const vec3 front = glm::normalize(eye - center);
-		const vec3 right = glm::cross(glm::normalize(up), front);
-
-		const float halfVSide = zFar * tanf(fov * .5f);
-		const float halfHSide = halfVSide * aspect;
-		const vec3 frontMultFar = zFar * front;
-
-
-		frustum.nearFace = { front, eye + zNear * front };
-		frustum.farFace = { eye + frontMultFar, -front };
-		frustum.rightFace = { eye,
-								glm::cross(frontMultFar - right * halfHSide, up) };
-		frustum.leftFace = { eye,
-								glm::cross(up, frontMultFar + right * halfHSide) };
-		frustum.topFace = { eye,
-								glm::cross(right, frontMultFar - up * halfVSide) };
-		frustum.bottomFace = { eye,
-								glm::cross(frontMultFar + up * halfVSide, right) };
-
-		return frustum;
-	}*/
+	void drawFrustum();
 
 	mat4 computeLookAt() const {
 		return glm::lookAt(eye, center, up);

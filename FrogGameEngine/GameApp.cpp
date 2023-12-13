@@ -71,7 +71,16 @@ void GameApp::EditorStart() {
     transformHouse->translate(vec3(0, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
 
-    
+    basicCamera = scene->AddGameObject("cam");
+    basicCamera->AddComponent(CAMERA);
+    {
+        Camera cameraToSet = basicCamera->GetComponent<CameraComponent>()->getCamera();
+        cameraToSet.zFar = 20;
+        cameraToSet.fov = 10;
+        basicCamera->GetComponent<CameraComponent>()->setCamera(cameraToSet);
+    }
+    basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
+
 }
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)

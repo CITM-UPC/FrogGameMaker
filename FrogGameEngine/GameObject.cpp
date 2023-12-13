@@ -193,6 +193,10 @@ void GameObject::Render(bool drawBoundingBox)
 		if (mesh->getMesh()) mesh->getMesh()->draw();
 	}
 
+	if (GetComponent<CameraComponent>() != nullptr) {
+		GetComponent<CameraComponent>()->getCamera().drawFrustum();
+	}
+
 	// render
 	for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
 		(*childIt)->Render(drawBoundingBox);

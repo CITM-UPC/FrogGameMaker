@@ -34,6 +34,8 @@ public:
 	
 	GameObject* house = nullptr;
 
+	GameObject* basicCamera = nullptr;
+
 	void AddLog(string l);
 
 	vector<string> GetLogs();
