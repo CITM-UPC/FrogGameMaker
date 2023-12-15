@@ -11,7 +11,7 @@ enum ReferenceAxis {
 class TransformComponent : public Component {
 public:
 
-	TransformComponent();
+	TransformComponent(GameObject* owner);
 
 	~TransformComponent();
 

@@ -1,6 +1,6 @@
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent()
+TransformComponent::TransformComponent(GameObject* owner) : Component(owner)
 {
 	_transform = mat4(1.0f);
 	componentType = TRANSFORM;

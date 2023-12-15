@@ -5,7 +5,7 @@
 class CameraComponent : public Component {
 public:
 
-	CameraComponent();
+	CameraComponent(GameObject* owner);
 	~CameraComponent();
 
 	void setCamera(Camera camera);

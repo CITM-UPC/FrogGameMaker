@@ -110,16 +110,16 @@ Component* GameObject::AddComponent(ComponentType type)
 	switch (type)
 	{
 	case ComponentType::TRANSFORM:
-		newComponent = make_unique<TransformComponent>();
+		newComponent = make_unique<TransformComponent>(this);
 		break;
 	case ComponentType::MESH:
-		newComponent = make_unique<MeshComponent>();
+		newComponent = make_unique<MeshComponent>(this);
 		break;
 	case ComponentType::TEXTURE:
-		newComponent = make_unique<TextureComponent>();
+		newComponent = make_unique<TextureComponent>(this);
 		break;
 	case ComponentType::CAMERA:
-		newComponent = make_unique<CameraComponent>();
+		newComponent = make_unique<CameraComponent>(this);
 		break;
 	default:
 		break;

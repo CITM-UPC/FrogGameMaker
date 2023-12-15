@@ -1,6 +1,6 @@
 #include "TextureComponent.h"
 
-TextureComponent::TextureComponent()
+TextureComponent::TextureComponent(GameObject* owner) : Component(owner)
 {
 	componentType = TEXTURE;
 }

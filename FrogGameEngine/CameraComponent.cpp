@@ -1,6 +1,6 @@
 #include "CameraComponent.h"
 
-CameraComponent::CameraComponent()
+CameraComponent::CameraComponent(GameObject* owner) : Component(owner)
 {
 	componentType = CAMERA;
 	
