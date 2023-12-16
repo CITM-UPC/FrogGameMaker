@@ -8,19 +8,14 @@ Frustum Camera::createFrustum()
 {
 	Frustum frustum;
 
-	const vec3 front = glm::normalize(eye - center);
-	const vec3 right = glm::cross(glm::normalize(up), front);
-
-	const float halfVSide = zFar * tanf(fov * .5f);
-	const float halfHSide = halfVSide * aspect;
-	const vec3 frontMultFar = zFar * front;
-
+	const vec3 front = { 0, 0, 1 };
+	const vec3 right = { 1, 0, 0 };
 
 	frustum.nearFace = { front, zNear };
 	frustum.farFace = { -front, zFar };
 
 	frustum.rightFace = { glm::rotate(front,  -((90 - (fov * 0.5)) * aspect), up), 0};
-	frustum.leftFace = { glm::rotate(front, (90 - (fov * 0.5) * aspect), right), 0 };
+	frustum.leftFace = { glm::rotate(front, (90 - (fov * 0.5) * aspect), up), 0 };
 
 	frustum.topFace = { glm::rotate(front, -(90 - (fov * 0.5)), right), 0 };
 	frustum.bottomFace = { glm::rotate(front, 90 - (fov * 0.5), right), 0 };
@@ -41,15 +36,17 @@ void Camera::drawFrustum()
 	// |     |
 	// c --- d
 
-	vec3 a = { zNear * -sin(fov / 2) * aspect, zNear * sin(fov / 2), zNear };
-	vec3 b = { zNear * sin(fov / 2) * aspect, zNear * sin(fov / 2), zNear };
-	vec3 c = { zNear * -sin(fov / 2) * aspect, zNear * -sin(fov / 2), zNear };
-	vec3 d = { zNear * sin(fov / 2) * aspect, zNear * -sin(fov / 2), zNear };
+	double verticalFovDistance = sin(fov / 2);
 
-	vec3 e = { zFar * -sin(fov / 2) * aspect, zFar * sin(fov / 2), zFar };
-	vec3 f = { zFar * sin(fov / 2) * aspect, zFar * sin(fov / 2), zFar };
-	vec3 g = { zFar * -sin(fov / 2) * aspect, zFar * -sin(fov / 2), zFar };
-	vec3 h = { zFar * sin(fov / 2) * aspect, zFar * -sin(fov / 2), zFar };
+	vec3 a = { zNear * -verticalFovDistance * aspect, zNear * verticalFovDistance, zNear };
+	vec3 b = { zNear * verticalFovDistance * aspect, zNear * verticalFovDistance, zNear };
+	vec3 c = { zNear * -verticalFovDistance * aspect, zNear * -verticalFovDistance, zNear };
+	vec3 d = { zNear * verticalFovDistance * aspect, zNear * -verticalFovDistance, zNear };
+
+	vec3 e = { zFar * -verticalFovDistance * aspect, zFar * verticalFovDistance, zFar };
+	vec3 f = { zFar * verticalFovDistance * aspect, zFar * verticalFovDistance, zFar };
+	vec3 g = { zFar * -verticalFovDistance * aspect, zFar * -verticalFovDistance, zFar };
+	vec3 h = { zFar * verticalFovDistance * aspect, zFar * -verticalFovDistance, zFar };
 
 
 	glLineWidth(2);
