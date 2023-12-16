@@ -39,15 +39,15 @@ void Camera::drawFrustum()
 	// |     |
 	// c --- d
 
-	vec3 a = { zNear * -sin(fov / 2), zNear * sin(fov * aspect / 2), zNear };
-	vec3 b = { zNear * sin(fov / 2), zNear * sin(fov * aspect / 2), zNear };
-	vec3 c = { zNear * -sin(fov / 2), zNear * -sin(fov * aspect / 2), zNear };
-	vec3 d = { zNear * sin(fov / 2), zNear * -sin(fov * aspect / 2), zNear };
+	vec3 a = { zNear * -sin(fov / 2) * aspect, zNear * sin(fov / 2), zNear };
+	vec3 b = { zNear * sin(fov / 2) * aspect, zNear * sin(fov / 2), zNear };
+	vec3 c = { zNear * -sin(fov / 2) * aspect, zNear * -sin(fov / 2), zNear };
+	vec3 d = { zNear * sin(fov / 2) * aspect, zNear * -sin(fov / 2), zNear };
 
-	vec3 e = { zFar * -sin(fov / 2), zFar * sin(fov * aspect / 2), zFar };
-	vec3 f = { zFar * sin(fov / 2), zFar * sin(fov * aspect / 2), zFar };
-	vec3 g = { zFar * -sin(fov / 2), zFar * -sin(fov * aspect / 2), zFar };
-	vec3 h = { zFar * sin(fov / 2), zFar * -sin(fov * aspect / 2), zFar };
+	vec3 e = { zFar * -sin(fov / 2) * aspect, zFar * sin(fov / 2), zFar };
+	vec3 f = { zFar * sin(fov / 2) * aspect, zFar * sin(fov / 2), zFar };
+	vec3 g = { zFar * -sin(fov / 2) * aspect, zFar * -sin(fov / 2), zFar };
+	vec3 h = { zFar * sin(fov / 2) * aspect, zFar * -sin(fov / 2), zFar };
 
 
 	glLineWidth(2);
