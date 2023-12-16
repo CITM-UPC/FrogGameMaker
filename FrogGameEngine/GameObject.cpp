@@ -194,7 +194,7 @@ void GameObject::Render(bool drawBoundingBox)
 	}
 
 	if (GetComponent<CameraComponent>() != nullptr) {
-		GetComponent<CameraComponent>()->getCamera().drawFrustum();
+		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
 	}
 
 	// render

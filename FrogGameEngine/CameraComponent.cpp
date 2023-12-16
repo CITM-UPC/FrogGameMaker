@@ -15,7 +15,7 @@ void CameraComponent::setCamera(Camera camera)
 	_camera = camera;
 }
 
-Camera CameraComponent::getCamera()
+Camera* CameraComponent::getCamera()
 {
-	return _camera;
+	return &_camera;
 }

@@ -718,7 +718,11 @@ void EditorUI::UIInspectorWriteCameraNode(CameraComponent* component) {
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Camera")) {
-		
+		Camera* cam = component->getCamera();
+		ImGui::InputDouble("FOV", &cam->fov);
+		ImGui::InputDouble("zNear", &cam->zNear);
+		ImGui::InputDouble("zFar", &cam->zFar);
+		ImGui::InputDouble("Aspect Ratio", &cam->aspect);
 	}
 }
 

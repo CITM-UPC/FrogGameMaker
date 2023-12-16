@@ -9,7 +9,7 @@ public:
 	~CameraComponent();
 
 	void setCamera(Camera camera);
-	Camera getCamera();
+	Camera* getCamera();
 
 protected:
 

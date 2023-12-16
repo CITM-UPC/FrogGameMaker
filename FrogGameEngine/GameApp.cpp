@@ -74,10 +74,10 @@ void GameApp::EditorStart() {
     basicCamera = scene->AddGameObject("cam");
     basicCamera->AddComponent(CAMERA);
     {
-        Camera cameraToSet = basicCamera->GetComponent<CameraComponent>()->getCamera();
-        cameraToSet.zFar = 20;
-        cameraToSet.fov = 10;
-        basicCamera->GetComponent<CameraComponent>()->setCamera(cameraToSet);
+        Camera* cameraToSet = basicCamera->GetComponent<CameraComponent>()->getCamera();
+        cameraToSet->zFar = 20;
+        cameraToSet->fov = 10;
+        basicCamera->GetComponent<CameraComponent>()->setCamera(*cameraToSet);
     }
     basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
 
