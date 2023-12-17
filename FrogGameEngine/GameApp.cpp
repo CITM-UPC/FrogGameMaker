@@ -59,6 +59,16 @@ GameApp::~GameApp()
 }
 
 void GameApp::EditorStart() {
+
+    std::string path = "../FrogGameEditor/Assets";
+    for (const auto& entry : filesystem::directory_iterator(path)) {
+        Paths currentAsset;
+        currentAsset.assetsPath = entry.path();
+        currentAsset.name = entry.path().filename().string();
+
+        allAssets.push_back(currentAsset);
+    }
+
     // scene->DebugStart();
     house = scene->AddGameObject();
     auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");

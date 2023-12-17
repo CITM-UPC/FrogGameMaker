@@ -1,10 +1,6 @@
 #include "Mesh.h"
 #include <GL/glew.h>
 
-#include <assimp/postprocess.h>
-#include <assimp/cimport.h>
-#include <assimp/scene.h>
-
 #include <span>
 
 #include <vector>
@@ -15,7 +11,7 @@ namespace fs = std::filesystem;
 
 using namespace std;
 
-struct aiMeshExt : aiMesh {
+/*struct aiMeshExt : aiMesh {
     auto verts() const { return span((vec3f*)mVertices, mNumVertices); }
     auto texCoords() const { return span((vec3f*)mTextureCoords[0], mNumVertices); }
     auto faces() const { return span(mFaces, mNumFaces); }
@@ -177,7 +173,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
     aiReleaseImport(scene_ptr);
 
     return mesh_ptrs;
-}
+}*/
 
 void Mesh::loadTextureToMesh(const std::string& path) 
 {
@@ -188,33 +184,6 @@ void Mesh::loadTextureToMesh(const std::string& path)
 
 }
 
-/*Mesh::Mesh(Cube cube) :
-    _format(F_V3C4),
-    _vertex_buffer_id(cube._vertex_buffer_id),
-    _numVerts(cube.NUM_VERTEXS),
-    _indexs_buffer_id(NULL),
-    _numIndexs(0)
-{
-    cube._vertex_buffer_id = 0;
-}
-
-Mesh::Mesh(Pyramid pyramid) :
-    _format(F_V3C4),
-    _vertex_buffer_id(pyramid._vertex_buffer_id),
-    _numVerts(pyramid.NUM_VERTEXS),
-    _indexs_buffer_id(NULL),
-    _numIndexs(0)
-{
-}
-
-Mesh::Mesh(Cylinder cylinder) :
-    _format(F_V3C4),
-    _vertex_buffer_id(cylinder._vertex_buffer_id),
-    _numVerts(cylinder.NUM_VERTEXS),
-    _indexs_buffer_id(NULL),
-    _numIndexs(0)
-{
-}*/
 
 Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsigned int numFaces, const unsigned int* index_data, unsigned int numIndexs) :
     _format(format),
@@ -248,6 +217,14 @@ Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsig
     else {
         _indexs_buffer_id = 0;
     }
+}
+
+Mesh::Mesh(MeshLoader custom) :
+    _format(F_V3T2),
+    _numVerts(b._numVerts),
+    _numIndexs(b._numIndexs),
+    _numFaces(b._numFaces),
+{
 }
 
 

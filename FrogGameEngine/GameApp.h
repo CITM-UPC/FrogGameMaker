@@ -1,6 +1,8 @@
 #pragma once
 #include <chrono>
 #include <string>
+#include <filesystem>
+#include <list>
 
 #include "Types.h"
 #include "GameRenderer.h"
@@ -33,6 +35,8 @@ public:
 	
 	GameObject* house = nullptr;
 
+	list<Paths> allAssets;
+
 	void AddLog(string l);
 
 	vector<string> GetLogs();
@@ -44,3 +48,11 @@ private:
 
 };
 
+
+struct Paths {
+
+	std::string name;
+	filesystem::path assetsPath;
+	filesystem::path libraryPath;
+
+};

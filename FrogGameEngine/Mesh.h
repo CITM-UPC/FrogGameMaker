@@ -5,6 +5,7 @@
 #include "Graphic.h"
 #include "Texture2D.h"
 #include "Types.h"
+#include "MeshLoader.h"
 
 class Mesh :
     public Graphic
@@ -29,8 +30,8 @@ private:
 public:
 	using Ptr = std::shared_ptr<Mesh>;
 
-	static std::vector<Ptr> loadFromFile(const std::string& path);
-	static std::vector<Ptr> loadFromFile(const std::string& path, const std::string& stringPath);
+	//static std::vector<Ptr> loadFromFile(const std::string& path);
+	//static std::vector<Ptr> loadFromFile(const std::string& path, const std::string& stringPath);
 
 	std::string path;
 	
@@ -49,6 +50,7 @@ public:
 	bool drawNormalsFaces = false;
 
 	Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsigned int numFaces, const unsigned int* index_data = nullptr, unsigned int numIndexs = 0);
+	Mesh(MeshLoader custom);
 	Mesh(Mesh&& b) noexcept;
 	void draw();
 	~Mesh();
