@@ -36,7 +36,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     fs::path pathPath(path.c_str());
     fs::path customPath("../FrogGameEditor/Library/Meshes/asdf.sht") /*= fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(pathPath.filename()) / fs::path(".sht")*/; //to library
 
-    customPath = customPath.parent_path() / pathPath.filename();
+    //customPath = customPath.parent_path() / pathPath.filename();
 
     scene_ptr->mName.C_Str();
     
