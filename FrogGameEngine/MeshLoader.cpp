@@ -34,7 +34,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
-    fs::path customPath(""); //to library
+    fs::path customPath = fs::path("../FrogGameEditor/Library/Meshes/")/fs::path(pathPath.filename())/fs::path(".sht"); //to library
 
     customPath = customPath.parent_path() / pathPath.filename();
 
@@ -53,7 +53,6 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     }*/
 
     //load meshes
-    //vector<MeshLoader> mesh_ptrs;
     for (const auto& mesh_ptr : scene.meshes()) {
 
         const auto& mesh = *mesh_ptr;
@@ -123,6 +122,24 @@ std::ostream& MeshLoader::serialize(std::ostream& os) const
     os.write((char*)&vLength, sizeof(vLength));
     os.write((char*)index_data.data(), index_data.size() * sizeof(unsigned int));
 
+    vLength = meshVerts.size();
+    os.write((char*)&vLength, sizeof(vLength));
+    os.write((char*)meshVerts.data(), meshVerts.size() * sizeof(vec3f));
+
+    vLength = meshNorms.size();
+    os.write((char*)&vLength, sizeof(vLength));
+    os.write((char*)meshNorms.data(), meshNorms.size() * sizeof(vec3f));
+
+    vLength = meshFaceCenters.size();
+    os.write((char*)&vLength, sizeof(vLength));
+    os.write((char*)meshFaceCenters.data(), meshFaceCenters.size() * sizeof(vec3f));
+
+    vLength = meshFaceNorms.size();
+    os.write((char*)&vLength, sizeof(vLength));
+    os.write((char*)meshFaceNorms.data(), meshFaceNorms.size() * sizeof(vec3f));
+
+    os.write((char*)numFaces, sizeof(unsigned int));
+
     return os;
 }
 
@@ -136,6 +153,24 @@ std::istream& MeshLoader::deserialize(std::istream& is)
     is.read((char*)&vLength, sizeof(vLength));
     index_data.resize(vLength);
     is.read((char*)index_data.data(), vLength * sizeof(unsigned int));
+
+    is.read((char*)&vLength, sizeof(vLength));
+    meshVerts.resize(vLength);
+    is.read((char*)meshVerts.data(), vLength * sizeof(vec3f));
+
+    is.read((char*)&vLength, sizeof(vLength));
+    meshNorms.resize(vLength);
+    is.read((char*)meshNorms.data(), vLength * sizeof(vec3f));
+
+    is.read((char*)&vLength, sizeof(vLength));
+    meshFaceCenters.resize(vLength);
+    is.read((char*)meshFaceCenters.data(), vLength * sizeof(vec3f));
+
+    is.read((char*)&vLength, sizeof(vLength));
+    meshFaceNorms.resize(vLength);
+    is.read((char*)meshFaceNorms.data(), vLength * sizeof(vec3f));
+
+    is.read((char*)numFaces, sizeof(unsigned int));
 
     return is;
 }
