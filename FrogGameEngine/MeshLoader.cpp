@@ -76,7 +76,6 @@ std::string MeshLoader::loadFromFile(const std::string& path)
 
         mesh_sptr.vertex_data = vertex_data;
         mesh_sptr.index_data = index_data;
-        //mesh_sptr->path = path;
 
         for (size_t i = 0; i < mesh.mNumVertices; i++) {
             aiVector3D normal = mesh.mNormals[i];
@@ -106,7 +105,6 @@ std::string MeshLoader::loadFromFile(const std::string& path)
         }
 
         oFile << mesh_sptr;
-        //mesh_ptrs.push_back(mesh_sptr);
     }
 
     aiReleaseImport(scene_ptr);

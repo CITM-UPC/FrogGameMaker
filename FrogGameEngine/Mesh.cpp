@@ -177,8 +177,7 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::st
 
 void Mesh::loadTextureToMesh(const std::string& path) 
 {
-    aiString aiPath(path);
-    fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
+    fs::path texPath(path);
     auto texture_ptr = make_shared<Texture2D>(texPath.string());
     texture = texture_ptr;
 
@@ -221,10 +220,32 @@ Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsig
 
 Mesh::Mesh(MeshLoader custom) :
     _format(F_V3T2),
-    _numVerts(b._numVerts),
-    _numIndexs(b._numIndexs),
-    _numFaces(b._numFaces),
+    _numVerts(custom.meshVerts.size()),
+    _numIndexs(custom.index_data.size()),
+    _numFaces(custom.numFaces)
 {
+    meshVerts = custom.meshVerts;
+    meshNorms = custom.meshNorms;
+    meshFaceCenters = custom.meshFaceCenters;
+    meshFaceNorms = custom.meshFaceNorms;
+
+    glGenBuffers(1, &_vertex_buffer_id);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
+
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * _numVerts, custom.vertex_data.data(), GL_STATIC_DRAW);
+
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    if (!custom.index_data.empty()) {
+        glGenBuffers(1, &_indexs_buffer_id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexs_buffer_id);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _numIndexs, custom.index_data.data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+    else {
+        _indexs_buffer_id = 0;
+    }
 }
 
 
