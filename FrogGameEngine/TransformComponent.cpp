@@ -62,6 +62,21 @@ vec3 TransformComponent::getScale()
 	return vec3(x, y, z);
 }
 
+vec3 TransformComponent::getRight()
+{
+	return _right;
+}
+
+vec3 TransformComponent::getUp()
+{
+	return _up;
+}
+
+vec3 TransformComponent::getForward()
+{
+	return _forward;
+}
+
 void TransformComponent::translate(vec3 translation, ReferenceAxis ref)
 {
 	switch (ref)
@@ -77,9 +92,21 @@ void TransformComponent::translate(vec3 translation, ReferenceAxis ref)
 	}
 }
 
-void TransformComponent::rotate(double degrees, const vec3& axis)
+void TransformComponent::rotate(double degrees, const vec3& axis, ReferenceAxis ref)
 {
-	_transform = glm::rotate(_transform, glm::radians(degrees), axis);
+	//axis = glm::normalize(axis);
+	
+	switch (ref)
+	{
+	case LOCAL:
+		_transform = glm::rotate(_transform, glm::radians(degrees), axis);
+		break;
+	case GLOBAL:
+		_transform = glm::rotate(_transform, glm::radians(degrees), axis * (glm::dmat3)_transform);
+		break;
+	default:
+		break;
+	}
 }
 
 void TransformComponent::scale(vec3 scale)

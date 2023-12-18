@@ -96,10 +96,10 @@ bool EditorApp::Update() {
 	// post update
 	{
 		if (gameIsOn) {
-			gameApp->GameRender(editorCamera->camera);
+			gameApp->GameRender(editorCamera->cameraObject.get()->GetComponent<CameraComponent>());
 		}
 		else {
-			gameApp->EditorRender(editorCamera->camera);
+			gameApp->EditorRender(editorCamera->cameraObject.get()->GetComponent<CameraComponent>());
 
 		}
 

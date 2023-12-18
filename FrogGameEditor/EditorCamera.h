@@ -1,7 +1,7 @@
 #pragma once
 #include "EditorModule.h"
 
-#include "../FrogGameEngine/GameRenderer.h"
+#include "../FrogGameEngine/GameObject.h"
 
 class EditorCamera : public EditorModule {
 public:
@@ -21,5 +21,7 @@ public:
 	// if the mouse pressed is drag to ui this still is false
 	bool mouseOnUI;
 
-	Camera camera;
+	vec3 focusPosition = { 0, 0, 0 };
+
+	unique_ptr<GameObject> cameraObject;
 };

@@ -126,7 +126,7 @@ bool EditorUI::Update() {
 	}
 
 	if (usingGuizmo) {
-		if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
+		/*if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
 			const float* viewMatrix = (float*)&editor->editorCamera->camera.computeLookAt()[0][0];
 			const float* projectionMatrix = (float*)&glm::perspective(editor->editorCamera->camera.fov, editor->editorCamera->camera.aspect, editor->editorCamera->camera.zNear, editor->editorCamera->camera.zFar)[0][0];
 
@@ -136,7 +136,7 @@ bool EditorUI::Update() {
 
 			ImGuizmo::Manipulate(viewMatrix, projectionMatrix, currentGuizmoOperation, currentGuizmoMode, transformMatrix);
 
-		}
+		}*/
 	}
 
 	// windows

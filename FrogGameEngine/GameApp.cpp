@@ -101,17 +101,21 @@ void GameApp::GameStep(std::chrono::duration<double> dt)
 
 }
 
-void GameApp::EditorRender(Camera camera)
+// (i think) camera has to be global -> not being a child --TODO--
+void GameApp::EditorRender(CameraComponent* camera)
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(camera.fov, camera.aspect, camera.zNear, camera.zFar);
+    gluPerspective(camera->getCamera()->fov, camera->getCamera()->aspect, camera->getCamera()->zNear, camera->getCamera()->zFar);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
-        camera.center.x, camera.center.y, camera.center.z,
-        camera.up.x, camera.up.y, camera.up.z);
+
+    vec3 center = camera->getTransform()->getPosition() + camera->getTransform()->getForward();
+
+    gluLookAt(camera->getTransform()->getPosition().x, camera->getTransform()->getPosition().y, camera->getTransform()->getPosition().z,
+        center.x, center.y, center.z,
+        camera->getTransform()->getUp().x, camera->getTransform()->getUp().y, camera->getTransform()->getUp().z);
 
     drawGrid(100, 1);
     drawAxis();
@@ -126,17 +130,21 @@ void GameApp::EditorRender(Camera camera)
     assert(glGetError() == GL_NONE);
 }
 
-void GameApp::GameRender(Camera camera)
+// (i think) camera has to be global -> not being a child --TODO--
+void GameApp::GameRender(CameraComponent* camera)
 {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(camera.fov, camera.aspect, camera.zNear, camera.zFar);
+    gluPerspective(camera->getCamera()->fov, camera->getCamera()->aspect, camera->getCamera()->zNear, camera->getCamera()->zFar);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
-        camera.center.x, camera.center.y, camera.center.z,
-        camera.up.x, camera.up.y, camera.up.z);
+
+    vec3 center = camera->getTransform()->getPosition() + camera->getTransform()->getForward();
+
+    gluLookAt(camera->getTransform()->getPosition().x, camera->getTransform()->getPosition().y, camera->getTransform()->getPosition().z,
+        center.x, center.y, center.z,
+        camera->getTransform()->getUp().x, camera->getTransform()->getUp().y, camera->getTransform()->getUp().z);
 
     drawGrid(100, 1);
     drawAxis();

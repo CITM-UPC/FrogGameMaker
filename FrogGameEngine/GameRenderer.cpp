@@ -10,15 +10,37 @@ Frustum Camera::createFrustum()
 
 	const vec3 front = { 0, 0, 1 };
 	const vec3 right = { 1, 0, 0 };
+	const vec3 up = { 0, 1, 0 };
 
-	frustum.nearFace = { front, zNear };
-	frustum.farFace = { -front, zFar };
+	frustum.nearFace = { front, {0, 0, zNear} };
+	frustum.farFace = { -front, {0, 0, zFar} };
 
-	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), up), 0};
-	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), up), 0 };
+	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), up), {0, 0, 0} };
+	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), up), {0, 0, 0} };
 
-	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), 0 };
-	frustum.bottomFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5)), right), 0 };
+	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), {0, 0, 0} };
+	frustum.bottomFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5)), right), {0, 0, 0} };
+
+	return frustum;
+}
+
+Frustum Camera::createFrustum(mat4 transform)
+{
+	Frustum frustum;
+
+	const vec3 right = transform[0];
+	const vec3 upUp = transform[1];
+	const vec3 front = transform[2];
+	const vec3 pos = transform[3];
+
+	frustum.nearFace = { front, pos + (front * zNear) };
+	frustum.farFace = { -front, pos + (front * zFar) };
+
+	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), upUp), pos };
+	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), upUp), pos };
+
+	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), pos };
+	frustum.bottomFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5)), right), pos };
 
 	return frustum;
 }

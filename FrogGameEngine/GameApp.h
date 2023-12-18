@@ -23,12 +23,11 @@ public:
 	void EditorStep(std::chrono::duration<double> dt);
 	void GameStart();
 	void GameStep(std::chrono::duration<double> dt);
-	void EditorRender(Camera camera);
-	void GameRender(Camera camera);
+	void EditorRender(CameraComponent* camera);
+	void GameRender(CameraComponent* camera);
 	void CleanUp();
 
 	vec3 positionCube = { 0, 0, 0 }, rotationCube = { 0, 0, 0 }, scaleCube = { 1, 1, 1 };
-
 
 	Scene* scene = nullptr;
 	
