@@ -183,7 +183,6 @@ void GameObject::Render(bool drawBoundingBox)
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
 
-	glColor3ub(128, 0, 0);
 	if (drawBoundingBox) {
 		DrawBoundingBox(GetBoundingBox());
 	}
@@ -210,6 +209,8 @@ static inline void glVec3(const vec3& v) { glVertex3dv(&v.x); }
 
 void GameObject::DrawBoundingBox(const AABBox& aabb)
 {
+	glColor3ub(128, 0, 0);
+
 	glLineWidth(2);
 	glBegin(GL_LINE_STRIP);
 
