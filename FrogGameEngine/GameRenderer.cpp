@@ -14,11 +14,11 @@ Frustum Camera::createFrustum()
 	frustum.nearFace = { front, zNear };
 	frustum.farFace = { -front, zFar };
 
-	frustum.rightFace = { glm::rotate(front,  -((90 - (fov * 0.5)) * aspect), up), 0};
-	frustum.leftFace = { glm::rotate(front, (90 - (fov * 0.5) * aspect), up), 0 };
+	frustum.rightFace = { glm::rotate(front,  -glm::radians((90 - (fov * 0.5)) * aspect), up), 0};
+	frustum.leftFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5) * aspect), up), 0 };
 
-	frustum.topFace = { glm::rotate(front, -(90 - (fov * 0.5)), right), 0 };
-	frustum.bottomFace = { glm::rotate(front, 90 - (fov * 0.5), right), 0 };
+	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), 0 };
+	frustum.bottomFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5)), right), 0 };
 
 	return frustum;
 }
@@ -36,7 +36,7 @@ void Camera::drawFrustum()
 	// |     |
 	// c --- d
 
-	double verticalFovDistance = sin(fov / 2);
+	double verticalFovDistance = sin(glm::radians(fov / 2));
 
 	vec3 a = { zNear * -verticalFovDistance * aspect, zNear * verticalFovDistance, zNear };
 	vec3 b = { zNear * verticalFovDistance * aspect, zNear * verticalFovDistance, zNear };
