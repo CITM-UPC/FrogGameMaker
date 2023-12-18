@@ -102,10 +102,15 @@ bool EditorInput::PreUpdate() {
 				if (droppedPath.parent_path() != path)
 					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
 
-				GameObject* newMesh = editor->gameApp->scene->AddGameObject();
-				auto mesh_ptrs = Mesh::loadFromFile(dropped_filedir);
+				//GameObject* newMesh = editor->gameApp->scene->AddGameObject();
+				auto mesh_ptrs = MeshLoader::loadFromFile(dropped_filedir);
+				Paths droppedFile;
+				droppedFile.assetsPath = filesystem::path(dropped_filedir);
+				droppedFile.libraryPath = filesystem::path(mesh_ptrs);
+				droppedFile.name = filesystem::path(dropped_filedir).filename().string();
+				editor->gameApp->allAssets.push_back(droppedFile);
 				editor->AddLog("Mesh loaded from " + dropped_filedir);
-				newMesh->AddMeshWithTexture(mesh_ptrs);
+				//newMesh->AddMeshWithTexture(mesh_ptrs);
 
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {

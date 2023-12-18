@@ -34,7 +34,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
-    fs::path customPath = fs::path("../FrogGameEditor/Library/Meshes/")/fs::path(pathPath.filename())/fs::path(".sht"); //to library
+    fs::path customPath("../FrogGameEditor/Library/Meshes/asdf.sht") /*= fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(pathPath.filename()) / fs::path(".sht")*/; //to library
 
     customPath = customPath.parent_path() / pathPath.filename();
 
@@ -103,7 +103,9 @@ std::string MeshLoader::loadFromFile(const std::string& path)
             mesh_sptr.meshFaceCenters.push_back(faceCenter);
         }
 
-        oFile << mesh_sptr;
+        mesh_sptr.serialize(oFile);
+
+        //AddLog
     }
 
     aiReleaseImport(scene_ptr);

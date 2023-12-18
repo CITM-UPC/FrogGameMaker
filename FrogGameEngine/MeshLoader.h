@@ -19,6 +19,7 @@ struct MeshLoader
 	std::vector<VertexV3T2> vertex_data;
 	std::vector<unsigned int> index_data;
 	unsigned int numFaces;
+
 	std::vector<vec3f> meshVerts;
 	std::vector<vec3f> meshNorms;
 	std::vector<vec3f> meshFaceCenters;
@@ -26,7 +27,7 @@ struct MeshLoader
 
 	using Ptr = std::shared_ptr<MeshLoader>;
 
-	std::string loadFromFile(const std::string& path);
+	static std::string loadFromFile(const std::string& path);
 
 	std::ostream& serialize(std::ostream& os) const;
 	std::istream& deserialize(std::istream& is);

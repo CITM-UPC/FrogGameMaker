@@ -11,6 +11,14 @@
 
 #include "Scene.h"
 
+struct Paths {
+
+	std::string name;
+	filesystem::path assetsPath;
+	filesystem::path libraryPath;
+
+};
+
 class GameApp
 {
 public:
@@ -49,10 +57,4 @@ private:
 };
 
 
-struct Paths {
 
-	std::string name;
-	filesystem::path assetsPath;
-	filesystem::path libraryPath;
-
-};
