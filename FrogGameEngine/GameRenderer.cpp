@@ -14,8 +14,8 @@ Frustum Camera::createFrustum()
 	frustum.nearFace = { front, zNear };
 	frustum.farFace = { -front, zFar };
 
-	frustum.rightFace = { glm::rotate(front,  -glm::radians((90 - (fov * 0.5)) * aspect), up), 0};
-	frustum.leftFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5) * aspect), up), 0 };
+	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), up), 0};
+	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), up), 0 };
 
 	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), 0 };
 	frustum.bottomFace = { glm::rotate(front, glm::radians(90 - (fov * 0.5)), right), 0 };
