@@ -66,7 +66,9 @@ void GameApp::EditorStart() {
     for (const auto& entry : filesystem::directory_iterator(path)) {
         Paths currentAsset;
         if (entry.path().string().ends_with(".fbx")) {
-            currentAsset.libraryPath = filesystem::path(MeshLoader::loadFromFile(entry.path().generic_string()));
+            vector<string> libraryStrings = MeshLoader::loadFromFile(entry.path().generic_string());
+            for (int i = 0; i < libraryStrings.size(); ++i)
+                currentAsset.libraryPath.push_back(filesystem::path(libraryStrings[i]));
         }
 
         currentAsset.assetsPath = entry.path();

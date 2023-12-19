@@ -15,7 +15,7 @@ struct Paths {
 
 	std::string name;
 	filesystem::path assetsPath;
-	filesystem::path libraryPath;
+	std::vector<filesystem::path> libraryPath;
 
 };
 
@@ -43,7 +43,7 @@ public:
 	
 	GameObject* house = nullptr;
 
-	list<Paths> allAssets;
+	vector<Paths> allAssets;
 
 	void AddLog(string l);
 

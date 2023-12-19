@@ -779,9 +779,9 @@ void EditorUI::UIAssetsWindow() {
 	ImGui::Begin("Assets");
 
 	std::string path = "../FrogGameEditor/Assets";
-	for (const auto& entry : fs::directory_iterator(path)) {
+	for (int i = 0; i < editor->gameApp->allAssets.size(); ++i) {
 
-		if (ImGui::Button(entry.path().string().c_str())) {
+		if (ImGui::Button(editor->gameApp->allAssets[i].name.c_str())) {
 			//ImGui::OpenPopup("assets_popup");
 
 

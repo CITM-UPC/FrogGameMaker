@@ -21,27 +21,30 @@ struct aiSceneExt : aiScene {
     auto materials() const { return span(mMaterials, mNumMaterials); }
     auto meshes() const { return span((aiMeshExt**)mMeshes, mNumMeshes); }
 };
+*/
 
-
-std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
+//std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
 
     
 
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
-    const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
+    //const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
+    //const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     //load textures
-    vector<Texture2D::Ptr> texture_ptrs;
+   /* vector<Texture2D::Ptr> texture_ptrs;
     for (const auto& material : scene.materials()) {
         aiString aiPath;
         material->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
         fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
         auto texture_ptr = make_shared<Texture2D>(texPath.string());
         texture_ptrs.push_back(texture_ptr);
-    }
+    }*/
 
     //load meshes
+ /**  vector<MeshLoader> forLoading;
     vector<Mesh::Ptr> mesh_ptrs;
+
+    //while (forLoading.)
     for (const auto& mesh_ptr : scene.meshes()) {
 
         const auto& mesh = *mesh_ptr;
@@ -95,12 +98,11 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path) {
         mesh_ptrs.push_back(mesh_sptr);
     }
 
-    aiReleaseImport(scene_ptr);
 
     return mesh_ptrs;
-}
+}*/
 
-std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::string& stringPath) {
+/*std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::string& stringPath) {
 
 
     const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);

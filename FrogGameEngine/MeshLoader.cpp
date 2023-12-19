@@ -28,20 +28,14 @@ struct aiSceneExt : aiScene {
 };
 
 
-std::string MeshLoader::loadFromFile(const std::string& path)
+std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 {
     const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
-    string fileName = pathPath.filename().string() + ".sht";
-    fs::path customPath= fs::path("../FrogGameEditor/Library/Meshes/") /  fs::path(fileName); //to library
-
-    //customPath = customPath.parent_path() / pathPath.filename();
-
-    scene_ptr->mName.C_Str();
-    
-    ofstream oFile(customPath.string(), ios::binary);
+    std::vector<std::string> pathList;
+   
 
     //load textures
    /* vector<Texture2D::Ptr> texture_ptrs;
@@ -54,7 +48,15 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     }*/
 
     //load meshes
+    int i = 0;
     for (const auto& mesh_ptr : scene.meshes()) {
+
+        string fileName = pathPath.filename().string()  + std::to_string(i) + ".sht";
+        fs::path customPath = fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(fileName); //to library
+
+        scene_ptr->mName.C_Str();
+
+        ofstream oFile(customPath.string(), ios::binary);
 
         const auto& mesh = *mesh_ptr;
 
@@ -107,12 +109,15 @@ std::string MeshLoader::loadFromFile(const std::string& path)
          oFile << mesh_sptr;
 
         //AddLog
+         oFile.close();
+         pathList.push_back(customPath.generic_string());
+         ++i;
     }
 
     aiReleaseImport(scene_ptr);
-    oFile.close();
+    
 
-    return customPath.generic_string();
+    return pathList;
 }
 
 std::ostream& MeshLoader::serialize(std::ostream& os) const
@@ -173,7 +178,7 @@ std::istream& MeshLoader::deserialize(std::istream& is)
     meshFaceNorms.resize(vLength);
     is.read((char*)meshFaceNorms.data(), vLength * sizeof(vec3f));
 
-    is.read((char*)numFaces, sizeof(unsigned int));
+    is.read((char*)&numFaces, sizeof(unsigned int));
 
     return is;
 }

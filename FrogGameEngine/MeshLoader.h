@@ -27,7 +27,7 @@ struct MeshLoader
 
 	using Ptr = std::shared_ptr<MeshLoader>;
 
-	static std::string loadFromFile(const std::string& path);
+	static std::vector<std::string> loadFromFile(const std::string& path);
 
 	std::ostream& serialize(std::ostream& os) const;
 	std::istream& deserialize(std::istream& is);
