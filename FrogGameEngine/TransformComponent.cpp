@@ -1,5 +1,7 @@
 #include "TransformComponent.h"
 
+#include "GameObject.h"
+
 TransformComponent::TransformComponent(GameObject* owner) : Component(owner)
 {
 	_transform = mat4(1.0f);
@@ -13,6 +15,17 @@ TransformComponent::~TransformComponent()
 
 mat4& TransformComponent::getTransform()
 {
+	return _transform;
+}
+
+mat4 TransformComponent::getGlobalTransform()
+{
+	if (owner->_parent != nullptr) {
+		mat4 globatTransform = owner->_parent->GetComponent<TransformComponent>()->getGlobalTransform() * _transform;
+
+		return globatTransform;
+	}
+
 	return _transform;
 }
 

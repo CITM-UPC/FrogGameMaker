@@ -19,8 +19,10 @@ public:
 
 	ComponentType componentType = TRANSFORM;
 
-private: 
+protected:
 	// used to connect to other components
 	GameObject* owner;
+
+private: 
 
 };

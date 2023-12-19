@@ -67,7 +67,7 @@ void GameApp::EditorStart() {
 
     auto transformHouse = house->GetComponent<TransformComponent>();
     transformHouse->rotate(30, vec3(1, 0, 1));
-    transformHouse->translate(vec3(10, 0, 0));
+    transformHouse->translate(vec3(0, -10, 10));
     transformHouse->scale(vec3(1, 1, 1));
 
     basicCamera = scene->AddGameObject("cam");

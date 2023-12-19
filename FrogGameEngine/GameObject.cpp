@@ -193,7 +193,9 @@ void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
 	}
 
-	if (frustum.IsBoundingBoxInFrustum(aabb)) {
+	AABBox globalAABBox = ((transform->getGlobalTransform() * aabb).AABB());
+
+	if (frustum.IsBoundingBoxInFrustum(globalAABBox)) {
 		if (toRender) {
 			MeshComponent* mesh = GetComponent<MeshComponent>();
 			if (mesh->getMesh()) mesh->getMesh()->draw();

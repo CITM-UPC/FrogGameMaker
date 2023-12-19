@@ -16,6 +16,7 @@ public:
 	~TransformComponent();
 
 	mat4& getTransform();
+	mat4 getGlobalTransform();
 
 	vec3& getPosition();
 	vec3& getRotation();
