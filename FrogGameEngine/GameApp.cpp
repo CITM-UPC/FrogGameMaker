@@ -64,7 +64,7 @@ void GameApp::EditorStart() {
     
     for (const auto& entry : filesystem::directory_iterator(path)) {
         Paths currentAsset;
-        if (entry.path().string().ends_with(".fbx")) {
+        if (entry.path().string().ends_with(".fbx") || entry.path().string().ends_with(".FBX")) {
             vector<string> libraryStrings = MeshLoader::loadFromFile(entry.path().generic_string());
             for (int i = 0; i < libraryStrings.size(); ++i)
                 currentAsset.libraryPath.push_back(libraryStrings[i]);

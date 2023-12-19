@@ -16,9 +16,6 @@
 #include "../FrogGameEngine/Scene.h"
 
 #include "../FrogGameEngine/Mesh.h"
-#include "../FrogGameEngine/Cube.h"
-#include "../FrogGameEngine/Pyramid.h"
-#include "../FrogGameEngine/Cylinder.h"
 
 namespace fs = std::filesystem;
 

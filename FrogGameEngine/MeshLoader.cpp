@@ -72,7 +72,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         vector<VertexV3T2> vertex_data;
         for (size_t i = 0; i < mesh.verts().size(); ++i) {
-            VertexV3T2 v = { {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z}, {mesh.texCoords()[i].x, mesh.texCoords()[i].y} };
+            VertexV3T2 v = { {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z}, {0,0/*mesh.texCoords()[i].x, mesh.texCoords()[i].y*/}};//to do
             vertex_data.push_back(v);
         }
 
