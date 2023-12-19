@@ -642,7 +642,9 @@ void EditorUI::UIInspectorWriteTransformNode(TransformComponent* component) {
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform")) {
+		ImGuiInputTextFlags flags = 0;
 		float vec3Position[3] = { (float)component->getPosition().x, (float)component->getPosition().y, (float)component->getPosition().z };
+		ImGui::InputDouble("Position X", &component->getPosition().x, 0, 0, "%.2f", flags);
 		ImGui::InputFloat3("Position", vec3Position);
 		float vec3Rotation[3] = { glm::degrees((float)component->getRotation().x), glm::degrees((float)component->getRotation().y), glm::degrees((float)component->getRotation().z) };
 		ImGui::InputFloat3("Rotation", vec3Rotation);
