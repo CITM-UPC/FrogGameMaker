@@ -105,10 +105,10 @@ bool EditorInput::PreUpdate() {
 				//GameObject* newMesh = editor->gameApp->scene->AddGameObject();
 				auto mesh_ptrs = MeshLoader::loadFromFile(dropped_filedir);
 				Paths droppedFile;
-				droppedFile.assetsPath = filesystem::path(dropped_filedir);
+				droppedFile.assetsPath = dropped_filedir;
 				for (int i = 0; i < mesh_ptrs.size(); ++i)
 				{
-					droppedFile.libraryPath.push_back(filesystem::path(mesh_ptrs[i]));
+					droppedFile.libraryPath.push_back(mesh_ptrs[i]);
 				}
 				droppedFile.name = filesystem::path(dropped_filedir).filename().string();
 				editor->gameApp->allAssets.push_back(droppedFile);

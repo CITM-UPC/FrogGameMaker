@@ -68,10 +68,10 @@ void GameApp::EditorStart() {
         if (entry.path().string().ends_with(".fbx")) {
             vector<string> libraryStrings = MeshLoader::loadFromFile(entry.path().generic_string());
             for (int i = 0; i < libraryStrings.size(); ++i)
-                currentAsset.libraryPath.push_back(filesystem::path(libraryStrings[i]));
+                currentAsset.libraryPath.push_back(libraryStrings[i]);
         }
 
-        currentAsset.assetsPath = entry.path();
+        currentAsset.assetsPath = entry.path().generic_string();
         currentAsset.name = entry.path().filename().string();
 
         allAssets.push_back(currentAsset);
@@ -79,8 +79,8 @@ void GameApp::EditorStart() {
 
     // scene->DebugStart();
     house = scene->AddGameObject();
-    //auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
-    //house->AddMeshWithTexture(mesh_ptrs);
+    auto mesh_ptrs = Mesh::loadFromFile(allAssets[0].libraryPath);
+    house->AddMeshWithTexture(mesh_ptrs);
 
     AddLog("BakerHouse.fbx loaded");
 

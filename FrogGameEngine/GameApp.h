@@ -14,8 +14,8 @@
 struct Paths {
 
 	std::string name;
-	filesystem::path assetsPath;
-	std::vector<filesystem::path> libraryPath;
+	std::string assetsPath;
+	std::vector<std::string> libraryPath;
 
 };
 
