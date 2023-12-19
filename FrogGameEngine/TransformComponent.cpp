@@ -5,6 +5,8 @@
 TransformComponent::TransformComponent(GameObject* owner) : Component(owner)
 {
 	_transform = mat4(1.0f);
+	_rotation = { 0, 0, 0 };
+	_scale = { 1, 1, 1 };
 	componentType = TRANSFORM;
 }
 
@@ -36,45 +38,36 @@ vec3& TransformComponent::getPosition()
 
 vec3& TransformComponent::getRotation()
 {
-	vec3 rotEulerAngles;
-	double Yaw, Pitch, Roll;
 	if (toleranceCheckFix(_transform[2][0], 1) == 1)
 	{
-		Yaw = glm::half_pi<float>();
-		Pitch = atan2(_transform[1][2], _transform[1][1]);
-		Roll = 0;
+		_yaw = glm::degrees(glm::half_pi<float>());
+		_pitch = glm::degrees(atan2(_transform[1][2], _transform[1][1]));
+		_roll = 0;
 
 	}
 	else if (toleranceCheckFix(_transform[2][0], -1) == -1)
 	{
-		Yaw = 3 * glm::half_pi<float>();
-		Pitch = atan2(_transform[1][2], _transform[1][1]);
-		Roll = 0;
+		_yaw = glm::degrees(3 * glm::half_pi<float>());
+		_pitch = glm::degrees(atan2(_transform[1][2], _transform[1][1]));
+		_roll = 0;
 	}
 	else
 	{
-
-		Yaw = asin(-_transform[2][0]);
-		Pitch = atan2(_transform[2][1], _transform[2][2]);
-		Roll = atan2(_transform[1][0], _transform[0][0]);
+		_yaw = glm::degrees(asin(-_transform[2][0]));
+		_pitch = glm::degrees(atan2(_transform[2][1], _transform[2][2]));
+		_roll = glm::degrees(atan2(_transform[1][0], _transform[0][0]));
 	}
 
-	rotEulerAngles.x = Pitch;
-	rotEulerAngles.y = Yaw;
-	rotEulerAngles.z = Roll;
-
-	return rotEulerAngles;
+	return _rotation;
 }
 
 vec3& TransformComponent::getScale()
 {
-	double x = glm::length(_right);
-	double y = glm::length(_up);
-	double z = glm::length(_forward);
+	_scale.x = glm::length(_right);
+	_scale.y = glm::length(_up);
+	_scale.z = glm::length(_forward);
 
-	vec3 scale = vec3(x, y, z);
-
-	return scale;
+	return _scale;
 }
 
 vec3 TransformComponent::getRight()
@@ -90,6 +83,50 @@ vec3 TransformComponent::getUp()
 vec3 TransformComponent::getForward()
 {
 	return _forward;
+}
+
+vec3& TransformComponent::getEulerAngles()
+{
+	return _rotation;
+}
+
+vec3& TransformComponent::getScaleVector()
+{
+	return _scale;
+}
+
+void TransformComponent::setTransformFromVectorEditing()
+{
+	double radPitch = glm::radians(_pitch);
+	double radYaw = glm::radians(_yaw);
+	double radRoll = glm::radians(_roll);
+
+	/*if (toleranceCheckFix(sin(radPitch), 1) == 1) {
+		_right = { 0, 0, -1 };
+		_up = { cos(radYaw) * sin(radPitch) * sin(radRoll) - cos(radRoll) * sin(radYaw), sin(radYaw) * sin(radPitch) * sin(radRoll) + cos(radRoll) * cos(radYaw), 0 };
+		_forward = { cos(radRoll) * cos(radYaw) * sin(radPitch) + sin(radYaw) * sin(radRoll), sin(radPitch) * sin(radYaw) * cos(radRoll) - cos(radYaw) * sin(radRoll), 0 };
+	}
+	else if (toleranceCheckFix(sin(radPitch), -1) == -1) {
+		_right = { 0, 0, 1 };
+		_up = { cos(radYaw) * sin(radPitch) * sin(radRoll) - cos(radRoll) * sin(radYaw), sin(radYaw) * sin(radPitch) * sin(radRoll) + cos(radRoll) * cos(radYaw), 0 };
+		_forward = { cos(radRoll) * cos(radYaw) * sin(radPitch) + sin(radYaw) * sin(radRoll), sin(radPitch) * sin(radYaw) * cos(radRoll) - cos(radYaw) * sin(radRoll), 0 };
+	}
+	else {
+		_right = { cos(radPitch) * cos(radYaw), cos(radPitch) * sin(radYaw), -sin(radPitch) };
+		_up = { cos(radYaw) * sin(radPitch) * sin(radRoll) - cos(radRoll) * sin(radYaw), sin(radYaw) * sin(radPitch) * sin(radRoll) + cos(radRoll) * cos(radYaw), cos(radPitch) * sin(radRoll) };
+		_forward = { cos(radRoll) * cos(radYaw) * sin(radPitch) + sin(radYaw) * sin(radRoll), sin(radPitch) * sin(radYaw) * cos(radRoll) - cos(radYaw) * sin(radRoll), cos(radPitch) * cos(radRoll) };
+	}*/
+
+	_right = { 1, 0, 0 };
+	_up = { 0, 1, 0 };
+	_forward = { 0, 0, 1 };
+
+	_transform = glm::rotate(_transform, glm::radians(_pitch), vec3{ 1, 0, 0 } * (glm::dmat3)_transform);
+	_transform = glm::rotate(_transform, glm::radians(_yaw), vec3{ 0, 1, 0 } * (glm::dmat3)_transform);
+	_transform = glm::rotate(_transform, glm::radians(_roll), vec3{ 0, 0, 1 } * (glm::dmat3)_transform);
+
+	scale(_scale);
+
 }
 
 void TransformComponent::translate(vec3 translation, ReferenceAxis ref)
@@ -122,11 +159,15 @@ void TransformComponent::rotate(double degrees, const vec3& axis, ReferenceAxis 
 	default:
 		break;
 	}
+
+	getRotation();
 }
 
 void TransformComponent::scale(vec3 scale)
 {
 	_transform = glm::scale(_transform, scale);
+
+	getScale();
 }
 
 double TransformComponent::toleranceCheckFix(double n, int c)
