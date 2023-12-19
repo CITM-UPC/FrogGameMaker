@@ -1,15 +1,22 @@
 #include "Texture2D.h"
 #include <GL/glew.h>
 #include <IL/il.h>
-
+#include <iostream>
 #include <algorithm>
 
 using namespace std;
 
-Texture2D::Texture2D(const std::string& path) {
+Texture2D::Texture2D(const std::string& oPath) {
 
-    this->path = path.c_str();
+    size_t lastChar = oPath.find_last_of('\\');
+    std::string path;
+    if (!oPath.ends_with(".dds") && !oPath.substr(0, lastChar).ends_with("Library/Materials")) {
+        path = transformToDDS(oPath);
+    }
+    else {
+        path = oPath;
 
+    
     //load image data using devil
     auto img = ilGenImage();
     ilBindImage(img);
@@ -18,9 +25,6 @@ Texture2D::Texture2D(const std::string& path) {
     auto height = ilGetInteger(IL_IMAGE_HEIGHT);
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
     auto data = ilGetData();
-
-    this->width = width;
-    this->height = height;
 
     //load image as a texture in VRAM
     glGenTextures(1, &_id);
@@ -35,6 +39,11 @@ Texture2D::Texture2D(const std::string& path) {
 
     //now we can delete image from RAM
     ilDeleteImage(img);
+    }
+    this->path = path.c_str();
+
+    this->width = width;
+    this->height = height;
 }
 
 Texture2D::Texture2D(Texture2D&& tex) noexcept : _id(tex._id) {
@@ -56,8 +65,8 @@ Texture2D::Texture2D()
     }
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glGenTextures(1, &_id);
-    glBindTexture(GL_TEXTURE_2D, _id);
+    glGenTextures(1, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -65,6 +74,43 @@ Texture2D::Texture2D()
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, CHECKERS_WIDTH, CHECKERS_HEIGHT,
         0, GL_RGBA, GL_UNSIGNED_BYTE, checkerImage);
 
+}
+
+std::string Texture2D::transformToDDS(const std::string& path)
+{
+   //load image data using devil
+    auto img = ilGenImage();
+    ilBindImage(img);
+    ilLoadImage(path.c_str());
+    auto width = ilGetInteger(IL_IMAGE_WIDTH);
+    auto height = ilGetInteger(IL_IMAGE_HEIGHT);
+    auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
+    auto data = ilGetData();
+
+    unsigned int id;
+    //load image as a texture in VRAM
+    glGenTextures(1, &id);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glTexImage2D(GL_TEXTURE_2D, 0, channels, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    size_t lastChar = path.find_last_of('\\');
+    std::string fileName = path.substr(lastChar + 1);
+    lastChar = fileName.find_last_of('.');
+    fileName = fileName.substr(0, lastChar);
+    fileName = "../FrogGameEditor/Library/Materials/" + fileName + ".dds";
+
+    ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
+    ilSave(IL_DDS, fileName.c_str());
+
+    ilDeleteImage(img);
+
+    return fileName;
 }
 
 Texture2D::~Texture2D() {

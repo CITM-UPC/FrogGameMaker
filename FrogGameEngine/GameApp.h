@@ -1,6 +1,8 @@
 #pragma once
 #include <chrono>
 #include <string>
+#include <filesystem>
+#include <list>
 
 #include "Types.h"
 #include "GameRenderer.h"
@@ -8,6 +10,14 @@
 #include "glm/ext/matrix_transform.hpp"
 
 #include "Scene.h"
+
+struct Paths {
+
+	std::string name;
+	std::string assetsPath;
+	std::vector<std::string> libraryPath;
+
+};
 
 class GameApp
 {
@@ -32,6 +42,7 @@ public:
 	GameObject* house = nullptr;
 
 	GameObject* basicCamera = nullptr;
+	vector<Paths> allAssets;
 
 	void AddLog(string l);
 
@@ -43,4 +54,6 @@ private:
 	vector<string> logs;
 
 };
+
+
 

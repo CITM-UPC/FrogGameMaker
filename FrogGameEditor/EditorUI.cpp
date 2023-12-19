@@ -1,5 +1,7 @@
 #include "EditorApp.h"
 
+#include <filesystem>
+
 #include "assimp/version.h"
 #include "IL/il.h"
 
@@ -17,6 +19,8 @@
 #include "../FrogGameEngine/Cube.h"
 #include "../FrogGameEngine/Pyramid.h"
 #include "../FrogGameEngine/Cylinder.h"
+
+namespace fs = std::filesystem;
 
 EditorUI::EditorUI() : EditorModule() {
 
@@ -295,25 +299,25 @@ void EditorUI::UIMainMenuBar() {
 			if (ImGui::BeginMenu("Basic Shapes")) {
 				if (ImGui::MenuItem("Cube")) {
 					GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cube");
-					auto mesh_ptrs = Mesh::loadFromFile("Cube.fbx");
+					auto mesh_ptrs = Mesh::loadFromFile("Cube.sht");
 					editor->AddLog("Loaded Cube");
 					newMesh->AddMeshWithTexture(mesh_ptrs);
 				}
 				if (ImGui::MenuItem("Sphere")) {
 					GameObject* newMesh = editor->gameApp->scene->AddGameObject("Sphere");
-					auto mesh_ptrs = Mesh::loadFromFile("Sphere.fbx");
+					auto mesh_ptrs = Mesh::loadFromFile("Sphere.sht");
 					editor->AddLog("Loaded Sphere");
 					newMesh->AddMeshWithTexture(mesh_ptrs);
 				}
 				if (ImGui::MenuItem("Cone")) {
 					GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cone");
-					auto mesh_ptrs = Mesh::loadFromFile("Cone.fbx");
+					auto mesh_ptrs = Mesh::loadFromFile("Cone.sht");
 					editor->AddLog("Loaded Cone");
 					newMesh->AddMeshWithTexture(mesh_ptrs);
 				}
 				if (ImGui::MenuItem("Cylinder")) {
 					GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cylinder");
-					auto mesh_ptrs = Mesh::loadFromFile("Cylinder.fbx");
+					auto mesh_ptrs = Mesh::loadFromFile("Cylinder.sht");
 					editor->AddLog("Loaded Cylinder");
 					newMesh->AddMeshWithTexture(mesh_ptrs);
 				}
@@ -791,5 +795,27 @@ void EditorUI::UIConsoleWindow() {
 void EditorUI::UIAssetsWindow() {
 
 	ImGui::Begin("Assets");
+
+	std::string path = "../FrogGameEditor/Assets";
+	for (int i = 0; i < editor->gameApp->allAssets.size(); ++i) {
+
+		if (ImGui::Button(editor->gameApp->allAssets[i].name.c_str())) {
+			//ImGui::OpenPopup("assets_popup");
+
+
+		}
+		
+	}
+		
+	/*if (ImGui::BeginPopup("assets_popup")) {
+		if (ImGui::Selectable("Add to scene")) {
+
+		}
+		if (ImGui::Selectable("Delete")) {
+			std::remove(entry.path().string().c_str());
+		}
+		ImGui::EndPopup();
+	}*/
+
 	ImGui::End();
 }

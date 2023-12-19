@@ -3,6 +3,7 @@
 #include <glm/ext/matrix_transform.hpp>
 #include <vector>
 #include <IL/il.h>
+#include "MeshLoader.h"
 
 using namespace std;
 
@@ -58,9 +59,29 @@ GameApp::~GameApp()
 }
 
 void GameApp::EditorStart() {
+
+    std::string path = "../FrogGameEditor/Assets";
+    
+    for (const auto& entry : filesystem::directory_iterator(path)) {
+        Paths currentAsset;
+        if (entry.path().string().ends_with(".fbx")) {
+            vector<string> libraryStrings = MeshLoader::loadFromFile(entry.path().generic_string());
+            for (int i = 0; i < libraryStrings.size(); ++i)
+                currentAsset.libraryPath.push_back(libraryStrings[i]);
+        }
+        else {
+            currentAsset.libraryPath.push_back(Texture2D::transformToDDS(entry.path().string()));
+        }
+
+        currentAsset.assetsPath = entry.path().generic_string();
+        currentAsset.name = entry.path().filename().string();
+
+        allAssets.push_back(currentAsset);
+    }
+
     // scene->DebugStart();
     house = scene->AddGameObject();
-    auto mesh_ptrs = Mesh::loadFromFile("Assets\\BakerHouse.fbx", "Assets\\Baker_house.png");
+    auto mesh_ptrs = Mesh::loadFromFile(allAssets[0].libraryPath);
     house->AddMeshWithTexture(mesh_ptrs);
 
     AddLog("BakerHouse.fbx loaded");
