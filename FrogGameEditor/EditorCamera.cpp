@@ -50,19 +50,19 @@ bool EditorCamera::Update() {
 	// While Right clicking, “WASD” fps-like movement and free look around must be enabled
 	else if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_RIGHT)) {
 		if (editor->editorInput->GetKey(SDL_SCANCODE_W)) {
-			TranslateLocally(vec3(0, 0, speed));
+			Translate(vec3(0, 0, speed));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_A)) {
-			TranslateLocally(vec3(speed, 0, 0));
+			Translate(vec3(speed, 0, 0));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_S)) {
-			TranslateLocally(vec3(0, 0, -speed));
+			Translate(vec3(0, 0, -speed));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_D)) {
-			TranslateLocally(vec3(-speed, 0, 0));
+			Translate(vec3(-speed, 0, 0));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_SPACE)) {
-			TranslateLocally(vec3(0, speed, 0));
+			Translate(vec3(0, speed, 0), GLOBAL);
 		}
 
 		LookAround(editor->editorInput->GetMouseMotion());
@@ -89,9 +89,9 @@ bool EditorCamera::Update() {
 	return true;
 }
 
-void EditorCamera::TranslateLocally(vec3 translation) {
+void EditorCamera::Translate(vec3 translation, ReferenceAxis ref) {
 
-	cameraObject.get()->GetComponent<TransformComponent>()->translate(translation);
+	cameraObject.get()->GetComponent<TransformComponent>()->translate(translation, ref);
 
 	double focusDistance = glm::distance(focusPosition, cameraObject.get()->GetComponent<TransformComponent>()->getPosition());
 	focusPosition = cameraObject.get()->GetComponent<TransformComponent>()->getPosition() + cameraObject.get()->GetComponent<TransformComponent>()->getForward() * focusDistance;

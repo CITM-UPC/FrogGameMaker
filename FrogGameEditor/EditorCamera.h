@@ -10,7 +10,7 @@ public:
 	bool Start();
 	bool Update();
 
-	void TranslateLocally(vec3 translation);
+	void Translate(vec3 translation, ReferenceAxis ref = LOCAL);
 	void OrbitAround(vec2 motion);
 	void LookAround(vec2 motion);
 	void CameraZoom(double amount);
