@@ -48,14 +48,13 @@ GameApp::GameApp()
 {
     ilInit();
     AddLog("IL Init");
-    actualCamera = new Camera();
 
     scene = new Scene("TestScene");
 }
 
 GameApp::~GameApp()
 {
-    delete actualCamera;
+
 }
 
 void GameApp::EditorStart() {
@@ -68,7 +67,7 @@ void GameApp::EditorStart() {
 
     auto transformHouse = house->GetComponent<TransformComponent>();
     transformHouse->rotate(30, vec3(1, 0, 1));
-    transformHouse->translate(vec3(0, 0, 0));
+    transformHouse->translate(vec3(10, 0, 0));
     transformHouse->scale(vec3(1, 1, 1));
 
     basicCamera = scene->AddGameObject("cam");
@@ -79,6 +78,7 @@ void GameApp::EditorStart() {
         cameraToSet->fov = 10;
         basicCamera->GetComponent<CameraComponent>()->setCamera(*cameraToSet);
     }
+    basicCamera->GetComponent<TransformComponent>()->translate({ 0, 10, -5 }, GLOBAL);
     basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
 
 }
@@ -95,9 +95,11 @@ void GameApp::GameStart()
 
 void GameApp::GameStep(std::chrono::duration<double> dt)
 {
-    auto childHouse = house->children.begin()->get();
-    childHouse->GetComponent<TransformComponent>()->rotate(1, vec3(1, 0, 0));
-    house->GetComponent<TransformComponent>()->rotate(1, vec3(0, 1, 0));
+    //auto childHouse = house->children.begin()->get();
+    //childHouse->GetComponent<TransformComponent>()->rotate(1, vec3(1, 0, 0));
+    //house->GetComponent<TransformComponent>()->rotate(1, vec3(0, 1, 0));
+
+    basicCamera->GetComponent<TransformComponent>()->translate({0, -0.1, 0}, GLOBAL);
 
 }
 
@@ -122,7 +124,7 @@ void GameApp::EditorRender(CameraComponent* camera)
 
 #pragma region Draw Sandbox
 
-    scene->Render(camera->getCamera()->createFrustum(), true);
+    scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
 
 #pragma endregion
 
@@ -151,7 +153,7 @@ void GameApp::GameRender(CameraComponent* camera)
 
 #pragma region Draw Sandbox
 
-    scene->Render(camera->getCamera()->createFrustum(), false);
+    scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
 
 #pragma endregion
 

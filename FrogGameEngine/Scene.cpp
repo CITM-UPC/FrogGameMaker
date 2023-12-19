@@ -129,10 +129,11 @@ void Scene::Render(Frustum frustum, bool drawBoundingBox)
 		DrawBoundingBox(GetBoundingBox());
 	}
 
-	for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
-		(*gameObjectI)->Render(drawBoundingBox);
+	if (frustum.IsBoundingBoxInFrustum(aabb)) {
+		for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
+			(*gameObjectI)->Render(frustum, drawBoundingBox);
+		}
 	}
-
 }
 
 void Scene::CleanUp()

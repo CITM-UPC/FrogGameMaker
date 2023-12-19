@@ -17,8 +17,6 @@ public:
 
 	//enum class RenderModes { RELEASE, DEBUG };
 
-	Camera* actualCamera;
-
 	void EditorStart();
 	void EditorStep(std::chrono::duration<double> dt);
 	void GameStart();

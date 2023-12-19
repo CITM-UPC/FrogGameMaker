@@ -171,7 +171,7 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
-void GameObject::Render(bool drawBoundingBox)
+void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 {
 	bool toRender = true;
 	// get necessary components
@@ -183,22 +183,26 @@ void GameObject::Render(bool drawBoundingBox)
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
 
-	if (drawBoundingBox) {
-		DrawBoundingBox(GetBoundingBox());
-	}
+	AABBox aabb = GetBoundingBox();
 
-	if (toRender) {
-		MeshComponent* mesh = GetComponent<MeshComponent>();
-		if (mesh->getMesh()) mesh->getMesh()->draw();
+	if (drawBoundingBox) {
+		DrawBoundingBox(aabb);
 	}
 
 	if (GetComponent<CameraComponent>() != nullptr) {
 		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
 	}
 
-	// render
-	for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
-		(*childIt)->Render(drawBoundingBox);
+	if (frustum.IsBoundingBoxInFrustum(aabb)) {
+		if (toRender) {
+			MeshComponent* mesh = GetComponent<MeshComponent>();
+			if (mesh->getMesh()) mesh->getMesh()->draw();
+		}
+
+		// render
+		for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
+			(*childIt)->Render(frustum, drawBoundingBox);
+		}
 	}
 
 	glPopMatrix();
