@@ -41,6 +41,28 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::vector<std::string>& path) 
     return mesh_ptrs;
 }
 
+Mesh::Ptr Mesh::loadFromFile(const std::string& path) {
+
+    //load meshes
+
+        MeshLoader forLoading;
+
+        ifstream iFile(path, ios::binary);
+
+        iFile >> forLoading;
+
+        auto mesh_sptr = make_shared<Mesh>(forLoading);
+
+        mesh_sptr->path = path;
+
+
+        iFile.close();
+    
+
+
+    return mesh_sptr;
+}
+
 
 void Mesh::loadTextureToMesh(const std::string& path) 
 {
