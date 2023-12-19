@@ -95,7 +95,13 @@ bool EditorApp::Update() {
 
 	// post update
 	{
-		gameApp->Render(editorCamera->camera);
+		if (gameIsOn) {
+			gameApp->GameRender(editorCamera->cameraObject.get()->GetComponent<CameraComponent>());
+		}
+		else {
+			gameApp->EditorRender(editorCamera->cameraObject.get()->GetComponent<CameraComponent>());
+
+		}
 
 		auto item = modules.begin();
 

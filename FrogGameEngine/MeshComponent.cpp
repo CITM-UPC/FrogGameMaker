@@ -1,6 +1,6 @@
 #include "MeshComponent.h"
 
-MeshComponent::MeshComponent()
+MeshComponent::MeshComponent(GameObject* owner) : Component(owner)
 {
 	componentType = MESH;
 

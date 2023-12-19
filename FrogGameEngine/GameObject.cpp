@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include <GL/glew.h>
+#include <glm/ext/matrix_transform.hpp>
 #include <memory>
 
 GameObject::GameObject()
@@ -109,16 +110,16 @@ Component* GameObject::AddComponent(ComponentType type)
 	switch (type)
 	{
 	case ComponentType::TRANSFORM:
-		newComponent = make_unique<TransformComponent>();
+		newComponent = make_unique<TransformComponent>(this);
 		break;
 	case ComponentType::MESH:
-		newComponent = make_unique<MeshComponent>();
+		newComponent = make_unique<MeshComponent>(this);
 		break;
 	case ComponentType::TEXTURE:
-		newComponent = make_unique<TextureComponent>();
+		newComponent = make_unique<TextureComponent>(this);
 		break;
 	case ComponentType::CAMERA:
-		newComponent = make_unique<CameraComponent>();
+		newComponent = make_unique<CameraComponent>(this);
 		break;
 	default:
 		break;
@@ -170,7 +171,7 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
-void GameObject::Render()
+void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 {
 	bool toRender = true;
 	// get necessary components
@@ -182,16 +183,80 @@ void GameObject::Render()
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
 
-	if (toRender) {
-		MeshComponent* mesh = GetComponent<MeshComponent>();
-		if (mesh->getMesh()) mesh->getMesh()->draw();
+	AABBox aabb = GetBoundingBox();
+
+	if (drawBoundingBox) {
+		DrawBoundingBox(aabb);
 	}
 
-	// render
-	for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
-		(*childIt)->Render();
+	if (GetComponent<CameraComponent>() != nullptr) {
+		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
+	}
+
+	AABBox globalAABBox = ((transform->getGlobalTransform() * aabb).AABB());
+
+	if (frustum.IsBoundingBoxInFrustum(globalAABBox)) {
+		if (toRender) {
+			MeshComponent* mesh = GetComponent<MeshComponent>();
+			if (mesh->getMesh()) mesh->getMesh()->draw();
+		}
+
+		// render
+		for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
+			(*childIt)->Render(frustum, drawBoundingBox);
+		}
 	}
 
 	glPopMatrix();
 
+}
+
+static inline void glVec3(const vec3& v) { glVertex3dv(&v.x); }
+
+void GameObject::DrawBoundingBox(const AABBox& aabb)
+{
+	glColor3ub(128, 0, 0);
+
+	glLineWidth(2);
+	glBegin(GL_LINE_STRIP);
+
+	glVec3(aabb.a());
+	glVec3(aabb.b());
+	glVec3(aabb.c());
+	glVec3(aabb.d());
+	glVec3(aabb.a());
+
+	glVec3(aabb.e());
+	glVec3(aabb.f());
+	glVec3(aabb.g());
+	glVec3(aabb.h());
+	glVec3(aabb.e());
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVec3(aabb.h());
+	glVec3(aabb.d());
+	glVec3(aabb.f());
+	glVec3(aabb.b());
+	glVec3(aabb.g());
+	glVec3(aabb.c());
+	glEnd();
+}
+
+AABBox GameObject::GetBoundingBox() 
+{
+	AABBox aabbox;
+	if (GetComponent<MeshComponent>() != nullptr) aabbox = GetComponent<MeshComponent>()->getMesh()->aabb;
+	else if (children.empty()) {
+		aabbox.min = vec3(0);
+		aabbox.max = vec3(0);
+	}
+
+	for (auto i = children.begin(); i != children.end(); ++i) {
+		const auto child_aabb = ((*i).get()->GetComponent<TransformComponent>()->getTransform() * (*i).get()->GetBoundingBox()).AABB();
+		aabbox.min = glm::min(aabbox.min, child_aabb.min);
+		aabbox.max = glm::max(aabbox.max, child_aabb.max);
+	}
+
+	return aabbox;
 }

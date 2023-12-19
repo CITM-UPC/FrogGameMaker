@@ -48,14 +48,13 @@ GameApp::GameApp()
 {
     ilInit();
     AddLog("IL Init");
-    actualCamera = new Camera();
 
     scene = new Scene("TestScene");
 }
 
 GameApp::~GameApp()
 {
-    delete actualCamera;
+
 }
 
 void GameApp::EditorStart() {
@@ -67,9 +66,20 @@ void GameApp::EditorStart() {
     AddLog("BakerHouse.fbx loaded");
 
     auto transformHouse = house->GetComponent<TransformComponent>();
-    transformHouse->rotate(1, vec3(0, 1, 0));
-    transformHouse->translate(vec3(0, 0, 0));
+    transformHouse->rotate(30, vec3(1, 0, 1));
+    transformHouse->translate(vec3(0, -10, 10));
     transformHouse->scale(vec3(1, 1, 1));
+
+    basicCamera = scene->AddGameObject("cam");
+    basicCamera->AddComponent(CAMERA);
+    {
+        Camera* cameraToSet = basicCamera->GetComponent<CameraComponent>()->getCamera();
+        cameraToSet->zFar = 20;
+        cameraToSet->fov = 10;
+        basicCamera->GetComponent<CameraComponent>()->setCamera(*cameraToSet);
+    }
+    basicCamera->GetComponent<TransformComponent>()->translate({ 0, 10, -5 }, GLOBAL);
+    basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
 
 }
 
@@ -85,27 +95,65 @@ void GameApp::GameStart()
 
 void GameApp::GameStep(std::chrono::duration<double> dt)
 {
-    house->GetComponent<TransformComponent>()->rotate(1, vec3(0, 1, 0));
+    //auto childHouse = house->children.begin()->get();
+    //childHouse->GetComponent<TransformComponent>()->rotate(1, vec3(1, 0, 0));
+    //house->GetComponent<TransformComponent>()->rotate(1, vec3(0, 1, 0));
+
+    basicCamera->GetComponent<TransformComponent>()->translate({0, -0.1, 0}, GLOBAL);
 
 }
 
-void GameApp::Render(Camera camera) {
+// (i think) camera has to be global -> not being a child --TODO--
+void GameApp::EditorRender(CameraComponent* camera)
+{
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(camera.fov, camera.aspect, camera.zNear, camera.zFar);
+    gluPerspective(camera->getCamera()->fov, camera->getCamera()->aspect, camera->getCamera()->zNear, camera->getCamera()->zFar);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    gluLookAt(camera.eye.x, camera.eye.y, camera.eye.z,
-        camera.center.x, camera.center.y, camera.center.z,
-        camera.up.x, camera.up.y, camera.up.z);
+
+    vec3 center = camera->getTransform()->getPosition() + camera->getTransform()->getForward();
+
+    gluLookAt(camera->getTransform()->getPosition().x, camera->getTransform()->getPosition().y, camera->getTransform()->getPosition().z,
+        center.x, center.y, center.z,
+        camera->getTransform()->getUp().x, camera->getTransform()->getUp().y, camera->getTransform()->getUp().z);
 
     drawGrid(100, 1);
     drawAxis();
 
 #pragma region Draw Sandbox
 
-    scene->Render();
+    scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
+
+#pragma endregion
+
+
+    assert(glGetError() == GL_NONE);
+}
+
+// (i think) camera has to be global -> not being a child --TODO--
+void GameApp::GameRender(CameraComponent* camera)
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(camera->getCamera()->fov, camera->getCamera()->aspect, camera->getCamera()->zNear, camera->getCamera()->zFar);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    vec3 center = camera->getTransform()->getPosition() + camera->getTransform()->getForward();
+
+    gluLookAt(camera->getTransform()->getPosition().x, camera->getTransform()->getPosition().y, camera->getTransform()->getPosition().z,
+        center.x, center.y, center.z,
+        camera->getTransform()->getUp().x, camera->getTransform()->getUp().y, camera->getTransform()->getUp().z);
+
+    drawGrid(100, 1);
+    drawAxis();
+
+#pragma region Draw Sandbox
+
+    scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
 
 #pragma endregion
 

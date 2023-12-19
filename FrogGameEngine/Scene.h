@@ -29,13 +29,21 @@ public:
 	// --TODO--
 	void Update();
 
-	void Render();
+	void Render(Frustum frustum, bool drawBoundingBox = false);
 
 	void CleanUp();
+
+	void DrawBoundingBox(const AABBox& aabb);
+
+	AABBox GetBoundingBox();
+
+	bool BoundingBoxInFrustum(Frustum frustum);
 
 	// uuid id
 	string name;
 	// should be a list of uuids
 	list<unique_ptr<GameObject>> children;
+
+	AABBox aabb;
 
 };

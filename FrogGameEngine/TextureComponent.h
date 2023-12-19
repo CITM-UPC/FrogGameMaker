@@ -5,7 +5,7 @@
 class TextureComponent : public Component {
 public:
 
-	TextureComponent();
+	TextureComponent(GameObject* owner);
 	~TextureComponent();
 
 	void setTexture(Texture2D::Ptr texture);

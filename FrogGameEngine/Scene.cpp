@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include <GL/glew.h>
 
 Scene::Scene()
 {
@@ -121,15 +122,74 @@ void Scene::Update()
 {
 }
 
-void Scene::Render()
+void Scene::Render(Frustum frustum, bool drawBoundingBox)
 {
-	for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
-		(*gameObjectI)->Render();
+	glColor3ub(128, 0, 0);
+	if (drawBoundingBox) {
+		DrawBoundingBox(GetBoundingBox());
 	}
 
+	if (frustum.IsBoundingBoxInFrustum(aabb)) {
+		for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
+			(*gameObjectI)->Render(frustum, drawBoundingBox);
+		}
+	}
 }
 
 void Scene::CleanUp()
 {
 	children.clear();
+}
+
+static inline void glVec3(const vec3& v) { glVertex3dv(&v.x); }
+
+void Scene::DrawBoundingBox(const AABBox& aabb)
+{
+	glLineWidth(2);
+	glBegin(GL_LINE_STRIP);
+
+	glVec3(aabb.a());
+	glVec3(aabb.b());
+	glVec3(aabb.c());
+	glVec3(aabb.d());
+	glVec3(aabb.a());
+
+	glVec3(aabb.e());
+	glVec3(aabb.f());
+	glVec3(aabb.g());
+	glVec3(aabb.h());
+	glVec3(aabb.e());
+	glEnd();
+
+	glBegin(GL_LINES);
+	glVec3(aabb.h());
+	glVec3(aabb.d());
+	glVec3(aabb.f());
+	glVec3(aabb.b());
+	glVec3(aabb.g());
+	glVec3(aabb.c());
+	glEnd();
+}
+
+AABBox Scene::GetBoundingBox()
+{
+	AABBox aabbox;
+	aabbox = aabb;
+	if (children.empty()) {
+		aabbox.min = vec3(0);
+		aabbox.max = vec3(0);
+	}
+
+	for (auto i = children.begin(); i != children.end(); ++i) {
+		const auto child_aabb = ((*i).get()->GetComponent<TransformComponent>()->getTransform() * (*i).get()->GetBoundingBox()).AABB();
+		aabbox.min = glm::min(aabbox.min, child_aabb.min);
+		aabbox.max = glm::max(aabbox.max, child_aabb.max);
+	}
+
+	return aabbox;
+}
+
+bool Scene::BoundingBoxInFrustum(Frustum frustum)
+{
+	return false;
 }

@@ -5,6 +5,8 @@
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl3.h"
 
+#include "imguizmo.h"
+
 #include "../FrogGameEngine/GameObject.h"
 
 class EditorUI : public EditorModule {
@@ -19,27 +21,32 @@ public:
 	bool CleanUp();
 
 public:
-	bool dockSpaceEnabled;
+	bool dockSpaceEnabled = true;
 
-	bool editorActivated;
+	bool editorActivated = true;
 
-	bool quitPressed;
+	bool quitPressed = false;
 
-	bool showDemoWindow;
-	bool showAnotherWindow;
+	bool showDemoWindow = false;
+	bool showAnotherWindow = false;
 
-	bool showHardwareWindow;
-	bool showAboutPopup;
-	bool showFPSLog;
+	bool showHardwareWindow = false;
+	bool showAboutPopup = false;
+	bool showFPSLog = true;
 
-	bool showConfigWindow;
+	bool showConfigWindow = false;
 
-	bool showHierarchyWindow;
-	bool showInspectorWindow;
+	bool showHierarchyWindow = true;
+	bool showInspectorWindow = true;
 
-	bool showConsoleWindow;
-	bool showAssetsWindow;
+	bool showConsoleWindow = true;
+	bool showAssetsWindow = true;
 	
+	bool usingGuizmo = false;
+	ImGuizmo::OPERATION currentGuizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+	ImGuizmo::MODE currentGuizmoMode = ImGuizmo::MODE::WORLD;
+	bool usingSnap;
+
 	ImVec4 clearColor;
 
 private:

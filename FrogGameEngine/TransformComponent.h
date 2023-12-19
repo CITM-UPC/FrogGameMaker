@@ -11,18 +11,23 @@ enum ReferenceAxis {
 class TransformComponent : public Component {
 public:
 
-	TransformComponent();
+	TransformComponent(GameObject* owner);
 
 	~TransformComponent();
 
 	mat4& getTransform();
+	mat4 getGlobalTransform();
 
 	vec3& getPosition();
 	vec3& getRotation();
 	vec3 getScale();
 
+	vec3 getRight();
+	vec3 getUp();
+	vec3 getForward();
+
 	void translate(vec3 translation, ReferenceAxis ref = LOCAL);
-	void rotate(double degrees, const vec3& axis);
+	void rotate(double degrees, const vec3& axis, ReferenceAxis ref = LOCAL);
 	void scale(vec3 scale);
 
 private:

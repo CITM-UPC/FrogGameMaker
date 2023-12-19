@@ -72,6 +72,9 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source Files\GameObject\Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundingBox.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
