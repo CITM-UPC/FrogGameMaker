@@ -50,8 +50,10 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
     //load meshes
     int i = 0;
     for (const auto& mesh_ptr : scene.meshes()) {
-
-        string fileName = pathPath.filename().string()  + std::to_string(i) + ".sht";
+        string fileName = pathPath.filename().string();
+        size_t lastDot = fileName.find_last_of('.');
+        fileName = fileName.substr(0, lastDot);
+        fileName = fileName + std::to_string(i) + ".sht";
         fs::path customPath = fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(fileName); //to library
 
         scene_ptr->mName.C_Str();

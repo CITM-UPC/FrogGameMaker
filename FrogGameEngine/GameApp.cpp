@@ -70,6 +70,9 @@ void GameApp::EditorStart() {
             for (int i = 0; i < libraryStrings.size(); ++i)
                 currentAsset.libraryPath.push_back(libraryStrings[i]);
         }
+        else {
+            currentAsset.libraryPath.push_back(Texture2D::transformToDDS(entry.path().string()));
+        }
 
         currentAsset.assetsPath = entry.path().generic_string();
         currentAsset.name = entry.path().filename().string();
