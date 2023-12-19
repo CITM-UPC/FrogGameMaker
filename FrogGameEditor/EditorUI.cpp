@@ -644,12 +644,50 @@ void EditorUI::UIInspectorWriteTransformNode(TransformComponent* component) {
 	if (ImGui::CollapsingHeader("Transform")) {
 		ImGuiInputTextFlags flags = 0;
 		float vec3Position[3] = { (float)component->getPosition().x, (float)component->getPosition().y, (float)component->getPosition().z };
-		ImGui::InputDouble("Position X", &component->getPosition().x, 0, 0, "%.2f", flags);
-		ImGui::InputFloat3("Position", vec3Position);
+		ImGui::PushItemWidth(60);
+
+		ImGui::PushID(1);
+
+		ImGui::SeparatorText("Position: ");
+		ImGui::InputDouble("X", &component->getPosition().x, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Y", &component->getPosition().y, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Z", &component->getPosition().z, 0, 0, "%.2f", flags);
+		ImGui::Spacing();
+
+		ImGui::PopID();
+		ImGui::PushID(2);
+
+		ImGui::SeparatorText("Rotation: ");
+		ImGui::InputDouble("X", &component->getRotation().x, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Y", &component->getRotation().y, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Z", &component->getRotation().z, 0, 0, "%.2f", flags);
+		ImGui::Spacing();
+
+		ImGui::PopID();
+		ImGui::PushID(3);
+
+		ImGui::SeparatorText("Scale: ");
+		ImGui::InputDouble("X", &component->getScale().x, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Y", &component->getScale().y, 0, 0, "%.2f", flags);
+		ImGui::SameLine();
+		ImGui::InputDouble("Z", &component->getScale().z, 0, 0, "%.2f", flags);
+		ImGui::Spacing();
+
+		ImGui::PopID();
+		ImGui::PopItemWidth();
+
+		
+
+		/*ImGui::InputFloat3("Position", vec3Position);
 		float vec3Rotation[3] = { glm::degrees((float)component->getRotation().x), glm::degrees((float)component->getRotation().y), glm::degrees((float)component->getRotation().z) };
 		ImGui::InputFloat3("Rotation", vec3Rotation);
 		float vec3Scale[3] = { (float)component->getScale().x, (float)component->getScale().y, (float)component->getScale().z };
-		ImGui::InputFloat3("Scale", vec3Scale);
+		ImGui::InputFloat3("Scale", vec3Scale);*/
 	}
 }
 

@@ -66,13 +66,15 @@ vec3& TransformComponent::getRotation()
 	return rotEulerAngles;
 }
 
-vec3 TransformComponent::getScale()
+vec3& TransformComponent::getScale()
 {
 	double x = glm::length(_right);
 	double y = glm::length(_up);
 	double z = glm::length(_forward);
 
-	return vec3(x, y, z);
+	vec3 scale = vec3(x, y, z);
+
+	return scale;
 }
 
 vec3 TransformComponent::getRight()

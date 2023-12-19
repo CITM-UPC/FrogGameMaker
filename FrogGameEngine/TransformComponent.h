@@ -20,7 +20,7 @@ public:
 
 	vec3& getPosition();
 	vec3& getRotation();
-	vec3 getScale();
+	vec3& getScale();
 
 	vec3 getRight();
 	vec3 getUp();
