@@ -122,7 +122,7 @@ void GameApp::EditorRender(CameraComponent* camera)
 
 #pragma region Draw Sandbox
 
-    scene->Render(true);
+    scene->Render(camera->getCamera()->createFrustum(), true);
 
 #pragma endregion
 
@@ -151,7 +151,7 @@ void GameApp::GameRender(CameraComponent* camera)
 
 #pragma region Draw Sandbox
 
-    scene->Render(false);
+    scene->Render(camera->getCamera()->createFrustum(), false);
 
 #pragma endregion
 

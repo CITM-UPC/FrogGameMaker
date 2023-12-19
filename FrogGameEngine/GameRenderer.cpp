@@ -2,6 +2,34 @@
 
 #include <GL/glew.h>
 
+
+bool Plane::IsPointOnPositiveSide(vec3 point)
+{
+	double distance = glm::dot((point - pos), glm::normalize(normal));
+
+	return (distance > 0);
+}
+
+bool Frustum::IsBoundingBoxInFrustum(AABBox aabb)
+{
+	// faces frustum
+	for (int f = 0; f < 6; ++f) {
+		int vertexInside = 0;
+		// vertex aabb
+		for (int v = 0; v < 8; ++v) {
+			if (faces[f].IsPointOnPositiveSide(aabb.verts()[v])) {
+				vertexInside++;
+			}
+		}
+
+		if (vertexInside == 0) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
 static inline void glVec3(const vec3& v) { glVertex3dv(&v.x); }
 
 Frustum Camera::createFrustum()
@@ -97,3 +125,4 @@ void Camera::drawFrustum()
 	glEnd();
 	
 }
+

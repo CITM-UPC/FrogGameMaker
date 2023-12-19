@@ -122,7 +122,7 @@ void Scene::Update()
 {
 }
 
-void Scene::Render(bool drawBoundingBox)
+void Scene::Render(Frustum frustum, bool drawBoundingBox)
 {
 	glColor3ub(128, 0, 0);
 	if (drawBoundingBox) {
@@ -186,4 +186,9 @@ AABBox Scene::GetBoundingBox()
 	}
 
 	return aabbox;
+}
+
+bool Scene::BoundingBoxInFrustum(Frustum frustum)
+{
+	return false;
 }

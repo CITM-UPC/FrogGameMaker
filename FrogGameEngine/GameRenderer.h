@@ -1,28 +1,40 @@
 #pragma once
 
+#include <array>
 #include "Types.h"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtx/rotate_vector.hpp"
+#include "BoundingBox.h"
+
 
 struct Plane
 {
 	// unit vector
-	vec3 normal = { 0.0f, 1.0f, 0.0f };
+	vec3 normal;
 
 	// position
-	vec3 pos = { 0, 0, 0 };
+	vec3 pos;
+
+	bool IsPointOnPositiveSide(vec3 point);
 };
 
 struct Frustum
 {
-	Plane topFace;
-	Plane bottomFace;
+	union {
+		std::array<Plane, 6> faces;
+		struct {
+			Plane topFace;
+			Plane bottomFace;
 
-	Plane rightFace;
-	Plane leftFace;
+			Plane rightFace;
+			Plane leftFace;
 
-	Plane farFace;
-	Plane nearFace;
+			Plane farFace;
+			Plane nearFace;
+		};
+	};
+	
+	bool IsBoundingBoxInFrustum(AABBox aabb);
 };
 
 struct Camera
@@ -35,7 +47,6 @@ struct Camera
 	// local frustum, will have to apply transformation before using it
 	Frustum createFrustum();
 
-	// local frustum, will have to apply transformation before using it
 	Frustum createFrustum(mat4 transform);
 
 	// local frustum, will be drawn after applying the transform matrix in the render

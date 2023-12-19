@@ -29,7 +29,7 @@ public:
 	// --TODO--
 	void Update();
 
-	void Render(bool drawBoundingBox = false);
+	void Render(Frustum frustum, bool drawBoundingBox = false);
 
 	void CleanUp();
 
@@ -37,6 +37,7 @@ public:
 
 	AABBox GetBoundingBox();
 
+	bool BoundingBoxInFrustum(Frustum frustum);
 
 	// uuid id
 	string name;
