@@ -8,7 +8,7 @@ using namespace std;
 
 Texture2D::Texture2D(const std::string& oPath) {
 
-    size_t lastChar = oPath.find_last_of('/');
+    size_t lastChar = oPath.find_last_of('\\');
     std::string path;
     if (!oPath.ends_with(".dds") && !oPath.substr(0, lastChar).ends_with("Library/Materials")) {
         path = transformToDDS(oPath);

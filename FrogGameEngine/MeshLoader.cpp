@@ -37,15 +37,23 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
     std::vector<std::string> pathList;
    
 
-    //load textures
-   /* vector<Texture2D::Ptr> texture_ptrs;
+    //intraduce texture
+    string texturePath;
     for (const auto& material : scene.materials()) {
+
         aiString aiPath;
         material->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
-        fs::path texPath = fs::path(path).parent_path() / fs::path(aiPath.C_Str()).filename();
-        auto texture_ptr = make_shared<Texture2D>(texPath.string());
-        texture_ptrs.push_back(texture_ptr);
-    }*/
+
+        texturePath = aiPath.C_Str();
+
+        size_t lastChar = texturePath.find_last_of('\\');
+        texturePath = texturePath.substr(lastChar + 1);
+        lastChar = texturePath.find_last_of('.');
+        texturePath = texturePath.substr(0, lastChar);
+        texturePath = "../FrogGameEditor/Library/Materials/" + texturePath + ".dds";
+
+
+    }
 
     //load meshes
     int i = 0;
@@ -78,6 +86,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         MeshLoader mesh_sptr = MeshLoader();
 
+        mesh_sptr.texture = texturePath;
         mesh_sptr.vertex_data = vertex_data;
         mesh_sptr.index_data = index_data;
 
@@ -150,6 +159,10 @@ std::ostream& MeshLoader::serialize(std::ostream& os) const
 
     os.write((char*)&numFaces, sizeof(unsigned int));
 
+    vLength = texture.size();
+    os.write((char*)&vLength, sizeof(vLength));
+    os.write(&texture[0], vLength);
+
     return os;
 }
 
@@ -181,6 +194,10 @@ std::istream& MeshLoader::deserialize(std::istream& is)
     is.read((char*)meshFaceNorms.data(), vLength * sizeof(vec3f));
 
     is.read((char*)&numFaces, sizeof(unsigned int));
+
+    is.read((char*)&vLength, sizeof(vLength));
+    texture.resize(vLength);
+    is.read(&texture[0], vLength);
 
     return is;
 }

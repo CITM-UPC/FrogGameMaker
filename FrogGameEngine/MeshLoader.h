@@ -25,6 +25,8 @@ struct MeshLoader
 	std::vector<vec3f> meshFaceCenters;
 	std::vector<vec3f> meshFaceNorms;
 
+	std::string texture;
+
 	using Ptr = std::shared_ptr<MeshLoader>;
 
 	static std::vector<std::string> loadFromFile(const std::string& path);

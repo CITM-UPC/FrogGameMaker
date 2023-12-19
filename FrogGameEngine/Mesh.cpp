@@ -41,87 +41,11 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::vector<std::string>& path) 
     return mesh_ptrs;
 }
 
-/*std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::string& path, const std::string& stringPath) {
-
-
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
-    const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
-
-    //load textures
-    vector<Texture2D::Ptr> texture_ptrs;
-    for (const auto& material : scene.materials()) {
-        aiString aiPath(stringPath);
-        fs::path texPath = fs::path(stringPath).parent_path() / fs::path(aiPath.C_Str()).filename();
-        auto texture_ptr = make_shared<Texture2D>(texPath.string());
-        texture_ptrs.push_back(texture_ptr);
-    }
-
-    //load meshes
-    vector<Mesh::Ptr> mesh_ptrs;
-    for (const auto& mesh_ptr : scene.meshes()) {
-
-        const auto& mesh = *mesh_ptr;
-
-        vector<V3T2> vertex_data;
-        for (size_t i = 0; i < mesh.verts().size(); ++i) {
-            V3T2 v = { mesh.verts()[i], vec2f(mesh.texCoords()[i].x, mesh.texCoords()[i].y) };
-            vertex_data.push_back(v);
-        }
-
-        vector<unsigned int> index_data;
-        for (const auto& face : mesh.faces()) {
-            // push back each vertex from the triangles
-            index_data.push_back(face.mIndices[0]);
-            index_data.push_back(face.mIndices[1]);
-            index_data.push_back(face.mIndices[2]);
-        }
-
-        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, vertex_data.data(), vertex_data.size(), mesh.mNumFaces, index_data.data(), index_data.size());
-        mesh_sptr->texture = texture_ptrs[mesh.mMaterialIndex];
-        mesh_sptr->path = path;
-
-        for (size_t i = 0; i < mesh.mNumVertices; i++) {
-            aiVector3D normal = mesh.mNormals[i];
-            vec3f glmNormal(normal.x, normal.y, normal.z);
-            mesh_sptr->meshNorms.push_back(glmNormal);
-        }
-
-        for (size_t i = 0; i < mesh.mNumVertices; i++) {
-            aiVector3D vert = mesh.mVertices[i];
-            vec3f glmNormal(vert.x, vert.y, vert.z);
-            mesh_sptr->meshVerts.push_back(glmNormal);
-        }
-
-        for (size_t i = 0; i < mesh.mNumFaces; i++) {
-            aiFace face = mesh.mFaces[i];
-
-            vec3f v0(mesh.mVertices[face.mIndices[0]].x, mesh.mVertices[face.mIndices[0]].y, mesh.mVertices[face.mIndices[0]].z);
-            vec3f v1(mesh.mVertices[face.mIndices[1]].x, mesh.mVertices[face.mIndices[1]].y, mesh.mVertices[face.mIndices[1]].z);
-            vec3f v2(mesh.mVertices[face.mIndices[2]].x, mesh.mVertices[face.mIndices[2]].y, mesh.mVertices[face.mIndices[2]].z);
-
-            vec3f faceNormal = glm::cross(v1 - v0, v2 - v0);
-            faceNormal = glm::normalize(faceNormal);
-            mesh_sptr->meshFaceNorms.push_back(faceNormal);
-
-            vec3f faceCenter = (v0 + v1 + v2) / 3.0f;
-            mesh_sptr->meshFaceCenters.push_back(faceCenter);
-        }
-
-
-        mesh_ptrs.push_back(mesh_sptr);
-    }
-
-    aiReleaseImport(scene_ptr);
-
-    return mesh_ptrs;
-}*/
 
 void Mesh::loadTextureToMesh(const std::string& path) 
 {
-    fs::path texPath(path);
-    auto texture_ptr = make_shared<Texture2D>(texPath.string());
+    auto texture_ptr = make_shared<Texture2D>(path);
     texture = texture_ptr;
-
 }
 
 
@@ -165,6 +89,7 @@ Mesh::Mesh(MeshLoader custom) :
     _numIndexs(custom.index_data.size()),
     _numFaces(custom.numFaces)
 {
+
     meshVerts = custom.meshVerts;
     meshNorms = custom.meshNorms;
     meshFaceCenters = custom.meshFaceCenters;
@@ -187,6 +112,8 @@ Mesh::Mesh(MeshLoader custom) :
     else {
         _indexs_buffer_id = 0;
     }
+
+    loadTextureToMesh(custom.texture);
 }
 
 
