@@ -9,8 +9,6 @@
 
 #include <filesystem>
 
-#include <iostream>
-#include <fstream>
 
 namespace fs = std::filesystem;
 
@@ -34,7 +32,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
-    fs::path customPath("../FrogGameEditor/Library/Meshes/asdf.sht") /*= fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(pathPath.filename()) / fs::path(".sht")*/; //to library
+    fs::path customPath("Library/Meshes/asdf.sht") /*= fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(pathPath.filename()) / fs::path(".sht")*/; //to library
 
     //customPath = customPath.parent_path() / pathPath.filename();
 
@@ -71,7 +69,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
 
         }
 
-        MeshLoader mesh_sptr;
+        MeshLoader mesh_sptr = MeshLoader();
 
         mesh_sptr.vertex_data = vertex_data;
         mesh_sptr.index_data = index_data;
@@ -102,8 +100,8 @@ std::string MeshLoader::loadFromFile(const std::string& path)
             vec3f faceCenter = (v0 + v1 + v2) / 3.0f;
             mesh_sptr.meshFaceCenters.push_back(faceCenter);
         }
-
-        mesh_sptr.serialize(oFile);
+        mesh_sptr.numFaces = mesh.mNumFaces;
+        oFile << mesh_sptr;
 
         //AddLog
     }
