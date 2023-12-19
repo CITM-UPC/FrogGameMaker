@@ -32,9 +32,7 @@ struct MeshLoader
 	std::ostream& serialize(std::ostream& os) const;
 	std::istream& deserialize(std::istream& is);
 
-	MeshLoader() {
-
-	}
+	//MeshLoader() {}
 
 };
 

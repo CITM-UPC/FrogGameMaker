@@ -7,6 +7,8 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 
+#include <fstream>
+
 #include <filesystem>
 
 
@@ -32,7 +34,8 @@ std::string MeshLoader::loadFromFile(const std::string& path)
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
-    fs::path customPath("Library/Meshes/asdf.sht") /*= fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(pathPath.filename()) / fs::path(".sht")*/; //to library
+    string fileName = pathPath.filename().string() + ".sht";
+    fs::path customPath= fs::path("../FrogGameEditor/Library/Meshes/") /  fs::path(fileName); //to library
 
     //customPath = customPath.parent_path() / pathPath.filename();
 
@@ -101,7 +104,7 @@ std::string MeshLoader::loadFromFile(const std::string& path)
             mesh_sptr.meshFaceCenters.push_back(faceCenter);
         }
         mesh_sptr.numFaces = mesh.mNumFaces;
-        oFile << mesh_sptr;
+         oFile << mesh_sptr;
 
         //AddLog
     }
@@ -138,7 +141,7 @@ std::ostream& MeshLoader::serialize(std::ostream& os) const
     os.write((char*)&vLength, sizeof(vLength));
     os.write((char*)meshFaceNorms.data(), meshFaceNorms.size() * sizeof(vec3f));
 
-    os.write((char*)numFaces, sizeof(unsigned int));
+    os.write((char*)&numFaces, sizeof(unsigned int));
 
     return os;
 }
