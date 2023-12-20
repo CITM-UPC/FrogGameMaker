@@ -21,6 +21,10 @@ public:
 	bool CleanUp();
 
 public:
+	// if the mouse pressed is drag to ui this still is false
+	bool mouseOnUI;
+
+
 	bool dockSpaceEnabled = true;
 
 	bool editorActivated = true;

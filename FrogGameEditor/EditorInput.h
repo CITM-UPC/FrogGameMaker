@@ -30,6 +30,10 @@ public:
 		return mouseButtons[id - 1];
 	}
 
+	vec2 GetMousePosition() const {
+		return vec2(mousePosX, mousePosY);
+	}
+
 	vec2 GetMouseMotion() const {
 		return vec2(mouseMotionX, mouseMotionY);
 	}
@@ -45,6 +49,9 @@ public:
 private:
 	KeyState* keyboard;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
+
+	int mousePosX;
+	int mousePosY;
 
 	int	mouseMotionX;
 	int mouseMotionY;

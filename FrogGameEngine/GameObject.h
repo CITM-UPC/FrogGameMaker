@@ -53,6 +53,8 @@ public:
 	void DrawBoundingBox(const AABBox& aabb);
 	AABBox GetBoundingBox();
 
+	AABBox GetGlobalBoundingBox();
+
 	// uuid id
 	string name;
 	// should be a list of uuids
