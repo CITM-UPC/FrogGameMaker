@@ -134,6 +134,10 @@ Mesh::Mesh(MeshLoader custom) :
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * _numVerts, custom.vertex_data.data(), GL_STATIC_DRAW);
 
+    for (const auto& v : span((V3T2*)custom.vertex_data.data(), custom.meshVerts.size())) {
+        aabb.min = glm::min(aabb.min, vec3(v.v));
+        aabb.max = glm::max(aabb.max, vec3(v.v));
+    }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
