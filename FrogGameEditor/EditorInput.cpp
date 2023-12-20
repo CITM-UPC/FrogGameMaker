@@ -145,6 +145,9 @@ bool EditorInput::PreUpdate() {
 			SDL_free(dropped_filedir);*/ }   // Free dropped_filedir memory
 						   break;
 		case SDL_MOUSEMOTION:
+			mousePosX = event.motion.x;
+			mousePosY = event.motion.y;
+
 			mouseMotionX = event.motion.xrel;
 			mouseMotionY = event.motion.yrel;
 			break;
