@@ -30,7 +30,7 @@ struct aiSceneExt : aiScene {
 
 std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 {
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals /* | aiProcess_PreTransformVertices*/);
+    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
@@ -50,7 +50,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         currentTexture = currentTexture.substr(lastChar + 1);
         lastChar = currentTexture.find_last_of('.');
         currentTexture = currentTexture.substr(0, lastChar);
-        currentTexture = "Library/Materials/" + currentTexture + ".tga";
+        currentTexture = "Library/Materials/" + currentTexture + ".dds";
 
         texturePath.push_back(currentTexture);
     }
@@ -64,7 +64,8 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         fileName = fileName + std::to_string(i) + ".sht";
         fs::path customPath = fs::path("Library/Meshes/") / fs::path(fileName); //to library
 
-        
+        //std::filesystem::create_directories(customPath);
+    
 
         scene_ptr->mName.C_Str();
 
@@ -78,7 +79,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
             VertexV3T2 v;
             v.vertex = {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z};
             if (mesh.HasTextureCoords(i))
-                v.texCoords = { mesh.texCoords()[i].x, mesh.texCoords()[i].y };//to do
+                v.texCoords = { mesh.texCoords()[i].x, mesh.texCoords()[i].y };
             else
                 v.texCoords = { 0, 0 };
             vertex_data.push_back(v);
@@ -97,6 +98,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         mesh_sptr.texture = texturePath[mesh.mMaterialIndex];
         mesh_sptr.vertex_data = vertex_data;
         mesh_sptr.index_data = index_data;
+        //mesh_sptr.transform = transformMatrix;
 
         for (size_t i = 0; i < mesh.mNumVertices; i++) {
             aiVector3D normal = mesh.mNormals[i];

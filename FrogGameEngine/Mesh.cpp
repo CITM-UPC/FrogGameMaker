@@ -18,6 +18,8 @@ using namespace std;
 
 std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::vector<std::string>& path) {
 
+
+
     //load meshes
     vector<Mesh::Ptr> mesh_ptrs;
 
@@ -58,8 +60,8 @@ Mesh::Ptr Mesh::loadFromFile(const std::string& path) {
 
         iFile >> forLoading;
 
-        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, forLoading.vertex_data.data(), forLoading.vertex_data.size(), forLoading.numFaces,
-            forLoading.index_data.data(), forLoading.index_data.size());
+        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, forLoading.vertex_data.data(), forLoading.vertex_data.size(), 
+            forLoading.numFaces, forLoading.index_data.data(), forLoading.index_data.size());
 
         mesh_sptr->path = path;
         mesh_sptr->meshVerts = forLoading.meshVerts;
