@@ -30,7 +30,7 @@ struct aiSceneExt : aiScene {
 
 std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 {
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
+    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals | aiProcess_PreTransformVertices);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
@@ -38,21 +38,22 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
    
 
     //intraduce texture
-    string texturePath;
+    vector<string> texturePath;
     for (const auto& material : scene.materials()) {
 
         aiString aiPath;
         material->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
+        
+        string currentTexture;
+        currentTexture = aiPath.C_Str();
+        
+        size_t lastChar = currentTexture.find_last_of('\\');
+        currentTexture = currentTexture.substr(lastChar + 1);
+        lastChar = currentTexture.find_last_of('.');
+        currentTexture = currentTexture.substr(0, lastChar);
+        currentTexture = "../FrogGameEditor/Library/Materials/" + currentTexture + ".dds";
 
-        texturePath = aiPath.C_Str();
-
-        size_t lastChar = texturePath.find_last_of('\\');
-        texturePath = texturePath.substr(lastChar + 1);
-        lastChar = texturePath.find_last_of('.');
-        texturePath = texturePath.substr(0, lastChar);
-        texturePath = "../FrogGameEditor/Library/Materials/" + texturePath + ".dds";
-
-
+        texturePath.push_back(currentTexture);
     }
 
     //load meshes
@@ -72,7 +73,13 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         vector<VertexV3T2> vertex_data;
         for (size_t i = 0; i < mesh.verts().size(); ++i) {
-            VertexV3T2 v = { {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z}, {0,0/*mesh.texCoords()[i].x, mesh.texCoords()[i].y*/}};//to do
+
+            VertexV3T2 v;
+            v.vertex = {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z};
+            if (mesh.HasTextureCoords(i))
+                v.texCoords = { mesh.texCoords()[i].x, mesh.texCoords()[i].y };//to do
+            else
+                v.texCoords = { 0, 0 };
             vertex_data.push_back(v);
         }
 
@@ -86,7 +93,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         MeshLoader mesh_sptr = MeshLoader();
 
-        mesh_sptr.texture = texturePath;
+        mesh_sptr.texture = texturePath[mesh.mMaterialIndex];
         mesh_sptr.vertex_data = vertex_data;
         mesh_sptr.index_data = index_data;
 

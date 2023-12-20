@@ -129,12 +129,13 @@ Mesh::Mesh(MeshLoader custom) :
     meshFaceCenters = custom.meshFaceCenters;
     meshFaceNorms = custom.meshFaceNorms;
 
+    loadTextureToMesh(custom.texture);
+
     glGenBuffers(1, &_vertex_buffer_id);
     glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * _numVerts, custom.vertex_data.data(), GL_STATIC_DRAW);
 
-    loadTextureToMesh(custom.texture);
     for (const auto& v : span((V3T2*)custom.vertex_data.data(), custom.meshVerts.size())) {
         aabb.min = glm::min(aabb.min, vec3(v.v));
         aabb.max = glm::max(aabb.max, vec3(v.v));
