@@ -896,10 +896,8 @@ void EditorUI::UIAssetsWindow() {
 		if (editor->editorObjectSelector->GetAssetSelected() != NULL && editor->editorObjectSelector->GetAssetSelected() == &editor->gameApp->allAssets[i]) {
 			isSelected = true;
 		}
-		// editor->editorObjectSelector->GetAssetSelected() == editor->gameApp->allAssets[i]
 		
 		if (ImGui::Selectable(editor->gameApp->allAssets[i].name.c_str(), isSelected)) {
-			//ImGui::OpenPopup("assets_popup");
 			editor->editorObjectSelector->SetAssetSelected(&editor->gameApp->allAssets[i]);
 			if (editor->gameApp->allAssets[i].name.ends_with(".fbx")) {
 				GameObject* object = editor->gameApp->scene->AddGameObject();

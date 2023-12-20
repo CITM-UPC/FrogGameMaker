@@ -102,7 +102,6 @@ bool EditorInput::PreUpdate() {
 				if (droppedPath.parent_path() != path)
 					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
 
-				//GameObject* newMesh = editor->gameApp->scene->AddGameObject();
 				auto mesh_ptrs = MeshLoader::loadFromFile(dropped_filedir);
 				Paths droppedFile;
 				droppedFile.assetsPath = dropped_filedir;
@@ -113,27 +112,19 @@ bool EditorInput::PreUpdate() {
 				droppedFile.name = filesystem::path(dropped_filedir).filename().string();
 				editor->gameApp->allAssets.push_back(droppedFile);
 				editor->AddLog("Mesh loaded from " + dropped_filedir);
-				//newMesh->AddMeshWithTexture(mesh_ptrs);
 
 			}
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds") || dropped_filedir.ends_with(".tga")) {
 				if (droppedPath.parent_path() != path)
 					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
-				
+
 
 			}
 			else {
 
 			}
-
-			// Shows directory of dropped file
-			/*SDL_ShowSimpleMessageBox(
-				SDL_MESSAGEBOX_INFORMATION,
-				"File dropped on window",
-				dropped_filedir,
-				editor->editorWindow->window
-			);
-			SDL_free(dropped_filedir);*/ }   // Free dropped_filedir memory
+		}
+ 
 						   break;
 		case SDL_MOUSEMOTION:
 			mousePosX = event.motion.x;
