@@ -30,7 +30,7 @@ struct aiSceneExt : aiScene {
 
 std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 {
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals | aiProcess_PreTransformVertices);
+    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals /* | aiProcess_PreTransformVertices*/);
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
