@@ -71,6 +71,21 @@ GameObject* Scene::DuplicateGameObject(GameObject* original)
 	return copyGameObject;
 }
 
+//void Scene::DeleteGameObject(GameObject* toDelete)
+//{
+//	if (toDelete->_parent != nullptr) {
+//		toDelete->_parent->DeleteChild(toDelete);
+//	}
+//	else {
+//		for (auto GO = children.begin(); GO != children.end(); ++GO) {
+//			if ((*GO).get() == toDelete) {
+//				children.erase(GO);
+//				return;
+//			}
+//		}
+//	}
+//}
+
 unique_ptr<GameObject> Scene::FindChild(GameObject* child)
 {
 	for (auto GO = children.begin(); GO != children.end(); ++GO) {

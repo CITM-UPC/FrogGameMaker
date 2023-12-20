@@ -293,6 +293,9 @@ void EditorUI::UIMainMenuBar() {
 		}
 
 		if (ImGui::BeginMenu("Create")) {
+			if (ImGui::MenuItem("Empty")) {
+				editor->gameApp->scene->AddGameObject();
+			}
 			if (ImGui::BeginMenu("Basic Shapes")) {
 				if (ImGui::MenuItem("Cube")) {
 					GameObject* newMesh = editor->gameApp->scene->AddGameObject("Cube");
@@ -609,22 +612,30 @@ void EditorUI::UIHierarchyNodeWrite(GameObject* GO) {
 		editor->editorObjectSelector->SetGameObjectSelected(GO);
 	}
 
+	//bool elementDeleted = false;
+
 	if (ImGui::BeginPopupContextItem()) {
 		editor->editorObjectSelector->SetGameObjectSelected(GO);
 
 		if (ImGui::Selectable("Duplicate")) {
 			editor->gameApp->scene->DuplicateGameObject(GO);
 		}
+		/*if (ImGui::Selectable("Delete")) {
+			editor->gameApp->scene->DeleteGameObject(GO);
+			elementDeleted = true;
+		}*/
 
 		ImGui::EndPopup();
 	}
 
-	if (nodeIsOpen) {
-		for (std::list<unique_ptr<GameObject>>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
-			UIHierarchyNodeWrite((*it).get());
+	//if (!elementDeleted) {
+		if (nodeIsOpen) {
+			for (std::list<unique_ptr<GameObject>>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
+				UIHierarchyNodeWrite((*it).get());
+			}
+			ImGui::TreePop();
 		}
-		ImGui::TreePop();
-	}
+	//}
 }
 
 void EditorUI::UIHierarchyWindow() {
