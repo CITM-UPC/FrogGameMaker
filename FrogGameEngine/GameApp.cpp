@@ -93,15 +93,16 @@ void GameApp::EditorStart() {
         }
     }
 
-    house = scene->AddGameObject();
+    house = scene->AddGameObject("House Object");
     auto mesh_ptrs = Mesh::loadFromFile(housePath);
     house->AddMeshWithTexture(mesh_ptrs);
 
     AddLog("BakerHouse.fbx loaded");
     
-    street = scene->AddGameObject();
+    street = scene->AddGameObject("Street Object");
     mesh_ptrs = Mesh::loadFromFile(streetPath);
     street->AddMeshWithTexture(mesh_ptrs);
+    street->GetComponent<TransformComponent>()->rotate(-90, {1, 0, 0});
 
     AddLog("Street environment_V01.fbx loaded");
 
@@ -113,7 +114,7 @@ void GameApp::EditorStart() {
     //auto transformStreet = street->GetComponent<TransformComponent>();
     //transformStreet->rotate(-90, vec3(1, 0, 0));
 
-    basicCamera = scene->AddGameObject("cam");
+    basicCamera = scene->AddGameObject("Camera Testing");
     basicCamera->AddComponent(CAMERA);
     {
         Camera* cameraToSet = basicCamera->GetComponent<CameraComponent>()->getCamera();
