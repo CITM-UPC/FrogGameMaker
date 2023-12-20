@@ -64,7 +64,7 @@ void GameApp::EditorStart() {
     
     for (const auto& entry : filesystem::directory_iterator(path)) {
         Paths currentAsset;
-        if (entry.path().string().ends_with(".fbx") || entry.path().string().ends_with(".FBX")) {
+        if (entry.path().string().ends_with(".fbx")) {
             vector<string> libraryStrings = MeshLoader::loadFromFile(entry.path().generic_string());
             for (int i = 0; i < libraryStrings.size(); ++i)
                 currentAsset.libraryPath.push_back(libraryStrings[i]);
@@ -80,16 +80,35 @@ void GameApp::EditorStart() {
     }
 
     // scene->DebugStart();
+    std::vector<std::string> housePath, streetPath;
+    for (int i = 0; i < allAssets.size(); ++i) {
+        if (allAssets[i].name == std::string("Street_environment.fbx")) {
+            streetPath = allAssets[i].libraryPath;
+        }
+        else if (allAssets[i].name == std::string("BakerHouse.fbx")) {
+            housePath = allAssets[i].libraryPath;
+        }
+    }
+
     house = scene->AddGameObject();
-    auto mesh_ptrs = Mesh::loadFromFile(allAssets[0].libraryPath);
+    auto mesh_ptrs = Mesh::loadFromFile(housePath);
     house->AddMeshWithTexture(mesh_ptrs);
 
     AddLog("BakerHouse.fbx loaded");
+    
+    street = scene->AddGameObject();
+    mesh_ptrs = Mesh::loadFromFile(streetPath);
+    street->AddMeshWithTexture(mesh_ptrs);
+
+    AddLog("Street environment_V01.fbx loaded");
 
     auto transformHouse = house->GetComponent<TransformComponent>();
     transformHouse->rotate(30, vec3(1, 0, 1));
     transformHouse->translate(vec3(0, -10, 10));
     transformHouse->scale(vec3(1, 1, 1));
+
+    //auto transformStreet = street->GetComponent<TransformComponent>();
+    //transformStreet->rotate(-90, vec3(1, 0, 0));
 
     basicCamera = scene->AddGameObject("cam");
     basicCamera->AddComponent(CAMERA);

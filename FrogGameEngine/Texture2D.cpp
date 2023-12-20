@@ -6,16 +6,7 @@
 
 using namespace std;
 
-Texture2D::Texture2D(const std::string& oPath) {
-
-    size_t lastChar = oPath.find_last_of('\\');
-    std::string path;
-    if (!oPath.ends_with(".dds") && !oPath.substr(0, lastChar).ends_with("Library/Materials")) {
-        path = transformToDDS(oPath);
-    }
-    else {
-        path = oPath;
-
+Texture2D::Texture2D(const std::string& path) {
     
     //load image data using devil
     auto img = ilGenImage();
@@ -25,6 +16,9 @@ Texture2D::Texture2D(const std::string& oPath) {
     auto height = ilGetInteger(IL_IMAGE_HEIGHT);
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
     auto data = ilGetData();
+
+    this->width = width;
+    this->height = height;
 
     //load image as a texture in VRAM
     glGenTextures(1, &_id);
@@ -39,11 +33,10 @@ Texture2D::Texture2D(const std::string& oPath) {
 
     //now we can delete image from RAM
     ilDeleteImage(img);
-    }
+   // }
     this->path = path.c_str();
 
-    this->width = width;
-    this->height = height;
+
 }
 
 Texture2D::Texture2D(Texture2D&& tex) noexcept : _id(tex._id) {

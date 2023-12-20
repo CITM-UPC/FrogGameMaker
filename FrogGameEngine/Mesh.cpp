@@ -134,6 +134,7 @@ Mesh::Mesh(MeshLoader custom) :
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * _numVerts, custom.vertex_data.data(), GL_STATIC_DRAW);
 
+    loadTextureToMesh(custom.texture);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -147,7 +148,7 @@ Mesh::Mesh(MeshLoader custom) :
         _indexs_buffer_id = 0;
     }
 
-    loadTextureToMesh(custom.texture);
+    
 }
 
 
