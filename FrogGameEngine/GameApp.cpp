@@ -182,6 +182,7 @@ void GameApp::GameRender(CameraComponent* camera)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // this position we have to make it global for it to be able to be as a child
     vec3 center = camera->getTransform()->getPosition() + camera->getTransform()->getForward();
 
     gluLookAt(camera->getTransform()->getPosition().x, camera->getTransform()->getPosition().y, camera->getTransform()->getPosition().z,

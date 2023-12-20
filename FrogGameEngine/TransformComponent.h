@@ -20,11 +20,15 @@ public:
 
 	vec3& getPosition();
 	vec3& getRotation();
-	vec3 getScale();
+	vec3& getScale();
 
 	vec3 getRight();
 	vec3 getUp();
 	vec3 getForward();
+
+	vec3& getEulerAngles();
+	vec3& getScaleVector();
+	void setTransformFromVectorEditing();
 
 	void translate(vec3 translation, ReferenceAxis ref = LOCAL);
 	void rotate(double degrees, const vec3& axis, ReferenceAxis ref = LOCAL);
@@ -45,4 +49,15 @@ private:
 			vec3 _pos;		double _paddingW;
 		};
 	};
+
+	union {
+		vec3 _rotation;
+		struct {
+			double _pitch;
+			double _yaw;
+			double _roll;
+		};
+	};
+
+	vec3 _scale;
 };
