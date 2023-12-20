@@ -58,6 +58,10 @@ vec3& TransformComponent::getRotation()
 		_roll = glm::degrees(atan2(_transform[1][0], _transform[0][0]));
 	}
 
+	_yaw = -_yaw;
+	_pitch = -_pitch;
+	_roll = -_roll;
+
 	return _rotation;
 }
 
@@ -121,9 +125,9 @@ void TransformComponent::setTransformFromVectorEditing()
 	_up = { 0, 1, 0 };
 	_forward = { 0, 0, 1 };
 
-	_transform = glm::rotate(_transform, glm::radians(_pitch), vec3{ 1, 0, 0 } * (glm::dmat3)_transform);
-	_transform = glm::rotate(_transform, glm::radians(_yaw), vec3{ 0, 1, 0 } * (glm::dmat3)_transform);
-	_transform = glm::rotate(_transform, glm::radians(_roll), vec3{ 0, 0, 1 } * (glm::dmat3)_transform);
+	_transform = glm::rotate(_transform, glm::radians(_pitch), vec3{ 1, 0, 0 });
+	_transform = glm::rotate(_transform, glm::radians(_yaw), vec3{ 0, 1, 0 });
+	_transform = glm::rotate(_transform, glm::radians(_roll), vec3{ 0, 0, 1 });
 
 	scale(_scale);
 
@@ -146,7 +150,7 @@ void TransformComponent::translate(vec3 translation, ReferenceAxis ref)
 
 void TransformComponent::rotate(double degrees, const vec3& axis, ReferenceAxis ref)
 {
-	//axis = glm::normalize(axis);
+	glm::normalize(axis);
 	
 	switch (ref)
 	{
