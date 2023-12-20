@@ -51,7 +51,7 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         currentTexture = currentTexture.substr(lastChar + 1);
         lastChar = currentTexture.find_last_of('.');
         currentTexture = currentTexture.substr(0, lastChar);
-        currentTexture = "../FrogGameEditor/Library/Materials/" + currentTexture + ".dds";
+        currentTexture = "../FrogGameEditor/Library/Materials/" + currentTexture + ".tga";
 
         texturePath.push_back(currentTexture);
     }

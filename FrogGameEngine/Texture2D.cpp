@@ -69,7 +69,7 @@ Texture2D::Texture2D()
 
 }
 
-std::string Texture2D::transformToDDS(const std::string& path)
+std::string Texture2D::transformToTGA(const std::string& path)
 {
    //load image data using devil
     auto img = ilGenImage();
@@ -96,10 +96,10 @@ std::string Texture2D::transformToDDS(const std::string& path)
     std::string fileName = path.substr(lastChar + 1);
     lastChar = fileName.find_last_of('.');
     fileName = fileName.substr(0, lastChar);
-    fileName = "../FrogGameEditor/Library/Materials/" + fileName + ".dds";
+    fileName = "../FrogGameEditor/Library/Materials/" + fileName + ".tga";
 
     ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-    ilSave(IL_DDS, fileName.c_str());
+    ilSave(IL_TGA, fileName.c_str());
 
     ilDeleteImage(img);
 
