@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include <GL/glew.h>
+#include <fstream>
 
 Scene::Scene()
 {
@@ -192,4 +193,22 @@ AABBox Scene::GetBoundingBox()
 bool Scene::BoundingBoxInFrustum(Frustum frustum)
 {
 	return false;
+}
+
+void Scene::LoadScene(const std::string& path)
+{
+	std::ifstream f(path);
+	json data = json::parse(f);
+
+	name = data["Name"];
+	// for each children, load each child
+}
+
+void Scene::SaveTemporalScene()
+{
+	ofstream("path.json");
+}
+
+void Scene::SaveScene()
+{
 }
