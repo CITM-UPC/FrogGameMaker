@@ -8,6 +8,24 @@ Victor Martin (Github: VicMarBall (https://github.com/VicMarBall))
 
 Ari Sevcik (Github: AriSevcik (https://github.com/AriSevcik))
 
+## New Features: 
+
+Camera Refactoring
+
+Bounding Boxes
+
+Frustum Culling
+
+Mouse Picking
+
+Hierarchy Editing
+
+Own File Format (.sht)
+
+Resources loaded in /Library
+
+PLAY and STOP
+
 ## How To Use: 
 ### Move Camera 
 Right Click and WASD to move
@@ -19,6 +37,14 @@ Right Click and move the mouse to look around
 Alt + Left Click and move the mouse to orbit around
 
 F to Focus on the selected object
+
+Right-Click to an object to select it
+
+In the menu General < PLAY / STOP to play the game
+
+### Debug: 
+
+K to change the Frustum Culling from the screen camera to the camera created at the scene and viceversa
 
 ### Drag & Drop 
 Drag and drop .FBX files to create a Game Object and load the mesh
@@ -49,6 +75,9 @@ Mesh:
 Texture: 
  - You can see the file name and its path
  - You can see the file size
+
+Camera: 
+ - You can edit the parameters of a camera (FOV, zNear, zFar, Aspect Ratio)
 
 ### Console Window
 See console logs
