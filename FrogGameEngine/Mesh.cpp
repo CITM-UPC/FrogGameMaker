@@ -37,6 +37,8 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::vector<std::string>& path) 
         mesh_sptr->meshFaceCenters = forLoading.meshFaceCenters;
         mesh_sptr->meshFaceNorms = forLoading.meshFaceNorms;
 
+        mesh_sptr->loadTextureToMesh(forLoading.texture);
+
 
         iFile.close();
         mesh_ptrs.push_back(mesh_sptr);
