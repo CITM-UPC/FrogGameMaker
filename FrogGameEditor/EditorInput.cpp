@@ -116,7 +116,7 @@ bool EditorInput::PreUpdate() {
 				//newMesh->AddMeshWithTexture(mesh_ptrs);
 
 			}
-			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds")) {
+			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds") || dropped_filedir.ends_with(".tga")) {
 				if (droppedPath.parent_path() != path)
 					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
 				if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {

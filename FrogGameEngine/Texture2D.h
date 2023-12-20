@@ -24,7 +24,7 @@ public:
 	Texture2D();
 	void bind() const;
 
-	static std::string transformToDDS(const std::string& path);
+	static std::string transformToTGA(const std::string& path);
 
 	~Texture2D();
 	

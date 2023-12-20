@@ -6,25 +6,20 @@
 
 using namespace std;
 
-Texture2D::Texture2D(const std::string& oPath) {
-
-    size_t lastChar = oPath.find_last_of('\\');
-    std::string path;
-    if (!oPath.ends_with(".dds") && !oPath.substr(0, lastChar).ends_with("Library/Materials")) {
-        path = transformToDDS(oPath);
-    }
-    else {
-        path = oPath;
-
+Texture2D::Texture2D(const std::string& path) {
     
     //load image data using devil
     auto img = ilGenImage();
     ilBindImage(img);
     ilLoadImage(path.c_str());
+    this->path = path;
     auto width = ilGetInteger(IL_IMAGE_WIDTH);
     auto height = ilGetInteger(IL_IMAGE_HEIGHT);
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
     auto data = ilGetData();
+
+    this->width = width;
+    this->height = height;
 
     //load image as a texture in VRAM
     glGenTextures(1, &_id);
@@ -39,11 +34,9 @@ Texture2D::Texture2D(const std::string& oPath) {
 
     //now we can delete image from RAM
     ilDeleteImage(img);
-    }
-    this->path = path.c_str();
+  
 
-    this->width = width;
-    this->height = height;
+
 }
 
 Texture2D::Texture2D(Texture2D&& tex) noexcept : _id(tex._id) {
@@ -76,7 +69,7 @@ Texture2D::Texture2D()
 
 }
 
-std::string Texture2D::transformToDDS(const std::string& path)
+std::string Texture2D::transformToTGA(const std::string& path)
 {
    //load image data using devil
     auto img = ilGenImage();
@@ -103,10 +96,10 @@ std::string Texture2D::transformToDDS(const std::string& path)
     std::string fileName = path.substr(lastChar + 1);
     lastChar = fileName.find_last_of('.');
     fileName = fileName.substr(0, lastChar);
-    fileName = "../FrogGameEditor/Library/Materials/" + fileName + ".dds";
+    fileName = "Library/Materials/" + fileName + ".tga";
 
     ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-    ilSave(IL_DDS, fileName.c_str());
+    ilSave(IL_TGA, fileName.c_str());
 
     ilDeleteImage(img);
 

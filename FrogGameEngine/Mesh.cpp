@@ -28,9 +28,16 @@ std::vector<Mesh::Ptr> Mesh::loadFromFile(const std::vector<std::string>& path) 
 
         iFile >> forLoading;
 
-        auto mesh_sptr = make_shared<Mesh>(forLoading);
-        
+        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, forLoading.vertex_data.data(), forLoading.vertex_data.size(), forLoading.numFaces,
+            forLoading.index_data.data(), forLoading.index_data.size());
+
         mesh_sptr->path = path[i];
+        mesh_sptr->meshVerts = forLoading.meshVerts;
+        mesh_sptr->meshNorms = forLoading.meshNorms;
+        mesh_sptr->meshFaceCenters = forLoading.meshFaceCenters;
+        mesh_sptr->meshFaceNorms = forLoading.meshFaceNorms;
+
+        mesh_sptr->loadTextureToMesh(forLoading.texture);
 
 
         iFile.close();
@@ -51,9 +58,16 @@ Mesh::Ptr Mesh::loadFromFile(const std::string& path) {
 
         iFile >> forLoading;
 
-        auto mesh_sptr = make_shared<Mesh>(forLoading);
+        auto mesh_sptr = make_shared<Mesh>(Formats::F_V3T2, forLoading.vertex_data.data(), forLoading.vertex_data.size(), forLoading.numFaces,
+            forLoading.index_data.data(), forLoading.index_data.size());
 
         mesh_sptr->path = path;
+        mesh_sptr->meshVerts = forLoading.meshVerts;
+        mesh_sptr->meshNorms = forLoading.meshNorms;
+        mesh_sptr->meshFaceCenters = forLoading.meshFaceCenters;
+        mesh_sptr->meshFaceNorms = forLoading.meshFaceNorms;
+
+        mesh_sptr->loadTextureToMesh(forLoading.texture);
 
 
         iFile.close();
@@ -115,43 +129,6 @@ Mesh::Mesh(Formats format, const void* vertex_data, unsigned int numVerts, unsig
     else {
         _indexs_buffer_id = 0;
     }
-}
-
-Mesh::Mesh(MeshLoader custom) :
-    _format(F_V3T2),
-    _numVerts(custom.meshVerts.size()),
-    _numIndexs(custom.index_data.size()),
-    _numFaces(custom.numFaces)
-{
-
-    meshVerts = custom.meshVerts;
-    meshNorms = custom.meshNorms;
-    meshFaceCenters = custom.meshFaceCenters;
-    meshFaceNorms = custom.meshFaceNorms;
-
-    glGenBuffers(1, &_vertex_buffer_id);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer_id);
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3T2) * _numVerts, custom.vertex_data.data(), GL_STATIC_DRAW);
-
-    for (const auto& v : span((V3T2*)custom.vertex_data.data(), custom.meshVerts.size())) {
-        aabb.min = glm::min(aabb.min, vec3(v.v));
-        aabb.max = glm::max(aabb.max, vec3(v.v));
-    }
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    if (!custom.index_data.empty()) {
-        glGenBuffers(1, &_indexs_buffer_id);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexs_buffer_id);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * _numIndexs, custom.index_data.data(), GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-    else {
-        _indexs_buffer_id = 0;
-    }
-
-    loadTextureToMesh(custom.texture);
 }
 
 

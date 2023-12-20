@@ -40,6 +40,7 @@ public:
 	Scene* scene = nullptr;
 	
 	GameObject* house = nullptr;
+	GameObject* street = nullptr;
 
 	GameObject* basicCamera = nullptr;
 	vector<Paths> allAssets;
