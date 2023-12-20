@@ -17,6 +17,8 @@ bool EditorCamera::Start() {
 	cameraObject.get()->GetComponent<TransformComponent>()->getPosition() = { 10, 2, 10 };
 	cameraObject.get()->GetComponent<TransformComponent>()->rotate(-120, { 0, 1, 0 });
 
+	focusPosition = cameraObject.get()->GetComponent<TransformComponent>()->getPosition() + (cameraObject.get()->GetComponent<TransformComponent>()->getForward() * 10.0);
+
 	cameraObject.get()->GetComponent<CameraComponent>()->getCamera()->aspect = (double)editor->editorWindow->width / (double)editor->editorWindow->height;
 
 	return true;
@@ -48,16 +50,19 @@ bool EditorCamera::Update() {
 	// While Right clicking, “WASD” fps-like movement and free look around must be enabled
 	else if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_RIGHT)) {
 		if (editor->editorInput->GetKey(SDL_SCANCODE_W)) {
-			TranslateLocally(vec3(0, 0, speed));
+			Translate(vec3(0, 0, speed));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_A)) {
-			TranslateLocally(vec3(speed, 0, 0));
+			Translate(vec3(speed, 0, 0));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_S)) {
-			TranslateLocally(vec3(0, 0, -speed));
+			Translate(vec3(0, 0, -speed));
 		}
 		if (editor->editorInput->GetKey(SDL_SCANCODE_D)) {
-			TranslateLocally(vec3(-speed, 0, 0));
+			Translate(vec3(-speed, 0, 0));
+		}
+		if (editor->editorInput->GetKey(SDL_SCANCODE_SPACE)) {
+			Translate(vec3(0, speed, 0), GLOBAL);
 		}
 
 		LookAround(editor->editorInput->GetMouseMotion());
@@ -84,9 +89,9 @@ bool EditorCamera::Update() {
 	return true;
 }
 
-void EditorCamera::TranslateLocally(vec3 translation) {
+void EditorCamera::Translate(vec3 translation, ReferenceAxis ref) {
 
-	cameraObject.get()->GetComponent<TransformComponent>()->translate(translation);
+	cameraObject.get()->GetComponent<TransformComponent>()->translate(translation, ref);
 
 	double focusDistance = glm::distance(focusPosition, cameraObject.get()->GetComponent<TransformComponent>()->getPosition());
 	focusPosition = cameraObject.get()->GetComponent<TransformComponent>()->getPosition() + cameraObject.get()->GetComponent<TransformComponent>()->getForward() * focusDistance;
@@ -94,30 +99,17 @@ void EditorCamera::TranslateLocally(vec3 translation) {
 
 void EditorCamera::OrbitAround(vec2 motion) {
 
-	//double sensibility = 0.1;
+	double sensibility = 0.1;
 
-	//if (motion.x != 0) {
-	//	vec3 newLocalZ = glm::rotate(cameraObject.get()->GetComponent<TransformComponent>()->getForward(), glm::radians((-motion.x) * sensibility), vec3(0, 1.0f, 0));
+	double focusDistance = glm::distance(cameraObject.get()->GetComponent<TransformComponent>()->getPosition(), focusPosition);	
 
-	//	if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y <= -0.99)) {
-	//		camera.eye = camera.center + newLocalZ;
-	//	}
-	//}
+	cameraObject.get()->GetComponent<TransformComponent>()->getPosition() = focusPosition;
 
-	//if (motion.y != 0) {
-	//	vec3 localX;
-	//	localX.x = camera.computeLookAt()[0].x;
-	//	localX.y = camera.computeLookAt()[1].x;
-	//	localX.z = camera.computeLookAt()[2].x;
+	cameraObject.get()->GetComponent<TransformComponent>()->rotate((-motion.x) * sensibility, vec3(0, 1.0f, 0), GLOBAL);
+	cameraObject.get()->GetComponent<TransformComponent>()->rotate((motion.y) * sensibility, vec3(1.0f, 0, 0));
 
-	//	vec3 localZ = camera.eye - camera.center;
-	//	vec3 newLocalZ = glm::rotate(localZ, glm::radians((-motion.y) * sensibility), localX);
+	cameraObject.get()->GetComponent<TransformComponent>()->getPosition() = cameraObject.get()->GetComponent<TransformComponent>()->getPosition() - (glm::normalize(cameraObject.get()->GetComponent<TransformComponent>()->getForward()) * focusDistance);
 
-	//	if (!(glm::normalize(newLocalZ).y >= 0.99 || glm::normalize(newLocalZ).y <= -0.99)) {
-
-	//		camera.eye = camera.center + newLocalZ;
-	//	}
-	//}
 }
 
 void EditorCamera::LookAround(vec2 motion) {
