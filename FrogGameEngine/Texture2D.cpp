@@ -96,7 +96,7 @@ std::string Texture2D::transformToTGA(const std::string& path)
     std::string fileName = path.substr(lastChar + 1);
     lastChar = fileName.find_last_of('.');
     fileName = fileName.substr(0, lastChar);
-    fileName = "../FrogGameEditor/Library/Materials/" + fileName + ".tga";
+    fileName = "Library/Materials/" + fileName + ".tga";
 
     ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
     ilSave(IL_TGA, fileName.c_str());

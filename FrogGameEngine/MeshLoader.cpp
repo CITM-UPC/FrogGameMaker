@@ -43,7 +43,6 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         aiString aiPath;
         material->GetTexture(aiTextureType_DIFFUSE, 0, &aiPath);
-        
         string currentTexture;
         currentTexture = aiPath.C_Str();
         
@@ -51,11 +50,11 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         currentTexture = currentTexture.substr(lastChar + 1);
         lastChar = currentTexture.find_last_of('.');
         currentTexture = currentTexture.substr(0, lastChar);
-        currentTexture = "../FrogGameEditor/Library/Materials/" + currentTexture + ".tga";
+        currentTexture = "Library/Materials/" + currentTexture + ".tga";
 
         texturePath.push_back(currentTexture);
     }
-
+   
     //load meshes
     int i = 0;
     for (const auto& mesh_ptr : scene.meshes()) {
@@ -63,7 +62,9 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         size_t lastDot = fileName.find_last_of('.');
         fileName = fileName.substr(0, lastDot);
         fileName = fileName + std::to_string(i) + ".sht";
-        fs::path customPath = fs::path("../FrogGameEditor/Library/Meshes/") / fs::path(fileName); //to library
+        fs::path customPath = fs::path("Library/Meshes/") / fs::path(fileName); //to library
+
+        
 
         scene_ptr->mName.C_Str();
 
