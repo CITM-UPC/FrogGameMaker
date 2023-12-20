@@ -16,12 +16,6 @@
     <Filter Include="Header Files\GameObject">
       <UniqueIdentifier>{94a91822-ae78-41d7-950f-d9d617718bdc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Shapes">
-      <UniqueIdentifier>{aa9a653c-20dc-4cf7-8f2f-3cab1dd0519c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Shapes">
-      <UniqueIdentifier>{89613a74-8753-42f8-9098-4d211a441e94}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\GameObject\Components">
       <UniqueIdentifier>{fecd7c04-1e13-4fff-bc5f-de6805e48f54}</UniqueIdentifier>
     </Filter>
@@ -41,18 +35,6 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Source Files\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Cylinder.cpp">
-      <Filter>Source Files\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Pyramid.cpp">
-      <Filter>Source Files\Shapes</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files\Shapes</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files\GameObject</Filter>
@@ -103,18 +85,6 @@
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Header Files\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Header Files\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Cylinder.h">
-      <Filter>Header Files\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Pyramid.h">
-      <Filter>Header Files\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\GameObject\Components</Filter>
