@@ -101,6 +101,17 @@ void Scene::MoveChildToAnotherParent(GameObject* child, GameObject* toParent)
 {
 	list<unique_ptr<GameObject>>::iterator GO;
 	
+	// look if the child is actually the parent of the toParent
+	if (toParent != nullptr) {
+		GameObject* parentChecker = toParent;
+		while (parentChecker->_parent != nullptr) {
+			if (parentChecker->_parent == child) {
+				return;
+			}
+			parentChecker = parentChecker->_parent;
+		}
+	}
+
 	// if the child has a parent, look in the parent children, if not, look at the scene children
 	if (child->_parent != nullptr) {
 		for (GO = child->_parent->children.begin(); GO != child->_parent->children.end(); ++GO) {

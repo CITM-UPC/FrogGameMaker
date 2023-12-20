@@ -612,6 +612,32 @@ void EditorUI::UIHierarchyNodeWrite(GameObject* GO) {
 		editor->editorObjectSelector->SetGameObjectSelected(GO);
 	}
 
+	// ------
+
+	if (ImGui::BeginDragDropSource())
+	{
+		ImGui::SetDragDropPayload("Hierarchy_DragAndDrop", &GO, sizeof(GameObject));
+
+		ImGui::EndDragDropSource();
+	}
+	if (ImGui::BeginDragDropTarget())
+	{
+		bool dropped = false;
+		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy_DragAndDrop"))
+		{
+			GameObject* dragging = *(GameObject**)payload->Data;
+
+			editor->gameApp->scene->MoveChildToAnotherParent(dragging, GO);
+			dropped = true;			
+		}
+		ImGui::EndDragDropTarget();
+		if (dropped) {
+			return;
+		}
+	}
+
+	// ------
+
 	//bool elementDeleted = false;
 
 	if (ImGui::BeginPopupContextItem()) {
@@ -651,6 +677,16 @@ void EditorUI::UIHierarchyWindow() {
 	// get the scene that has as children the rest of game objects
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader(sceneToUI->name.c_str())) {
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Hierarchy_DragAndDrop"))
+			{
+				GameObject* dragging = *(GameObject**)payload->Data;
+
+				editor->gameApp->scene->MoveChildToAnotherParent(dragging, nullptr);
+			}
+			ImGui::EndDragDropTarget();
+		}
 
 		for (std::list<unique_ptr<GameObject>>::iterator it = sceneToUI->children.begin(); it != sceneToUI->children.end(); ++it) {
 			UIHierarchyNodeWrite((*it).get());
