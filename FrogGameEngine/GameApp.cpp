@@ -63,7 +63,7 @@ void GameApp::EditorStart() {
     std::filesystem::create_directories("Library/Meshes/");
     std::filesystem::create_directories("Library/Materials/");
 
-    std::string path = "../FrogGameEditor/Assets";
+    std::string path = "Assets";
     
     for (const auto& entry : filesystem::directory_iterator(path)) {
         Paths currentAsset;

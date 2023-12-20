@@ -888,7 +888,6 @@ void EditorUI::UIAssetsWindow() {
 
 	ImGui::Begin("Assets");
 
-	std::string path = "../FrogGameEditor/Assets";
 	for (int i = 0; i < editor->gameApp->allAssets.size(); ++i) {
 
 		bool isSelected = false;
