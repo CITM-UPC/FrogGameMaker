@@ -834,11 +834,29 @@ void EditorUI::UIAssetsWindow() {
 	std::string path = "../FrogGameEditor/Assets";
 	for (int i = 0; i < editor->gameApp->allAssets.size(); ++i) {
 
-		if (ImGui::Button(editor->gameApp->allAssets[i].name.c_str())) {
+		bool isSelected = false;
+
+		if (editor->editorObjectSelector->GetAssetSelected() != NULL && editor->editorObjectSelector->GetAssetSelected() == &editor->gameApp->allAssets[i]) {
+			isSelected = true;
+		}
+		// editor->editorObjectSelector->GetAssetSelected() == editor->gameApp->allAssets[i]
+		
+		if (ImGui::Selectable(editor->gameApp->allAssets[i].name.c_str(), isSelected)) {
 			//ImGui::OpenPopup("assets_popup");
+			editor->editorObjectSelector->SetAssetSelected(&editor->gameApp->allAssets[i]);
 
 
 		}
+		if (ImGui::BeginPopupContextItem()) {
+			editor->editorObjectSelector->SetAssetSelected(&editor->gameApp->allAssets[i]);
+
+			if (ImGui::Selectable("Delete")) {
+				// delete
+			}
+			
+			ImGui::EndPopup();
+		}
+		ImGui::SetItemTooltip(editor->gameApp->allAssets[i].assetsPath.c_str());
 		
 	}
 		

@@ -114,3 +114,13 @@ GameObject* EditorObjectSelector::GetGameObjectSelected()
 {
 	return gameObjectSelected;
 }
+
+void EditorObjectSelector::SetAssetSelected(Paths* selected)
+{
+	assetSelected = selected;
+}
+
+Paths* EditorObjectSelector::GetAssetSelected()
+{
+	return assetSelected;
+}
