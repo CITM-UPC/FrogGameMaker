@@ -8,11 +8,12 @@ using namespace std;
 
 Texture2D::Texture2D(const std::string& path) {
     
+    this->path = path.c_str();
+
     //load image data using devil
     auto img = ilGenImage();
     ilBindImage(img);
     ilLoadImage(path.c_str());
-    this->path = path;
     auto width = ilGetInteger(IL_IMAGE_WIDTH);
     auto height = ilGetInteger(IL_IMAGE_HEIGHT);
     auto channels = ilGetInteger(IL_IMAGE_CHANNELS);
@@ -69,7 +70,7 @@ Texture2D::Texture2D()
 
 }
 
-std::string Texture2D::transformToTGA(const std::string& path)
+std::string Texture2D::transformToDDS(const std::string& path)
 {
    //load image data using devil
     auto img = ilGenImage();
@@ -96,10 +97,10 @@ std::string Texture2D::transformToTGA(const std::string& path)
     std::string fileName = path.substr(lastChar + 1);
     lastChar = fileName.find_last_of('.');
     fileName = fileName.substr(0, lastChar);
-    fileName = "Library/Materials/" + fileName + ".tga";
+    fileName = "Library/Materials/" + fileName + ".dds";
 
     ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);
-    ilSave(IL_TGA, fileName.c_str());
+    ilSave(IL_DDS, fileName.c_str());
 
     ilDeleteImage(img);
 

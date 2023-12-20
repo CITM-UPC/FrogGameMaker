@@ -70,7 +70,7 @@ void GameApp::EditorStart() {
                 currentAsset.libraryPath.push_back(libraryStrings[i]);
         }
         else {
-            currentAsset.libraryPath.push_back(Texture2D::transformToTGA(entry.path().string()));
+            currentAsset.libraryPath.push_back(Texture2D::transformToDDS(entry.path().string()));
         }
 
         currentAsset.assetsPath = entry.path().generic_string();

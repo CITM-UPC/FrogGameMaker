@@ -119,16 +119,7 @@ bool EditorInput::PreUpdate() {
 			else if (dropped_filedir.ends_with(".png") || dropped_filedir.ends_with(".dds") || dropped_filedir.ends_with(".tga")) {
 				if (droppedPath.parent_path() != path)
 					filesystem::copy(dropped_filedir, "Assets", filesystem::copy_options::skip_existing);
-				if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
-					TextureComponent* textureComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TextureComponent>();
-					MeshComponent* meshComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<MeshComponent>();
-					if (meshComponent->getMesh() != nullptr) {
-						meshComponent->getMesh()->loadTextureToMesh(dropped_filedir);
-						textureComponent->setTexture(meshComponent->getMesh()->texture);
-						editor->AddLog("Texture " + dropped_filedir + " applied to " + editor->editorObjectSelector->GetGameObjectSelected()->name);
-					}
-
-				}
+				
 
 			}
 			else {

@@ -901,7 +901,25 @@ void EditorUI::UIAssetsWindow() {
 		if (ImGui::Selectable(editor->gameApp->allAssets[i].name.c_str(), isSelected)) {
 			//ImGui::OpenPopup("assets_popup");
 			editor->editorObjectSelector->SetAssetSelected(&editor->gameApp->allAssets[i]);
+			if (editor->gameApp->allAssets[i].name.ends_with(".fbx")) {
+				GameObject* object = editor->gameApp->scene->AddGameObject();
+				auto mesh_ptrs = Mesh::loadFromFile(editor->gameApp->allAssets[i].libraryPath);
+				object->AddMeshWithTexture(mesh_ptrs);
+			}
+			else if (editor->gameApp->allAssets[i].name.ends_with(".png") || editor->gameApp->allAssets[i].name.ends_with(".dds") || editor->gameApp->allAssets[i].name.ends_with(".tga")) {
+				if (editor->editorObjectSelector->GetGameObjectSelected() != nullptr) {
+					TextureComponent* textureComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<TextureComponent>();
+					MeshComponent* meshComponent = editor->editorObjectSelector->GetGameObjectSelected()->GetComponent<MeshComponent>();
+					if (meshComponent->getMesh() != nullptr) {
+						meshComponent->getMesh()->loadTextureToMesh(editor->gameApp->allAssets[i].libraryPath[0]);
+						textureComponent->setTexture(meshComponent->getMesh()->texture);
+						editor->AddLog("Texture " + editor->gameApp->allAssets[i].libraryPath[0] + " applied to " + editor->editorObjectSelector->GetGameObjectSelected()->name);
+					}
 
+				}
+			}
+
+			editor->gameApp->AddLog(editor->gameApp->allAssets[i].name + " loaded");
 
 		}
 		if (ImGui::BeginPopupContextItem()) {
