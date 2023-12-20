@@ -27,6 +27,10 @@ bool EditorCamera::Start() {
 
 bool EditorCamera::Update() {
 
+	if (editor->editorInput->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		editor->gameApp->useBasicCameraWithFrustum = !editor->gameApp->useBasicCameraWithFrustum;
+	}
+
 	if (editor->editorInput->WindowSizeHasUpdated()) {
 		cameraObject.get()->GetComponent<CameraComponent>()->getCamera()->aspect = (double)editor->editorWindow->width / (double)editor->editorWindow->height;
 	}

@@ -43,6 +43,8 @@ public:
 	GameObject* street = nullptr;
 
 	GameObject* basicCamera = nullptr;
+	bool useBasicCameraWithFrustum = false;
+
 	vector<Paths> allAssets;
 
 	void AddLog(string l);
