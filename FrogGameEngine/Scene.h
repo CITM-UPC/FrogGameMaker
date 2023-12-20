@@ -2,6 +2,9 @@
 #include <string>
 #include <list>
 #include "GameObject.h"
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
 
 using namespace std;
 
@@ -38,6 +41,12 @@ public:
 	AABBox GetBoundingBox();
 
 	bool BoundingBoxInFrustum(Frustum frustum);
+
+	void LoadScene(const std::string& path);
+
+	void SaveTemporalScene();
+
+	void SaveScene();
 
 	// uuid id
 	string name;

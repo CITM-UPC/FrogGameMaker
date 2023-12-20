@@ -18,4 +18,9 @@ public:
 	GameObject* GetGameObjectSelected();
 
 	GameObject* gameObjectSelected = nullptr;
+
+	void SetAssetSelected(Paths* selected);
+	Paths* GetAssetSelected();
+
+	Paths* assetSelected = nullptr;
 };
