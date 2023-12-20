@@ -851,7 +851,12 @@ void EditorUI::UIAssetsWindow() {
 			editor->editorObjectSelector->SetAssetSelected(&editor->gameApp->allAssets[i]);
 
 			if (ImGui::Selectable("Delete")) {
-				// delete
+				std::remove(editor->gameApp->allAssets[i].assetsPath.c_str());
+				for (int j = 0; j < editor->gameApp->allAssets[i].libraryPath.size(); ++j) {
+					std::remove(editor->gameApp->allAssets[i].libraryPath[j].c_str());
+				}
+				editor->gameApp->allAssets.erase(editor->gameApp->allAssets.begin() + i);
+
 			}
 			
 			ImGui::EndPopup();
@@ -860,15 +865,6 @@ void EditorUI::UIAssetsWindow() {
 		
 	}
 		
-	/*if (ImGui::BeginPopup("assets_popup")) {
-		if (ImGui::Selectable("Add to scene")) {
-
-		}
-		if (ImGui::Selectable("Delete")) {
-			std::remove(entry.path().string().c_str());
-		}
-		ImGui::EndPopup();
-	}*/
 
 	ImGui::End();
 }
