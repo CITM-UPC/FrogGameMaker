@@ -7,7 +7,7 @@ bool Plane::IsPointOnPositiveSide(vec3 point)
 {
 	double distance = glm::dot((point - pos), glm::normalize(normal));
 
-	return (distance > 0);
+	return (distance >= 0);
 }
 
 bool Frustum::IsBoundingBoxInFrustum(AABBox aabb)
@@ -43,7 +43,7 @@ Frustum Camera::createFrustum()
 	frustum.nearFace = { front, {0, 0, zNear} };
 	frustum.farFace = { -front, {0, 0, zFar} };
 
-	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), up), {0, 0, 0} };
+	frustum.rightFace = { glm::rotate(front, -glm::radians(90 - ((fov * 0.5) * aspect)), up), {0, 0, 0} };
 	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), up), {0, 0, 0} };
 
 	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), {0, 0, 0} };
@@ -64,7 +64,7 @@ Frustum Camera::createFrustum(mat4 transform)
 	frustum.nearFace = { front, pos + (front * zNear) };
 	frustum.farFace = { -front, pos + (front * zFar) };
 
-	frustum.rightFace = { glm::rotate(front,  -glm::radians(90 - ((fov * 0.5) * aspect)), upUp), pos };
+	frustum.rightFace = { glm::rotate(front, -glm::radians(90 - ((fov * 0.5) * aspect)), upUp), pos };
 	frustum.leftFace = { glm::rotate(front, glm::radians(90 - ((fov * 0.5) * aspect)), upUp), pos };
 
 	frustum.topFace = { glm::rotate(front, -glm::radians(90 - (fov * 0.5)), right), pos };

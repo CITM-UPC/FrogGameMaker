@@ -177,7 +177,7 @@ void Scene::Render(Frustum frustum, bool drawBoundingBox)
 		DrawBoundingBox(GetBoundingBox());
 	}
 
-	if (frustum.IsBoundingBoxInFrustum(aabb)) {
+	if (frustum.IsBoundingBoxInFrustum(GetBoundingBox())) {
 		for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
 			(*gameObjectI)->Render(frustum, drawBoundingBox);
 		}
