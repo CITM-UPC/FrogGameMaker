@@ -10,6 +10,13 @@ TransformComponent::TransformComponent(GameObject* owner) : Component(owner)
 	componentType = TRANSFORM;
 }
 
+TransformComponent::TransformComponent(TransformComponent* ref) : Component(ref->owner)
+{
+	_transform = ref->_transform;
+	_rotation = ref->_rotation;
+	_scale = ref->_scale;
+}
+
 TransformComponent::~TransformComponent()
 {
 

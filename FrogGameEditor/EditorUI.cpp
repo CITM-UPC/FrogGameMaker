@@ -609,6 +609,16 @@ void EditorUI::UIHierarchyNodeWrite(GameObject* GO) {
 		editor->editorObjectSelector->SetGameObjectSelected(GO);
 	}
 
+	if (ImGui::BeginPopupContextItem()) {
+		editor->editorObjectSelector->SetGameObjectSelected(GO);
+
+		if (ImGui::Selectable("Duplicate")) {
+			editor->gameApp->scene->DuplicateGameObject(GO);
+		}
+
+		ImGui::EndPopup();
+	}
+
 	if (nodeIsOpen) {
 		for (std::list<unique_ptr<GameObject>>::iterator it = GO->children.begin(); it != GO->children.end(); ++it) {
 			UIHierarchyNodeWrite((*it).get());

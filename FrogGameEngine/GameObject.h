@@ -26,6 +26,7 @@ public:
 	GameObject();
 	GameObject(string name);
 	GameObject(GameObjectTypes type, string name);
+	GameObject(GameObject* ref);
 
 	~GameObject();
 

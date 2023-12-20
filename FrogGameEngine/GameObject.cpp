@@ -45,6 +45,14 @@ GameObject::GameObject(GameObjectTypes type, string name)
 	}
 }
 
+GameObject::GameObject(GameObject* ref)
+{
+	name = ref->name + " Copy";
+
+	AddComponent(TRANSFORM);
+
+}
+
 GameObject::~GameObject()
 {
 	children.clear();

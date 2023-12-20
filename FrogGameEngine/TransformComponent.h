@@ -12,6 +12,7 @@ class TransformComponent : public Component {
 public:
 
 	TransformComponent(GameObject* owner);
+	TransformComponent(TransformComponent* ref);
 
 	~TransformComponent();
 

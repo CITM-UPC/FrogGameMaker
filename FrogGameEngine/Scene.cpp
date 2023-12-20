@@ -50,6 +50,27 @@ GameObject* Scene::AddGameObjectChildren(GameObject* parent)
 
 }
 
+GameObject* Scene::DuplicateGameObject(GameObject* original)
+{
+	unique_ptr<GameObject> ptrGameObject = make_unique<GameObject>(original);
+	GameObject* copyGameObject = ptrGameObject.get();
+
+	for (auto c = original->children.begin(); c != original->children.end(); ++c) {
+		unique_ptr<GameObject> ptrGameObjectChild = make_unique<GameObject>((*c).get());
+		copyGameObject->AddChild(move(ptrGameObjectChild));
+	}
+
+	if (original->_parent != nullptr) {
+		children.push_back(move(ptrGameObject));
+		MoveChildToAnotherParent(copyGameObject, original->_parent);
+	}
+	else {
+		children.push_back(move(ptrGameObject));
+	}
+
+	return copyGameObject;
+}
+
 unique_ptr<GameObject> Scene::FindChild(GameObject* child)
 {
 	for (auto GO = children.begin(); GO != children.end(); ++GO) {
