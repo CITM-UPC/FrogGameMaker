@@ -6,6 +6,7 @@
 #include "EditorCamera.h"
 #include "EditorWindow.h"
 #include "EditorInput.h"
+#include "EditorUI.h"
 
 EditorObjectSelector::EditorObjectSelector()
 {
@@ -18,11 +19,13 @@ bool EditorObjectSelector::Start()
 
 bool EditorObjectSelector::Update()
 {
-	if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		GameObject* clicked = DoClickRayCast();
-		SetGameObjectSelected(clicked);
+	if (!editor->editorUI->mouseOnUI) {
+		if (editor->editorInput->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN && editor->editorInput->GetKey(SDL_SCANCODE_LALT) == KEY_IDLE) {
+			GameObject* clicked = DoClickRayCast();
+			SetGameObjectSelected(clicked);
+		}
 	}
-
+	
 	if (gameObjectSelected == nullptr) {
 		return true;
 	}

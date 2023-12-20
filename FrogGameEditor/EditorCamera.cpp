@@ -5,6 +5,7 @@
 #include "EditorObjectSelector.h"
 
 #include "EditorCamera.h"
+#include "EditorUI.h"
 
 #include "../FrogGameEngine/GameObject.h"
 
@@ -36,7 +37,7 @@ bool EditorCamera::Update() {
 		speed = speed * 2.0 /*multiplying factor*/;
 	}
 
-	if (mouseOnUI) {
+	if (editor->editorUI->mouseOnUI) {
 		return true;
 	}
 

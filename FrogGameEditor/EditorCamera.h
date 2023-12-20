@@ -18,9 +18,6 @@ public:
 
 	float baseSpeed = 0.15;
 
-	// if the mouse pressed is drag to ui this still is false
-	bool mouseOnUI;
-
 	vec3 focusPosition = { 0, 0, 0 };
 
 	unique_ptr<GameObject> cameraObject;
