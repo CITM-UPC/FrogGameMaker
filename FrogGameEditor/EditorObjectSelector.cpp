@@ -141,14 +141,19 @@ GameObject* EditorObjectSelector::DoClickRayCast()
 
 	std::map<float, GameObject*> hitObjectsMap;
 
-	for (const auto& object : editor->gameApp->scene->children)
-	{
-		if (RayAABBIntersection(ray, object.get()))
+	if (RayAABBIntersection(ray, editor->gameApp->scene->GetBoundingBox())) {
+		cout << "Scene AABB hitted" << endl;
+
+		for (const auto& object : editor->gameApp->scene->children)
 		{
-			CheckMeshCollisionRecursive(ray, object.get(), hitObjectsMap);
+			if (RayAABBIntersection(ray, object.get()->GetGlobalBoundingBox()))
+			{
+				cout << "Hit AABB of " << object.get()->name.c_str() << endl;
+
+				CheckMeshCollisionRecursive(ray, object.get(), hitObjectsMap);
+			}
 		}
 	}
-
 
 	float closestHitPoint = std::numeric_limits<float>::infinity();
 

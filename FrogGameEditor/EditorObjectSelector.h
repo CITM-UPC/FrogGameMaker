@@ -65,9 +65,7 @@ static bool RayTriangleIntersection(const Ray& ray, const Triangle& triangle, fl
     return t > EPSILON;
 }
 
-static bool RayAABBIntersection(const Ray& ray, GameObject* go) {
-
-    AABBox box = go->GetBoundingBox();
+static bool RayAABBIntersection(const Ray& ray, AABBox box) {
 
     float tMin = (box.min.x - ray.origin.x) / ray.direction.x;
     float tMax = (box.max.x - ray.origin.x) / ray.direction.x;

@@ -278,3 +278,13 @@ AABBox GameObject::GetBoundingBox()
 
 	return aabbox;
 }
+
+AABBox GameObject::GetGlobalBoundingBox()
+{
+	AABBox baseAABB = GetBoundingBox();
+	AABBox globalAABB = baseAABB;
+	globalAABB = (GetComponent<TransformComponent>()->getGlobalTransform() * baseAABB).AABB();
+	
+
+	return globalAABB;
+}
