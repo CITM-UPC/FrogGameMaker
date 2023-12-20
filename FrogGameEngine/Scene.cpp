@@ -50,6 +50,42 @@ GameObject* Scene::AddGameObjectChildren(GameObject* parent)
 
 }
 
+GameObject* Scene::DuplicateGameObject(GameObject* original)
+{
+	unique_ptr<GameObject> ptrGameObject = make_unique<GameObject>(original);
+	GameObject* copyGameObject = ptrGameObject.get();
+
+	for (auto c = original->children.begin(); c != original->children.end(); ++c) {
+		unique_ptr<GameObject> ptrGameObjectChild = make_unique<GameObject>((*c).get());
+		copyGameObject->AddChild(move(ptrGameObjectChild));
+	}
+
+	if (original->_parent != nullptr) {
+		children.push_back(move(ptrGameObject));
+		MoveChildToAnotherParent(copyGameObject, original->_parent);
+	}
+	else {
+		children.push_back(move(ptrGameObject));
+	}
+
+	return copyGameObject;
+}
+
+//void Scene::DeleteGameObject(GameObject* toDelete)
+//{
+//	if (toDelete->_parent != nullptr) {
+//		toDelete->_parent->DeleteChild(toDelete);
+//	}
+//	else {
+//		for (auto GO = children.begin(); GO != children.end(); ++GO) {
+//			if ((*GO).get() == toDelete) {
+//				children.erase(GO);
+//				return;
+//			}
+//		}
+//	}
+//}
+
 unique_ptr<GameObject> Scene::FindChild(GameObject* child)
 {
 	for (auto GO = children.begin(); GO != children.end(); ++GO) {
@@ -65,6 +101,17 @@ void Scene::MoveChildToAnotherParent(GameObject* child, GameObject* toParent)
 {
 	list<unique_ptr<GameObject>>::iterator GO;
 	
+	// look if the child is actually the parent of the toParent
+	if (toParent != nullptr) {
+		GameObject* parentChecker = toParent;
+		while (parentChecker->_parent != nullptr) {
+			if (parentChecker->_parent == child) {
+				return;
+			}
+			parentChecker = parentChecker->_parent;
+		}
+	}
+
 	// if the child has a parent, look in the parent children, if not, look at the scene children
 	if (child->_parent != nullptr) {
 		for (GO = child->_parent->children.begin(); GO != child->_parent->children.end(); ++GO) {

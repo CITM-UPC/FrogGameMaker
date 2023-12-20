@@ -45,6 +45,14 @@ GameObject::GameObject(GameObjectTypes type, string name)
 	}
 }
 
+GameObject::GameObject(GameObject* ref)
+{
+	name = ref->name + " Copy";
+
+	AddComponent(TRANSFORM);
+
+}
+
 GameObject::~GameObject()
 {
 	children.clear();
@@ -91,6 +99,16 @@ unique_ptr<GameObject> GameObject::RemoveChild(GameObject* child)
 
 	return move(ptrChild);
 }
+
+//void GameObject::DeleteChild(GameObject* child)
+//{
+//	for (auto GO = children.begin(); GO != children.end(); ++GO) {
+//		if ((*GO).get() == child) {
+//			children.erase(GO);
+//			return;
+//		}
+//	}
+//}
 
 unique_ptr<GameObject> GameObject::FindChild(GameObject* child)
 {

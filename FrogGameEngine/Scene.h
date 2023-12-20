@@ -19,6 +19,10 @@ public:
 
 	GameObject* AddGameObjectChildren(GameObject* parent);
 
+	GameObject* DuplicateGameObject(GameObject* original);
+
+	// void DeleteGameObject(GameObject* toDelete);
+
 	unique_ptr<GameObject> FindChild(GameObject* child);
 
 	// if toParent is nullptr the child goes to the scene
