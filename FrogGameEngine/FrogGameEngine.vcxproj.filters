@@ -25,6 +25,12 @@
     <Filter Include="Source Files\GameObject\Components">
       <UniqueIdentifier>{85bb32a2-4e7d-4d2b-9b86-18618501ae25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Particle Systems">
+      <UniqueIdentifier>{e7e4f0e7-c58e-4a30-8322-ccadc3331415}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Particle Systems">
+      <UniqueIdentifier>{444dd228-2a4c-4d2d-86c0-03b4ded8a8e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -59,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="MeshLoader.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Source Files\Particle Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Emmiter.cpp">
+      <Filter>Source Files\Particle Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Source Files\Particle Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +121,15 @@
     </ClInclude>
     <ClInclude Include="MeshLoader.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\Particle Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Emmiter.h">
+      <Filter>Header Files\Particle Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Header Files\Particle Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
