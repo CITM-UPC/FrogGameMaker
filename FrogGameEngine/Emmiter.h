@@ -11,3 +11,61 @@
 // particle module in the powerpoints
 // 
 // list/vector of the particles
+
+#include <vector>
+#include "Particle.h"
+
+#include "EmmiterModule.h"
+
+// instead of writing individually every time all of this, this is nested in a struct that stores the single value, the range value and which one you're using
+template <typename T> 
+struct SingleOrRandom {
+	bool usingSingleValue;
+	union {
+		T singleValue;
+		struct rangeValue {
+			T lowerLimit;
+			T upperLimit;
+		};
+	};
+};
+
+class Emmiter {
+public:
+	Emmiter();
+	~Emmiter();
+
+	void InitParticles();
+	void UpdateParticles();
+	void RenderParticles();
+
+public:
+
+	// specific behaviors
+	std::vector<EmmiterSpawnModule> spawnModules;
+
+	std::vector<EmmiterUpdateModule> updateModules;
+
+	std::vector<EmmiterRenderModule> renderModules;
+
+
+	// graphic / mesh / mesh + texture
+
+	SingleOrRandom<vec3> initialPosition;
+	SingleOrRandom<vec3> initialVelocity;
+	SingleOrRandom<vec3> initialAcceleration;
+
+	SingleOrRandom<vec3> initialRotation;
+	SingleOrRandom<vec3> initialAngularVelocity;
+
+	SingleOrRandom<vec3> initialScale;
+	SingleOrRandom<vec3> finalScale;
+
+	// SingleOrRandom<Color> initialColor;
+	// SingleOrRandom<Color> endColor;
+
+	// billboarding
+
+private: 
+	std::vector<Particle> particles;
+};

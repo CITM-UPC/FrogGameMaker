@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Particle Systems">
       <UniqueIdentifier>{444dd228-2a4c-4d2d-86c0-03b4ded8a8e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Particle Systems\EmmiterModules">
+      <UniqueIdentifier>{388e7ec6-6638-4880-b362-fbb7487854d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -130,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
       <Filter>Header Files\Particle Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="EmmiterModule.h">
+      <Filter>Header Files\Particle Systems\EmmiterModules</Filter>
+    </ClInclude>
+    <ClInclude Include="BillboardingEM.h">
+      <Filter>Header Files\Particle Systems\EmmiterModules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
