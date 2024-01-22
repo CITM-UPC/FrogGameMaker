@@ -78,7 +78,7 @@
     <ClCompile Include="Emmiter.cpp">
       <Filter>Source Files\Particle Systems</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleSystem.cpp">
+    <ClCompile Include="ParticleSystemComponent.cpp">
       <Filter>Source Files\Particle Systems</Filter>
     </ClCompile>
     <ClCompile Include="SpawnModules.cpp">
@@ -137,7 +137,7 @@
     <ClInclude Include="Emmiter.h">
       <Filter>Header Files\Particle Systems</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleSystem.h">
+    <ClInclude Include="ParticleSystemComponent.h">
       <Filter>Header Files\Particle Systems</Filter>
     </ClInclude>
     <ClInclude Include="EmmiterModule.h">

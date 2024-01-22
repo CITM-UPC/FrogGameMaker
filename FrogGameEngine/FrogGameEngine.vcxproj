@@ -176,7 +176,7 @@ copy "$(SolutionDir)vcpkg\installed\x64-windows\bin\*.*" "$(OutDir)"</Command>
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
+    <ClCompile Include="ParticleSystemComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SpawnModules.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -198,7 +198,7 @@ copy "$(SolutionDir)vcpkg\installed\x64-windows\bin\*.*" "$(OutDir)"</Command>
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="ParticleSystemComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SpawnModules.h" />
     <ClInclude Include="Texture2D.h" />
