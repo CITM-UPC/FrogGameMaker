@@ -47,9 +47,9 @@ In the menu General < PLAY / STOP to play the game
 K to change the Frustum Culling from the screen camera to the camera created at the scene and viceversa
 
 ### Drag & Drop 
-Drag and drop .FBX files to create a Game Object and load the mesh
+Drag and drop .fbx files to create a Game Object and load the mesh
 
-Drag and drop .PNG and .DDS to apply a texture to the selected Game Object
+Drag and drop .png and .dds to apply a texture to the selected Game Object
 
 ## Windows
 ### Hierarchy Window 
