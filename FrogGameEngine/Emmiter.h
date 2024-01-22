@@ -13,6 +13,7 @@
 // list/vector of the particles
 
 #include <vector>
+#include <queue>
 #include "Particle.h"
 
 #include "EmmiterModule.h"
@@ -35,14 +36,29 @@ public:
 	Emmiter();
 	~Emmiter();
 
-	void InitParticles();
-	void UpdateParticles();
+	void PlayParticles();
+	void UpdateParticles(float dt);
 	void RenderParticles();
 
+	void SpawnParticles(int amount);
+	
+	// function for when we change the maxParticles or when we start
+	void RestartParticlePool();
+
+	void InitializeParticle(Particle& particle);
+
 public:
+	int maxParticles;
+
+	float duration;
+	float lifetime;
+
+	bool isLooping;
 
 	// specific behaviors
-	std::vector<EmmiterSpawnModule> spawnModules;
+	EmmiterSpawnModule spawnModule;
+
+	std::vector<EmmiterInitializeModule> initializeModules;
 
 	std::vector<EmmiterUpdateModule> updateModules;
 
@@ -64,8 +80,9 @@ public:
 	// SingleOrRandom<Color> initialColor;
 	// SingleOrRandom<Color> endColor;
 
-	// billboarding
-
 private: 
 	std::vector<Particle> particles;
+	std::vector<int> usingParticlesIDs;
+	std::queue<int> freeParticlesIDs;
+
 };

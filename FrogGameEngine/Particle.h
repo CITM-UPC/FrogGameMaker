@@ -12,6 +12,7 @@
 
 class Particle {
 public:
+	float duration;
 	float lifetime;
 
 	// Color color
@@ -20,8 +21,6 @@ public:
 	vec3 position;
 	glm::quat rotation;
 	vec3 scale;
-
-
 
 private: 
 	
