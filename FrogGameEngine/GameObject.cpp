@@ -194,9 +194,6 @@ void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 	bool toRender = true;
 	// get necessary components
 	TransformComponent* transform = GetComponent<TransformComponent>();
-	if (GetComponent<MeshComponent>() == nullptr) {
-		toRender = false;
-	}
 
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
@@ -207,16 +204,13 @@ void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 		DrawBoundingBox(aabb);
 	}
 
-	if (GetComponent<CameraComponent>() != nullptr) {
-		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
-	}
-
 	AABBox globalAABBox = ((transform->getGlobalTransform() * aabb).AABB());
 
 	if (frustum.IsBoundingBoxInFrustum(globalAABBox)) {
 		if (toRender) {
-			MeshComponent* mesh = GetComponent<MeshComponent>();
-			if (mesh->getMesh()) mesh->getMesh()->draw();
+			for (auto c = components.begin(); c != components.end(); ++c) {
+				(*c)->Render();
+			}
 		}
 
 		// render

@@ -16,6 +16,7 @@ public:
 	~Component() {};
 	virtual void Start() {};
 	virtual void Update() {};
+	virtual void Render() {};
 
 	ComponentType componentType = TRANSFORM;
 
