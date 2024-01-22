@@ -189,6 +189,13 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
+void GameObject::Update(float dt)
+{
+	for (auto i = components.begin(); i != components.end(); ++i) {
+		(*i)->Update(dt);
+	}
+}
+
 void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 {
 	bool toRender = true;

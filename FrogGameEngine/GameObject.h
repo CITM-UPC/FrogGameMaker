@@ -30,6 +30,9 @@ public:
 
 	~GameObject();
 
+	void Update(float dt);
+	void Render(Frustum frustum, bool drawBoundingBox = false);
+
 	GameObject* AddNewChildren();
 	GameObject* AddNewChildren(GameObjectTypes GOType);
 
@@ -47,8 +50,6 @@ public:
 
 	void AddMeshWithTexture(std::vector<Mesh::Ptr> meshes);
 	void AddMeshWithTexture(Mesh::Ptr meshes);
-
-	void Render(Frustum frustum, bool drawBoundingBox = false);
 
 	void DrawBoundingBox(const AABBox& aabb);
 	AABBox GetBoundingBox();

@@ -40,6 +40,9 @@ public:
 	void UpdateParticles(float dt);
 	void RenderParticles();
 
+	void Update(float dt);
+	void Render();
+
 	void SpawnParticles(int amount);
 	
 	// function for when we change the maxParticles or when we start

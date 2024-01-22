@@ -15,7 +15,7 @@ public:
 	Component(GameObject* owner) { this->owner = owner; };
 	~Component() {};
 	virtual void Start() {};
-	virtual void Update() {};
+	virtual void Update(float dt) {};
 	virtual void Render() {};
 
 	ComponentType componentType = TRANSFORM;

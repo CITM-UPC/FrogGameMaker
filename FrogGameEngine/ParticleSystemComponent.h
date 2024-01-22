@@ -13,8 +13,11 @@ public:
 	ParticleSystemComponent(GameObject* owner);
 	~ParticleSystemComponent();
 
-	void Update() override;
+	void Update(float dt) override;
 	void Render() override;
+
+	void Save();
+	void Load();
 
 	std::vector<Emmiter> emmiters;
 
