@@ -3,6 +3,7 @@
 ParticleSystemComponent::ParticleSystemComponent(GameObject* owner) : Component(owner)
 {
 	componentType = PARTICLE_SYSTEM;
+	isON = true;
 }
 
 ParticleSystemComponent::~ParticleSystemComponent()
