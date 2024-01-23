@@ -36,11 +36,8 @@ public:
 	Emmiter();
 	~Emmiter();
 
-	void PlayParticles();
-	void UpdateParticles(float dt);
-	void RenderParticles();
-
-	void Update(float dt);
+	void Start();
+	void Update(double dt);
 	void Render();
 
 	void SpawnParticles(int amount);

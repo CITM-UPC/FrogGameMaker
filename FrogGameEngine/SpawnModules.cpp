@@ -7,7 +7,7 @@ ConstantSpawnRate::ConstantSpawnRate()
 	timeFromLastSpawn = 0;
 }
 
-void ConstantSpawnRate::Update(float dt)
+void ConstantSpawnRate::Update(double dt)
 {
 	timeFromLastSpawn += dt;
 
@@ -23,14 +23,14 @@ void ConstantSpawnRate::Update(float dt)
 	}
 }
 
-void SingleBurstSpawn::Update(float dt)
+void SingleBurstSpawn::Update(double dt)
 {
 	owner->SpawnParticles(amount);
 
 	activated = false;
 }
 
-void ConstantBurstSpawn::Update(float dt)
+void ConstantBurstSpawn::Update(double dt)
 {
 	timeFromLastSpawn += dt;
 

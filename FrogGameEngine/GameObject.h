@@ -30,7 +30,7 @@ public:
 
 	~GameObject();
 
-	void Update(float dt);
+	void Update(double dt);
 	void Render(Frustum frustum, bool drawBoundingBox = false);
 
 	GameObject* AddNewChildren();

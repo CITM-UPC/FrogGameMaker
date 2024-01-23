@@ -15,11 +15,17 @@ public:
 	float duration;
 	float lifetime;
 
-	// Color color
-	// Color deltaColor
+	void Update(double dt);
+
+	vec3 color;
+	vec3 deltaColor;
 
 	vec3 position;
+	vec3 velocity;
+	
 	glm::quat rotation;
+	
+
 	vec3 scale;
 
 private: 

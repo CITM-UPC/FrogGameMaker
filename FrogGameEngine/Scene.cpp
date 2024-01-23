@@ -166,7 +166,7 @@ void Scene::Start()
 {
 }
 
-void Scene::Update(float dt)
+void Scene::Update(double dt)
 {
 	for (auto i = children.begin(); i != children.end(); ++i) {
 		(*i)->Update(dt);

@@ -8,19 +8,26 @@ Emmiter::~Emmiter()
 {
 }
 
-void Emmiter::PlayParticles()
+void Emmiter::Start()
 {
+	while (!usingParticlesIDs.empty()) {
+		freeParticlesIDs.push(usingParticlesIDs[usingParticlesIDs.size() - 1]);
+		usingParticlesIDs.pop_back();
+	}
 }
 
-void Emmiter::UpdateParticles(float dt)
+void Emmiter::Update(double dt)
 {
 	for (auto i = updateModules.begin(); i != updateModules.end(); ++i) {
 		(*i).Update(dt, particles);
 	}
 }
 
-void Emmiter::RenderParticles()
+void Emmiter::Render()
 {
+	for (auto i = renderModules.begin(); i != renderModules.end(); ++i) {
+		(*i).Update(particles);
+	}
 }
 
 void Emmiter::SpawnParticles(int amount)
@@ -42,6 +49,8 @@ void Emmiter::RestartParticlePool()
 
 void Emmiter::InitializeParticle(Particle& particle)
 {
+	particle.lifetime = 0;
+
 	for (auto i = initializeModules.begin(); i != initializeModules.end(); ++i) {
 		(*i).Initialize(particle);
 	}

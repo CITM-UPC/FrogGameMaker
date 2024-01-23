@@ -8,7 +8,7 @@ public:
 	float spawnRate;
 	float timeFromLastSpawn;
 
-	void Update(float dt) override;
+	void Update(double dt) override;
 };
 
 class SingleBurstSpawn : public EmmiterSpawnModule {
@@ -19,7 +19,7 @@ public:
 
 	bool activated = false;
 
-	void Update(float dt) override;
+	void Update(double dt) override;
 };
 
 class ConstantBurstSpawn : public EmmiterSpawnModule {
@@ -31,5 +31,5 @@ public:
 
 	float amount;
 
-	void Update(float dt) override;
+	void Update(double dt) override;
 };

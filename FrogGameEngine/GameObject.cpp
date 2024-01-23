@@ -189,7 +189,7 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
-void GameObject::Update(float dt)
+void GameObject::Update(double dt)
 {
 	for (auto i = components.begin(); i != components.end(); ++i) {
 		(*i)->Update(dt);

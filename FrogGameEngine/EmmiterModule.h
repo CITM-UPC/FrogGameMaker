@@ -6,7 +6,7 @@ class Emmiter;
 
 class EmmiterSpawnModule {
 public:
-	virtual void Update(float dt) {};
+	virtual void Update(double dt) {};
 
 protected:
 	Emmiter* owner;
@@ -22,7 +22,7 @@ protected:
 
 class EmmiterUpdateModule {
 public:
-	virtual void Update(float dt, std::vector<Particle>& particles) {};
+	virtual void Update(double dt, std::vector<Particle>& particles) {};
 
 protected:
 	Emmiter* owner;
@@ -30,7 +30,7 @@ protected:
 
 class EmmiterRenderModule {
 public:
-	virtual void Update(float dt) {};
+	virtual void Update(std::vector<Particle>& particles) {};
 
 protected:
 	Emmiter* owner;

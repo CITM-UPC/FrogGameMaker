@@ -13,8 +13,12 @@ public:
 	ParticleSystemComponent(GameObject* owner);
 	~ParticleSystemComponent();
 
-	void Update(float dt) override;
+	void Update(double dt) override;
 	void Render() override;
+
+	void Play();
+	void Stop();
+	void Restart();
 
 	void Save();
 	void Load();
@@ -24,5 +28,5 @@ public:
 protected:
 
 private:
-
+	bool isON;
 };

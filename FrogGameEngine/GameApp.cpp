@@ -129,7 +129,7 @@ void GameApp::EditorStart() {
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)
 {
-    float newDT = dt.count();
+    double newDT = dt.count();
     scene->Update(newDT);
 }
 
