@@ -1,5 +1,14 @@
 #include "ParticleSystemComponent.h"
 
+ParticleSystemComponent::ParticleSystemComponent(GameObject* owner) : Component(owner)
+{
+	componentType = PARTICLE_SYSTEM;
+}
+
+ParticleSystemComponent::~ParticleSystemComponent()
+{
+}
+
 void ParticleSystemComponent::Update(double dt)
 {
 	if (isON) {

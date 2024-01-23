@@ -10,6 +10,7 @@
 #include "MeshComponent.h"
 #include "TextureComponent.h"
 #include "CameraComponent.h"
+#include "ParticleSystemComponent.h"
 
 #include "BoundingBox.h"
 

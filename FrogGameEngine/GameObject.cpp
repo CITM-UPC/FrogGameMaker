@@ -139,6 +139,9 @@ Component* GameObject::AddComponent(ComponentType type)
 	case ComponentType::CAMERA:
 		newComponent = make_unique<CameraComponent>(this);
 		break;
+	case ComponentType::PARTICLE_SYSTEM:
+		newComponent = make_unique<ParticleSystemComponent>(this);
+		break;
 	default:
 		break;
 	}

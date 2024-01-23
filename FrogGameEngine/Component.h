@@ -4,8 +4,8 @@ enum ComponentType {
 	TRANSFORM,
 	MESH,
 	TEXTURE,
-	CAMERA
-
+	CAMERA,
+	PARTICLE_SYSTEM
 };
 
 class GameObject;
