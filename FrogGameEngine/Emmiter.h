@@ -53,6 +53,8 @@ public:
 	float duration;
 	float lifetime;
 
+	float delay;
+
 	bool isLooping;
 
 	// specific behaviors

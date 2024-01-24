@@ -1,4 +1,6 @@
 #include "Emmiter.h"
+#include <map>
+#include <GL/glew.h>
 
 Emmiter::Emmiter()
 {
@@ -10,6 +12,7 @@ Emmiter::~Emmiter()
 
 void Emmiter::Start()
 {
+	delay = 0;
 	while (!usingParticlesIDs.empty()) {
 		freeParticlesIDs.push(usingParticlesIDs[usingParticlesIDs.size() - 1]);
 		usingParticlesIDs.pop_back();
@@ -18,13 +21,26 @@ void Emmiter::Start()
 
 void Emmiter::Update(double dt)
 {
-	for (auto i = updateModules.begin(); i != updateModules.end(); ++i) {
-		(*i).Update(dt, particles);
+	lifetime += dt;
+
+	if (lifetime >= delay) {
+		for (auto i = updateModules.begin(); i != updateModules.end(); ++i) {
+			(*i).Update(dt, particles);
+		}
 	}
 }
 
 void Emmiter::Render()
 {
+	//// sort particles by distance to the camera
+	//std::map<float, Particle*> particlesToRender;
+	//float modelview[16];
+	//glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
+
+	//for () {
+	//	particlesToRender.insert
+	//}
+
 	for (auto i = renderModules.begin(); i != renderModules.end(); ++i) {
 		(*i).Update(particles);
 	}
