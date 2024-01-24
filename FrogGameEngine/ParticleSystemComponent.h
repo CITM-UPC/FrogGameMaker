@@ -20,10 +20,12 @@ public:
 	void Stop();
 	void Restart();
 
+	void AddEmmiter();
+
 	void Save();
 	void Load();
 
-	std::vector<Emmiter> emmiters;
+	std::vector<std::unique_ptr<Emmiter>> emmiters;
 
 protected:
 

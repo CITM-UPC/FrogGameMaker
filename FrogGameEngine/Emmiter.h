@@ -14,7 +14,9 @@
 
 #include <vector>
 #include <queue>
+#include <array>
 #include "Particle.h"
+#include <memory>
 
 #include "EmmiterModule.h"
 
@@ -48,6 +50,8 @@ public:
 	void InitializeParticle(Particle& particle);
 
 public:
+	bool isON;
+
 	int maxParticles;
 
 	float duration;
@@ -58,13 +62,13 @@ public:
 	bool isLooping;
 
 	// specific behaviors
-	EmmiterSpawnModule spawnModule;
+	std::unique_ptr<EmmiterSpawnModule> spawnModule;
 
-	std::vector<EmmiterInitializeModule> initializeModules;
+	std::vector<std::unique_ptr<EmmiterInitializeModule>> initializeModules;
 
-	std::vector<EmmiterUpdateModule> updateModules;
+	std::vector<std::unique_ptr<EmmiterUpdateModule>> updateModules;
 
-	std::vector<EmmiterRenderModule> renderModules;
+	std::unique_ptr<EmmiterRenderModule> renderModule;
 
 
 	// graphic / mesh / mesh + texture

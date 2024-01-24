@@ -53,6 +53,8 @@ public:
 
 	void ClearLogs();
 
+	GameObject* CreateSmokeObject();
+
 private:
 	vector<string> logs;
 

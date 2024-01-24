@@ -1,8 +1,9 @@
 #include "SpawnModules.h"
 #include "Emmiter.h"
 
-ConstantSpawnRate::ConstantSpawnRate()
+ConstantSpawnRate::ConstantSpawnRate(Emmiter* owner)
 {
+	this->owner = owner;
 	spawnRate = 1;
 	timeFromLastSpawn = 0;
 }

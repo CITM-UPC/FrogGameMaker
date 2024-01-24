@@ -16,6 +16,7 @@ public:
 	float lifetime;
 
 	void Update(double dt);
+	void Render();
 
 	vec3 color;
 	vec3 deltaColor;

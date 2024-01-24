@@ -167,6 +167,7 @@ copy "$(SolutionDir)vcpkg\installed\x64-windows\bin\*.*" "$(OutDir)"</Command>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BillboardingEM.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="Emmiter.cpp" />
     <ClCompile Include="GameApp.cpp" />

@@ -84,6 +84,9 @@
     <ClCompile Include="SpawnModules.cpp">
       <Filter>Source Files\Particle Systems\Emmiter Modules</Filter>
     </ClCompile>
+    <ClCompile Include="BillboardingEM.cpp">
+      <Filter>Source Files\Particle Systems\Emmiter Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">

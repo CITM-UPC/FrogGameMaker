@@ -3,7 +3,7 @@
 
 class ConstantSpawnRate : public EmmiterSpawnModule {
 public:
-	ConstantSpawnRate();
+	ConstantSpawnRate(Emmiter* owner);
 
 	float spawnRate;
 	float timeFromLastSpawn;
