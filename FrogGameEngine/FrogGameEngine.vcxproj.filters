@@ -37,6 +37,18 @@
     <Filter Include="Header Files\Particle Systems\Emmiter Modules">
       <UniqueIdentifier>{388e7ec6-6638-4880-b362-fbb7487854d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Particle Systems\Emmiter Modules\Spawn">
+      <UniqueIdentifier>{c348c8a2-f6e1-4eeb-a57a-1be03e40836f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Particle Systems\Emmiter Modules\Initialize">
+      <UniqueIdentifier>{b56576fc-0054-402d-92ca-e2c27fed1c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Particle Systems\Emmiter Modules\Update">
+      <UniqueIdentifier>{9e18c521-84a4-41a5-ba90-3f74770832d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Particle Systems\Emmiter Modules\Render">
+      <UniqueIdentifier>{5807eeae-d4ef-4d1c-a3ef-a8e0dd90ab48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameApp.cpp">
@@ -86,6 +98,12 @@
     </ClCompile>
     <ClCompile Include="BillboardingEM.cpp">
       <Filter>Source Files\Particle Systems\Emmiter Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="InitializeModules.cpp">
+      <Filter>Source Files\Particle Systems\Emmiter Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleOrRandom.cpp">
+      <Filter>Source Files\Particle Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,10 +165,16 @@
       <Filter>Header Files\Particle Systems\Emmiter Modules</Filter>
     </ClInclude>
     <ClInclude Include="BillboardingEM.h">
-      <Filter>Header Files\Particle Systems\Emmiter Modules</Filter>
+      <Filter>Header Files\Particle Systems\Emmiter Modules\Render</Filter>
     </ClInclude>
     <ClInclude Include="SpawnModules.h">
-      <Filter>Header Files\Particle Systems\Emmiter Modules</Filter>
+      <Filter>Header Files\Particle Systems\Emmiter Modules\Spawn</Filter>
+    </ClInclude>
+    <ClInclude Include="InitializeModules.h">
+      <Filter>Header Files\Particle Systems\Emmiter Modules\Initialize</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleOrRandom.h">
+      <Filter>Header Files\Particle Systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

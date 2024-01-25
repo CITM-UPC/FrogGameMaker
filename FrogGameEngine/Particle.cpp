@@ -7,7 +7,7 @@ void Particle::Update(double dt)
 
 	color += deltaColor * dt;
 
-	position += velocity * dt;
+	position += speed * dt;
 }
 
 void Particle::Render()

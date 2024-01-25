@@ -12,7 +12,7 @@
 
 class Particle {
 public:
-	float duration;
+	float duration = 10;
 	float lifetime;
 
 	void Update(double dt);
@@ -22,7 +22,7 @@ public:
 	vec3 deltaColor;
 
 	vec3 position;
-	vec3 velocity;
+	vec3 speed;
 	
 	glm::quat rotation;
 	

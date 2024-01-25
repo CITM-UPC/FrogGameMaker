@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include "SpawnModules.h"
 #include "BillboardingEM.h"
+#include "InitializeModules.h"
 
 Emmiter::Emmiter()
 {
@@ -16,6 +17,12 @@ Emmiter::Emmiter()
 	spawnModule = std::make_unique<ConstantSpawnRate>(this);
 
 	renderModule = std::make_unique<Billboarding>();
+
+	auto setSpeed = std::make_unique<SetSpeed>();
+	setSpeed->speed.usingSingleValue = true;
+	setSpeed->speed.singleValue = vec3{0, 1, 0};
+
+	initializeModules.push_back(std::move(setSpeed));
 
 	RestartParticlePool();
 }
@@ -50,6 +57,10 @@ void Emmiter::Update(double dt)
 		for (auto i = updateModules.begin(); i != updateModules.end(); ++i) {
 			(*i)->Update(dt, particles);
 		}
+	}
+
+	for (auto i = particles.begin(); i != particles.end(); ++i) {
+		(*i).Update(dt);
 	}
 }
 
