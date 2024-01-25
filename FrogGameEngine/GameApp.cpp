@@ -125,11 +125,14 @@ void GameApp::EditorStart() {
     basicCamera->GetComponent<TransformComponent>()->translate({ 0, 10, -5 }, GLOBAL);
     basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
 
+    CreateSmokeObject();
+
 }
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)
 {
-
+    double newDT = dt.count();
+    scene->Update(newDT);
 }
 
 void GameApp::GameStart()
@@ -238,5 +241,15 @@ vector<string> GameApp::GetLogs()
 void GameApp::ClearLogs()
 {
     logs.clear();
+}
+
+GameObject* GameApp::CreateSmokeObject()
+{
+    GameObject* smoker = scene->AddGameObject("Smoker");
+
+    smoker->AddComponent(PARTICLE_SYSTEM);
+
+
+    return smoker;
 }
 

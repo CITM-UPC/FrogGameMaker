@@ -14,6 +14,8 @@ public:
 
 	TransformComponent* getTransform();
 
+	void Render() override;
+
 protected:
 
 private:

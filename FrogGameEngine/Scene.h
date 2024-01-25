@@ -34,7 +34,7 @@ public:
 	void Start();
 
 	// --TODO--
-	void Update();
+	void Update(double dt);
 
 	void Render(Frustum frustum, bool drawBoundingBox = false);
 

@@ -4,8 +4,8 @@ enum ComponentType {
 	TRANSFORM,
 	MESH,
 	TEXTURE,
-	CAMERA
-
+	CAMERA,
+	PARTICLE_SYSTEM
 };
 
 class GameObject;
@@ -15,7 +15,8 @@ public:
 	Component(GameObject* owner) { this->owner = owner; };
 	~Component() {};
 	virtual void Start() {};
-	virtual void Update() {};
+	virtual void Update(double dt) {};
+	virtual void Render() {};
 
 	ComponentType componentType = TRANSFORM;
 

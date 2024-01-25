@@ -139,6 +139,9 @@ Component* GameObject::AddComponent(ComponentType type)
 	case ComponentType::CAMERA:
 		newComponent = make_unique<CameraComponent>(this);
 		break;
+	case ComponentType::PARTICLE_SYSTEM:
+		newComponent = make_unique<ParticleSystemComponent>(this);
+		break;
 	default:
 		break;
 	}
@@ -189,14 +192,18 @@ void GameObject::AddMeshWithTexture(Mesh::Ptr meshes)
 	texture->setTexture(meshes->texture);
 }
 
+void GameObject::Update(double dt)
+{
+	for (auto i = components.begin(); i != components.end(); ++i) {
+		(*i)->Update(dt);
+	}
+}
+
 void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 {
 	bool toRender = true;
 	// get necessary components
 	TransformComponent* transform = GetComponent<TransformComponent>();
-	if (GetComponent<MeshComponent>() == nullptr) {
-		toRender = false;
-	}
 
 	glPushMatrix();
 	glMultMatrixd(&transform->getTransform()[0].x);
@@ -207,16 +214,13 @@ void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 		DrawBoundingBox(aabb);
 	}
 
-	if (GetComponent<CameraComponent>() != nullptr) {
-		GetComponent<CameraComponent>()->getCamera()->drawFrustum();
-	}
-
 	AABBox globalAABBox = ((transform->getGlobalTransform() * aabb).AABB());
 
 	if (frustum.IsBoundingBoxInFrustum(globalAABBox)) {
 		if (toRender) {
-			MeshComponent* mesh = GetComponent<MeshComponent>();
-			if (mesh->getMesh()) mesh->getMesh()->draw();
+			for (auto c = components.begin(); c != components.end(); ++c) {
+				(*c)->Render();
+			}
 		}
 
 		// render

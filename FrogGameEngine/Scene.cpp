@@ -166,8 +166,11 @@ void Scene::Start()
 {
 }
 
-void Scene::Update()
+void Scene::Update(double dt)
 {
+	for (auto i = children.begin(); i != children.end(); ++i) {
+		(*i)->Update(dt);
+	}
 }
 
 void Scene::Render(Frustum frustum, bool drawBoundingBox)

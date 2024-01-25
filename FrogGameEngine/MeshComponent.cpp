@@ -19,3 +19,8 @@ Mesh::Ptr MeshComponent::getMesh()
 {
 	return _mesh;
 }
+
+void MeshComponent::Render()
+{
+	if (getMesh()) getMesh()->draw();
+}

@@ -26,3 +26,8 @@ TransformComponent* CameraComponent::getTransform()
 {
 	return transform;
 }
+
+void CameraComponent::Render()
+{
+	getCamera()->drawFrustum();
+}
