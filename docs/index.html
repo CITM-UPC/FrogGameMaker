@@ -64,7 +64,31 @@ table {
   <hr>
 
   <h3>Main core sub-systems</h3>
-  <p>Short explanation of the main core sub-systems.</p>
+  <h4>Game objects</h4>
+  <p>Base of all entities in the scene. Can have the following components</p>
+  <ul style="text-align:left;">
+  <li><h5>Transform</h5>
+  Alters the position, rotation and scale</li>
+  <li><h5>Mesh</h5>
+  3D mesh to be printed. Includes the amount of vertices and faces and has the option to see its normals</li>
+  <li><h5>Texture</h5>
+  2D image assigned to the mesh, can be changed to a checkboard</li>
+  <li><h5>Camera</h5>
+  Includes FOV, zNear, zFar and aspect ratio
+  </li>
+  </ul> 
+  <h4>Scene hierarchy</h4>
+  <ul style="text-align:left;">
+  Delete, reparent, create empty and create children
+  </ul>
+  <h4>Mesh loading optimization</h4>
+  <ul style="text-align:left;">
+  With our own file format created for each mesh when added to the assets, loading of the meshes is quicker and lighter
+  </ul>
+  <h4>UI docking</h4>
+  <ul style="text-align:left;">
+  Since the UI was made with ImGui, all window placements can be edited as user prefers
+  </ul>
   
   <hr>
 
