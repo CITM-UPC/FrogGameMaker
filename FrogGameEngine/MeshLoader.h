@@ -12,8 +12,8 @@
 struct MeshLoader
 {
 	struct VertexV3T2 {
-		struct { float x, y, z; } vertex;
-		struct { float s, t; } texCoords;
+		vec3f v;
+		vec2f t;
 	};
 
 	std::vector<VertexV3T2> vertex_data;

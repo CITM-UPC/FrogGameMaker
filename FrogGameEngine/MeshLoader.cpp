@@ -30,7 +30,7 @@ struct aiSceneExt : aiScene {
 
 std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 {
-    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_ForceGenNormals);
+    const auto scene_ptr = aiImportFile(path.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs/*| aiProcess_ForceGenNormals*/ );
     const aiSceneExt& scene = *(aiSceneExt*)scene_ptr;
 
     fs::path pathPath(path.c_str());
@@ -46,11 +46,12 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
         string currentTexture;
         currentTexture = aiPath.C_Str();
         
+        if (!currentTexture.empty()){
         size_t lastChar = currentTexture.find_last_of('\\');
         currentTexture = currentTexture.substr(lastChar + 1);
         lastChar = currentTexture.find_last_of('.');
         currentTexture = currentTexture.substr(0, lastChar);
-        currentTexture = "Library/Materials/" + currentTexture + ".dds";
+        currentTexture = "Library/Materials/" + currentTexture + ".png";}
 
         texturePath.push_back(currentTexture);
     }
@@ -73,15 +74,16 @@ std::vector<std::string> MeshLoader::loadFromFile(const std::string& path)
 
         const auto& mesh = *mesh_ptr;
 
+        //vec3f* verts = (vec3f*)mesh_ptr->mVertices;
+        //vec3f* texCoords = (vec3f*)mesh_ptr->mTextureCoords[0];
+
         vector<VertexV3T2> vertex_data;
         for (size_t i = 0; i < mesh.verts().size(); ++i) {
 
             VertexV3T2 v;
-            v.vertex = {mesh.verts()[i].x, mesh.verts()[i].y, mesh.verts()[i].z};
-            if (mesh.HasTextureCoords(i))
-                v.texCoords = { mesh.texCoords()[i].x, mesh.texCoords()[i].y };
-            else
-                v.texCoords = { 0, 0 };
+            v.v = mesh.verts()[i];
+            if (mesh_ptr->HasTextureCoords(0))
+            v.t = vec2f(mesh.texCoords()[i].x, mesh.texCoords()[i].y);
             vertex_data.push_back(v);
         }
 
