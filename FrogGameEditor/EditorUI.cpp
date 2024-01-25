@@ -17,6 +17,8 @@
 
 #include "../FrogGameEngine/Mesh.h"
 
+#include "EditorPS_UI_Nodes.h"
+
 namespace fs = std::filesystem;
 
 EditorUI::EditorUI() : EditorModule() {
@@ -822,6 +824,29 @@ void EditorUI::UIInspectorWriteCameraNode(CameraComponent* component) {
 	}
 }
 
+void EditorUI::UIInspectorWriteParticleSystemNode(ParticleSystemComponent* component) {
+
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::CollapsingHeader("Particle System")) {
+		if (ImGui::Button("Play")) {
+			component->Play();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Stop")) {
+			component->Stop();
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Replay")) {
+			component->Replay();
+		}
+
+		for (auto emmiter = component->emmiters.begin(); emmiter != component->emmiters.end(); ++emmiter) {
+			UIEmmiterWriteNode((*emmiter).get());
+		}
+
+	}
+}
+
 void EditorUI::UIInspectorNodeWrite(Component* component) {
 
 	switch (component->componentType)
@@ -837,6 +862,9 @@ void EditorUI::UIInspectorNodeWrite(Component* component) {
 		break;
 	case ComponentType::CAMERA:
 		UIInspectorWriteCameraNode((CameraComponent*)component);
+		break;
+	case ComponentType::PARTICLE_SYSTEM:
+		UIInspectorWriteParticleSystemNode((ParticleSystemComponent*)component);
 		break;
 	default:
 		break;

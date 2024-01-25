@@ -18,12 +18,14 @@ public:
 
 	void Play();
 	void Stop();
-	void Restart();
+	void Replay();
 
 	void AddEmmiter();
 
 	void Save();
 	void Load();
+
+	bool IsON();
 
 	std::vector<std::unique_ptr<Emmiter>> emmiters;
 

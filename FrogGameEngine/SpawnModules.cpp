@@ -10,13 +10,15 @@ ConstantSpawnRate::ConstantSpawnRate(Emmiter* owner)
 
 void ConstantSpawnRate::Update(double dt)
 {
+	if (spawnRate <= 0.001) return;
+
 	timeFromLastSpawn += dt;
 
-	if (timeFromLastSpawn >= spawnRate) {
+	if (timeFromLastSpawn >= 1 / spawnRate) {
 		int ticks = 0;
 
-		while (timeFromLastSpawn >= spawnRate) {
-			timeFromLastSpawn -= spawnRate;
+		while (timeFromLastSpawn >= 1 / spawnRate) {
+			timeFromLastSpawn -= 1 / spawnRate;
 			ticks++;
 		}
 
@@ -33,13 +35,15 @@ void SingleBurstSpawn::Update(double dt)
 
 void ConstantBurstSpawn::Update(double dt)
 {
+	if (spawnRate <= 0.001) return;
+
 	timeFromLastSpawn += dt;
 
-	if (timeFromLastSpawn >= spawnRate) {
+	if (timeFromLastSpawn >= 1 / spawnRate) {
 		int ticks = 0;
 
-		while (timeFromLastSpawn >= spawnRate) {
-			timeFromLastSpawn -= spawnRate;
+		while (timeFromLastSpawn >= 1 / spawnRate) {
+			timeFromLastSpawn -= 1 / spawnRate;
 			ticks++;
 		}
 
