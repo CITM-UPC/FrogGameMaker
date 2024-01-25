@@ -20,19 +20,6 @@
 
 #include "EmmiterModule.h"
 
-// instead of writing individually every time all of this, this is nested in a struct that stores the single value, the range value and which one you're using
-template <typename T> 
-struct SingleOrRandom {
-	bool usingSingleValue;
-	union {
-		T singleValue;
-		struct rangeValue {
-			T lowerLimit;
-			T upperLimit;
-		};
-	};
-};
-
 class Emmiter {
 public:
 	Emmiter();
@@ -47,7 +34,7 @@ public:
 	// function for when we change the maxParticles or when we start
 	void RestartParticlePool();
 
-	void InitializeParticle(Particle& particle);
+	void InitializeParticle(Particle* particle);
 
 public:
 	bool isON;
@@ -68,26 +55,10 @@ public:
 
 	std::vector<std::unique_ptr<EmmiterUpdateModule>> updateModules;
 
-	std::unique_ptr<EmmiterRenderModule> renderModule;
-
-
-	// graphic / mesh / mesh + texture
-
-	SingleOrRandom<vec3> initialPosition;
-	SingleOrRandom<vec3> initialVelocity;
-	SingleOrRandom<vec3> initialAcceleration;
-
-	SingleOrRandom<vec3> initialRotation;
-	SingleOrRandom<vec3> initialAngularVelocity;
-
-	SingleOrRandom<vec3> initialScale;
-	SingleOrRandom<vec3> finalScale;
-
-	// SingleOrRandom<Color> initialColor;
-	// SingleOrRandom<Color> endColor;
+	std::unique_ptr<EmmiterRenderModule> renderModule;	
 
 private: 
-	std::vector<Particle> particles;
+	std::vector<std::unique_ptr<Particle>> particles;
 	std::vector<int> usingParticlesIDs;
 	std::queue<int> freeParticlesIDs;
 

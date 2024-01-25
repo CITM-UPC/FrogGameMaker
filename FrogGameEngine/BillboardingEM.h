@@ -1,8 +1,10 @@
 #pragma once
 #include "EmmiterModule.h"
 
-class Billboarding : public EmmiterRenderModule {
+class BillboardRender : public EmmiterRenderModule {
 public:
+	BillboardRender(Emmiter* owner);
+
 	enum BillboardType {
 		NONE,
 		SCREEN_ALIGNED,
@@ -12,5 +14,5 @@ public:
 
 	BillboardType type;
 
-	void Update(std::vector<Particle>& particles) override;
+	void Update(Particle* particle) override;
 };

@@ -14,7 +14,7 @@ protected:
 
 class EmmiterInitializeModule {
 public:
-	virtual void Initialize(Particle particle) {};
+	virtual void Initialize(Particle* particle) {};
 
 protected:
 	Emmiter* owner;
@@ -22,7 +22,7 @@ protected:
 
 class EmmiterUpdateModule {
 public:
-	virtual void Update(double dt, std::vector<Particle>& particles) {};
+	virtual void Update(double dt, Particle* particle) {};
 
 protected:
 	Emmiter* owner;
@@ -30,7 +30,7 @@ protected:
 
 class EmmiterRenderModule {
 public:
-	virtual void Update(std::vector<Particle>& particles) {};
+	virtual void Update(Particle* particle) {};
 
 protected:
 	Emmiter* owner;

@@ -13,7 +13,7 @@ public:
 
 class SingleBurstSpawn : public EmmiterSpawnModule {
 public:
-	SingleBurstSpawn();
+	SingleBurstSpawn(Emmiter* owner);
 
 	float amount;
 
@@ -24,7 +24,7 @@ public:
 
 class ConstantBurstSpawn : public EmmiterSpawnModule {
 public:
-	ConstantBurstSpawn(); 
+	ConstantBurstSpawn(Emmiter* owner);
 
 	float spawnRate;
 	float timeFromLastSpawn;

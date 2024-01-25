@@ -1,8 +1,12 @@
 #include "BillboardingEM.h"
 
-void Billboarding::Update(std::vector<Particle>& particles)
+BillboardRender::BillboardRender(Emmiter* owner)
 {
-	for (auto i = particles.begin(); i != particles.end(); ++i) {
-		(*i).Render();
-	}
+	this->owner = owner;
+	type = NONE;
+}
+
+void BillboardRender::Update(Particle* particle)
+{
+	particle->Render();
 }
