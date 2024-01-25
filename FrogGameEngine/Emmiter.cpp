@@ -16,11 +16,13 @@ Emmiter::Emmiter()
 
 	spawnModule = std::make_unique<ConstantSpawnRate>(this);
 
-	renderModule = std::make_unique<Billboarding>();
+	renderModule = std::make_unique<BillboardRender>(this);
 
 	auto setSpeed = std::make_unique<SetSpeed>();
-	setSpeed->speed.usingSingleValue = true;
-	setSpeed->speed.singleValue = vec3{0, 1, 0};
+	setSpeed->speed.usingSingleValue = false;
+	setSpeed->speed.rangeValue.lowerLimit = vec3{-0.5, 1, -0.5};
+	setSpeed->speed.rangeValue.upperLimit = vec3{ 0.5, 2, 0.5 };
+
 
 	initializeModules.push_back(std::move(setSpeed));
 
@@ -61,8 +63,12 @@ void Emmiter::Update(double dt)
 		}
 	}
 
-	for (auto i = particles.begin(); i != particles.end(); ++i) {
-		(*i)->Update(dt);
+	for (auto i = usingParticlesIDs.begin(); i != usingParticlesIDs.end(); ++i) {
+		particles[*i]->Update(dt);
+		if (particles[*i]->lifetime > particles[*i]->duration) {
+			freeParticlesIDs.push(*i);
+			usingParticlesIDs.erase(i);
+		}
 	}
 }
 

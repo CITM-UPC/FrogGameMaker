@@ -4,7 +4,7 @@
 ConstantSpawnRate::ConstantSpawnRate(Emmiter* owner)
 {
 	this->owner = owner;
-	spawnRate = 1;
+	spawnRate = 0.5f;
 	timeFromLastSpawn = 0;
 }
 

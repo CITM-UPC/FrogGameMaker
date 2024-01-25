@@ -1,8 +1,10 @@
 #pragma once
 #include "EmmiterModule.h"
 
-class Billboarding : public EmmiterRenderModule {
+class BillboardRender : public EmmiterRenderModule {
 public:
+	BillboardRender(Emmiter* owner);
+
 	enum BillboardType {
 		NONE,
 		SCREEN_ALIGNED,

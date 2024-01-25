@@ -1,9 +1,9 @@
 #include "InitializeModules.h"
 
-void SetSpeed::Initialize(Particle particle)
+void SetSpeed::Initialize(Particle* particle)
 {
 	if (speed.usingSingleValue) {
-		particle.speed = speed.singleValue;
+		particle->speed = speed.singleValue;
 	}
 	else {
 		vec3 randomVec = vec3{ 
@@ -11,7 +11,7 @@ void SetSpeed::Initialize(Particle particle)
 			randomFloat(speed.rangeValue.lowerLimit.y, speed.rangeValue.upperLimit.y), 
 			randomFloat(speed.rangeValue.lowerLimit.z, speed.rangeValue.upperLimit.z) };
 
-		particle.speed = randomVec;
+		particle->speed = randomVec;
 	}
 
 }
