@@ -34,7 +34,7 @@ public:
 	// function for when we change the maxParticles or when we start
 	void RestartParticlePool();
 
-	void InitializeParticle(Particle& particle);
+	void InitializeParticle(Particle* particle);
 
 public:
 	bool isON;
@@ -58,7 +58,7 @@ public:
 	std::unique_ptr<EmmiterRenderModule> renderModule;	
 
 private: 
-	std::vector<Particle> particles;
+	std::vector<std::unique_ptr<Particle>> particles;
 	std::vector<int> usingParticlesIDs;
 	std::queue<int> freeParticlesIDs;
 

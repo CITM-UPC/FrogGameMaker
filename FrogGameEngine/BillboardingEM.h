@@ -12,5 +12,5 @@ public:
 
 	BillboardType type;
 
-	void Update(std::vector<Particle>& particles) override;
+	void Update(Particle* particle) override;
 };

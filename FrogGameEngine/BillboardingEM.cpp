@@ -1,8 +1,6 @@
 #include "BillboardingEM.h"
 
-void Billboarding::Update(std::vector<Particle>& particles)
+void Billboarding::Update(Particle* particle)
 {
-	for (auto i = particles.begin(); i != particles.end(); ++i) {
-		(*i).Render();
-	}
+	particle->Render();
 }
