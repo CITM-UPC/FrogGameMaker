@@ -9,8 +9,9 @@ Victor Martin (Github: VicMarBall (https://github.com/VicMarBall))
 Ari Sevcik (Github: AriSevcik (https://github.com/AriSevcik))
 
 ## New Features: 
-
 Particle Systems!
+
+Press "1" to see Fireworks
 
 Textures working
 
