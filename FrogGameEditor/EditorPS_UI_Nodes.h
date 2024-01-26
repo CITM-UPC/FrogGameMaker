@@ -25,16 +25,19 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 		switch (emmiter->spawnModule->type)	{
 		case EmmiterSpawnModule::CONSTANT:
 			ImGui::SeparatorText("Constant Spawn Rate");
+			ImGui::InputFloat("Particle Duration", &((ConstantSpawnRate*)emmiter->spawnModule.get())->duration);
 			ImGui::InputFloat("Spawn Rate", &((ConstantSpawnRate*)emmiter->spawnModule.get())->spawnRate);
 
 			break;
 		case EmmiterSpawnModule::SINGLE_BURST:
 			ImGui::SeparatorText("Single Burst");
+			ImGui::InputFloat("Particle Duration", &((SingleBurstSpawn*)emmiter->spawnModule.get())->duration);
 			ImGui::InputFloat("Amount", &((SingleBurstSpawn*)emmiter->spawnModule.get())->amount);
 
 			break;
 		case EmmiterSpawnModule::CONSTANT_BURST:
 			ImGui::SeparatorText("Constant Burst");
+			ImGui::InputFloat("Particle Duration", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->duration);
 			ImGui::InputFloat("Spawn Rate", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->spawnRate);
 			ImGui::InputFloat("Amount", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->amount);
 
@@ -92,37 +95,37 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 
 			ImGui::PushItemWidth(60);
 
-			ImGui::SeparatorText("Set Initial Speed: ");
+			ImGui::SeparatorText("Set Initial Color: ");
 
 			ImGui::Checkbox("Single Value", &((SetColor*)(*m).get())->color.usingSingleValue);
 
 			ImGui::PushItemWidth(60);
 
 			if (((SetColor*)(*m).get())->color.usingSingleValue) {
-				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.singleValue.x, 0, 0, "%.2f");
+				ImGui::InputDouble("R", &((SetColor*)(*m).get())->color.singleValue.r, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.singleValue.y, 0, 0, "%.2f");
+				ImGui::InputDouble("G", &((SetColor*)(*m).get())->color.singleValue.g, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.singleValue.z, 0, 0, "%.2f");
+				ImGui::InputDouble("B", &((SetColor*)(*m).get())->color.singleValue.b, 0, 0, "%.2f");
 			}
 			else {
-				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.x, 0, 0, "%.2f");
+				ImGui::InputDouble("R", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.r, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.y, 0, 0, "%.2f");
+				ImGui::InputDouble("G", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.g, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.z, 0, 0, "%.2f");
+				ImGui::InputDouble("B", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.b, 0, 0, "%.2f");
 
-				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.x, 0, 0, "%.2f");
+				ImGui::InputDouble("R", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.r, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.y, 0, 0, "%.2f");
+				ImGui::InputDouble("G", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.g, 0, 0, "%.2f");
 				ImGui::SameLine();
 				ImGui::PopID();
-				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.z, 0, 0, "%.2f");
+				ImGui::InputDouble("B", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.b, 0, 0, "%.2f");
 			}
 
 			ImGui::PopItemWidth();

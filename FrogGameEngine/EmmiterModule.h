@@ -18,6 +18,8 @@ public:
 
 	EmmiterSpawnModuleType type;
 
+	float duration;
+
 protected:
 	Emmiter* owner;
 };

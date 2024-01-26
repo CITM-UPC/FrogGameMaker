@@ -267,8 +267,8 @@ GameObject* GameApp::CreateSmokeObject()
     SetColor* cp = (SetColor*)em1->AddModule(EmmiterInitializeModule::SET_COLOR);
 
     cp->color.usingSingleValue = false;
-    cp->color.rangeValue.lowerLimit = vec3{ 1, 0, 0 };
-    cp->color.rangeValue.upperLimit = vec3{ 1, 0.5, 0 };
+    cp->color.rangeValue.lowerLimit = vec3{ 255, 0, 0 };
+    cp->color.rangeValue.upperLimit = vec3{ 255, 200, 0 };
 
     em1->AddModule(EmmiterRenderModule::BILLBOARD);
 

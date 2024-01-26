@@ -12,7 +12,7 @@
 
 class Particle {
 public:
-	float duration = 10;
+	float duration;
 	float lifetime;
 
 	void Update(double dt);
