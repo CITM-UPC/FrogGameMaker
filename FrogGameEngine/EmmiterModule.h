@@ -25,7 +25,8 @@ public:
 	virtual void Initialize(Particle* particle) {};
 
 	enum EmmiterInitializeModuleType {
-		SET_SPEED
+		SET_SPEED,
+		SET_COLOR
 	};
 
 	EmmiterInitializeModuleType type;

@@ -145,3 +145,81 @@ void Emmiter::InitializeParticle(Particle* particle)
 		(*i)->Initialize(particle);
 	}
 }
+
+void Emmiter::ClearModules()
+{
+	spawnModule.reset();
+	initializeModules.clear();
+	updateModules.clear();
+	renderModule.reset();
+}
+
+EmmiterSpawnModule* Emmiter::AddModule(EmmiterSpawnModule::EmmiterSpawnModuleType type)
+{
+	EmmiterSpawnModule* newModule = nullptr;
+	switch (type)
+	{
+	case EmmiterSpawnModule::CONSTANT:
+		spawnModule = std::make_unique<ConstantSpawnRate>(this);
+		newModule = spawnModule.get();
+		break;
+	case EmmiterSpawnModule::SINGLE_BURST:
+		spawnModule = std::make_unique<SingleBurstSpawn>(this);
+		newModule = spawnModule.get();
+		break;
+	case EmmiterSpawnModule::CONSTANT_BURST:
+		spawnModule = std::make_unique<ConstantBurstSpawn>(this);
+		newModule = spawnModule.get();
+		break;
+	default:
+		break;
+	}
+	return newModule;
+}
+
+EmmiterInitializeModule* Emmiter::AddModule(EmmiterInitializeModule::EmmiterInitializeModuleType type)
+{
+	EmmiterInitializeModule* newModule = nullptr;
+	switch (type)
+	{
+	case EmmiterInitializeModule::SET_SPEED:
+		initializeModules.push_back(std::move(std::make_unique<SetSpeed>()));
+		newModule = initializeModules[initializeModules.size() - 1].get();
+		break;
+	case EmmiterInitializeModule::SET_COLOR:
+		initializeModules.push_back(std::move(std::make_unique<SetColor>()));
+		newModule = initializeModules[initializeModules.size() - 1].get();
+		break;
+	default:
+		break;
+	}
+	return newModule;
+}
+
+EmmiterUpdateModule* Emmiter::AddModule(EmmiterUpdateModule::EmmiterUpdateModuleType type)
+{
+	EmmiterUpdateModule* newModule = nullptr;
+	switch (type)
+	{
+	case EmmiterUpdateModule::CHANGE_COLOR:
+		break;
+	default:
+		break;
+	}
+	return newModule;
+}
+
+EmmiterRenderModule* Emmiter::AddModule(EmmiterRenderModule::EmmiterRenderModuleType type)
+{
+	EmmiterRenderModule* newModule = nullptr;
+	switch (type)
+	{
+	case EmmiterRenderModule::BILLBOARD:
+		renderModule = std::make_unique<BillboardRender>(this);
+		newModule = renderModule.get();
+		break;
+	default:
+		break;
+	}
+	return newModule;
+}

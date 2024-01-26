@@ -13,5 +13,19 @@ void SetSpeed::Initialize(Particle* particle)
 
 		particle->speed = randomVec;
 	}
+}
 
+void SetColor::Initialize(Particle* particle)
+{
+	if (color.usingSingleValue) {
+		particle->color = color.singleValue;
+	}
+	else {
+		vec3 randomVec = vec3{
+			randomFloat(color.rangeValue.lowerLimit.x, color.rangeValue.upperLimit.x),
+			randomFloat(color.rangeValue.lowerLimit.y, color.rangeValue.upperLimit.y),
+			randomFloat(color.rangeValue.lowerLimit.z, color.rangeValue.upperLimit.z) };
+
+		particle->color = randomVec;
+	}
 }

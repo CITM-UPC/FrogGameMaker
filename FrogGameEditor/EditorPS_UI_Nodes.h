@@ -88,6 +88,46 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 			ImGui::PopItemWidth();
 
 			break;
+		case EmmiterInitializeModule::SET_COLOR:
+
+			ImGui::PushItemWidth(60);
+
+			ImGui::SeparatorText("Set Initial Speed: ");
+
+			ImGui::Checkbox("Single Value", &((SetColor*)(*m).get())->color.usingSingleValue);
+
+			ImGui::PushItemWidth(60);
+
+			if (((SetColor*)(*m).get())->color.usingSingleValue) {
+				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.singleValue.x, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.singleValue.y, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.singleValue.z, 0, 0, "%.2f");
+			}
+			else {
+				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.x, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.y, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.rangeValue.lowerLimit.z, 0, 0, "%.2f");
+
+				ImGui::InputDouble("X", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.x, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Y", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.y, 0, 0, "%.2f");
+				ImGui::SameLine();
+				ImGui::PopID();
+				ImGui::InputDouble("Z", &((SetColor*)(*m).get())->color.rangeValue.upperLimit.z, 0, 0, "%.2f");
+			}
+
+			ImGui::PopItemWidth();
+
+			break;
 		default:
 			break;
 		}

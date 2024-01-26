@@ -26,11 +26,25 @@ void ConstantSpawnRate::Update(double dt)
 	}
 }
 
+SingleBurstSpawn::SingleBurstSpawn(Emmiter* owner)
+{
+	this->owner = owner;
+	amount = 10;
+}
+
 void SingleBurstSpawn::Update(double dt)
 {
 	owner->SpawnParticles(amount);
 
 	activated = false;
+}
+
+ConstantBurstSpawn::ConstantBurstSpawn(Emmiter* owner)
+{
+	this->owner = owner;
+	spawnRate = 0.5f;
+	timeFromLastSpawn = 0;
+	amount = 10;
 }
 
 void ConstantBurstSpawn::Update(double dt)
