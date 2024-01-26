@@ -20,7 +20,8 @@ public:
 	void Stop();
 	void Replay();
 
-	void AddEmmiter();
+	void ClearEmmiters();
+	Emmiter* AddEmmiter();
 
 	void Save();
 	void Load();

@@ -44,9 +44,15 @@ void ParticleSystemComponent::Replay()
 	}
 }
 
-void ParticleSystemComponent::AddEmmiter()
+void ParticleSystemComponent::ClearEmmiters()
+{
+	emmiters.clear();
+}
+
+Emmiter* ParticleSystemComponent::AddEmmiter()
 {
 	emmiters.push_back(std::move(std::make_unique<Emmiter>()));
+	return emmiters[emmiters.size() - 1].get();
 }
 
 bool ParticleSystemComponent::IsON()
