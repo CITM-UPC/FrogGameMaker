@@ -77,6 +77,8 @@ void ParticleSystemComponent::Save()
 			oFile.write((char*)&moduleExistence, sizeof(moduleExistence));
 
 			oFile.write((char*)&(*i)->spawnModule->type, sizeof((*i)->spawnModule->type));
+			
+			oFile.write((char*)&(*i)->spawnModule->duration, sizeof((*i)->spawnModule->duration));
 
 			float spawnRate;
 			float amount;
@@ -138,8 +140,6 @@ void ParticleSystemComponent::Save()
 
 		oFile.write((char*)&(*i)->duration, sizeof((*i)->duration));
 
-		oFile.write((char*)&(*i)->delay, sizeof((*i)->delay));
-
 		oFile.write((char*)&(*i)->lifetime, sizeof((*i)->lifetime));
 
 		oFile.write((char*)&(*i)->maxParticles, sizeof((*i)->maxParticles));
@@ -151,9 +151,97 @@ void ParticleSystemComponent::Save()
 	oFile.close();
 }
 
-void ParticleSystemComponent::Load()
+void ParticleSystemComponent::Load(std::string path)
 {
+	ifstream iFile(path, ios::binary);
 
+	size_t emmiterAmount = 0;
+	iFile.read((char*)&emmiterAmount, sizeof(emmiterAmount));
+
+	for (int i = 0; i < emmiterAmount; i++) {
+		AddEmmiter();
+		size_t vLength = 0;
+
+		bool moduleExistence;
+		iFile.read((char*)&moduleExistence, sizeof(moduleExistence));
+		if (moduleExistence) {
+			EmmiterSpawnModule::EmmiterSpawnModuleType type;
+			iFile.read((char*)&type, sizeof(type));
+			emmiters[i]->AddModule(type);
+			float spawnDuration;
+
+			iFile.read((char*)&spawnDuration, sizeof(spawnDuration));
+			emmiters[i]->spawnModule->duration = spawnDuration;
+
+			float spawnRate;
+			float amount;
+			switch (type)
+			{
+			case EmmiterSpawnModule::EmmiterSpawnModuleType::CONSTANT:
+				iFile.read((char*)&spawnRate, sizeof(spawnRate));
+				//emmiters[i]->spawnModule->
+				break;
+			case EmmiterSpawnModule::EmmiterSpawnModuleType::SINGLE_BURST:
+				iFile.read((char*)&amount, sizeof(amount));
+				break;
+			case EmmiterSpawnModule::EmmiterSpawnModuleType::CONSTANT_BURST:
+				iFile.read((char*)&spawnRate, sizeof(spawnRate));
+				iFile.read((char*)&amount, sizeof(amount));
+				break;
+			default:
+				break;
+			}
+		}
+
+		iFile.read((char*)&moduleExistence, sizeof(moduleExistence));
+		if (moduleExistence) {
+			EmmiterRenderModule::EmmiterRenderModuleType type;
+			iFile.read((char*)&type, sizeof(type));
+			emmiters[i]->AddModule(type);
+		}
+
+		iFile.read((char*)&vLength, sizeof(vLength));
+		for (auto j = vLength; j < vLength; ++j) {
+			EmmiterInitializeModule::EmmiterInitializeModuleType type;
+			iFile.read((char*)&type, sizeof(type));
+			emmiters[i]->AddModule(type);
+
+			SingleOrRandom<vec3> vector;
+			iFile.read((char*)&vector, sizeof(vector));
+			
+		}
+
+		iFile.read((char*)&vLength, sizeof(vLength));
+		for (auto j = vLength; j < vLength; ++j) {
+			EmmiterUpdateModule::EmmiterUpdateModuleType type;
+			iFile.read((char*)&type, sizeof(type));
+			emmiters[i]->AddModule(type);
+		}
+
+		float delay;
+		iFile.read((char*)&delay, sizeof(delay));
+		emmiters[i]->delay = delay;
+
+		float duration;
+		iFile.read((char*)&duration, sizeof(duration));
+		emmiters[i]->duration = duration;
+
+		float lifetime;
+		iFile.read((char*)&lifetime, sizeof(lifetime));
+		emmiters[i]->lifetime = lifetime;
+
+		int maxParticles;
+		iFile.read((char*)&maxParticles, sizeof(maxParticles));
+		emmiters[i]->maxParticles = maxParticles;
+
+		bool isLooping;
+		iFile.read((char*)&isLooping, sizeof(isLooping));
+		emmiters[i]->isLooping = isLooping;
+
+	}
+
+
+	iFile.close();
 }
 
 bool ParticleSystemComponent::IsON()

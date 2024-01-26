@@ -829,7 +829,7 @@ void EditorUI::UIInspectorWriteParticleSystemNode(ParticleSystemComponent* compo
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Particle System")) {
 		if (ImGui::Button("Load")) {
-			component->Load();
+			component->Load("");
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Save")) {

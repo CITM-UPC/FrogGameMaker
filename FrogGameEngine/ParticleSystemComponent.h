@@ -24,7 +24,7 @@ public:
 	Emmiter* AddEmmiter();
 
 	void Save();
-	void Load();
+	void Load(std::string path);
 
 	bool IsON();
 
