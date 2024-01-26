@@ -63,12 +63,19 @@ void Emmiter::Update(double dt)
 		}
 	}
 
+	std::vector<std::vector<int>::iterator> particlesToFree;
+
 	for (auto i = usingParticlesIDs.begin(); i != usingParticlesIDs.end(); ++i) {
 		particles[*i]->Update(dt);
 		if (particles[*i]->lifetime > particles[*i]->duration) {
-			freeParticlesIDs.push(*i);
-			usingParticlesIDs.erase(i);
+			particlesToFree.push_back(i);
 		}
+	}
+
+	for (auto i = particlesToFree.begin(); i != particlesToFree.end(); ++i) {
+		freeParticlesIDs.push(*(*i));
+		usingParticlesIDs.erase(*i);
+
 	}
 }
 
