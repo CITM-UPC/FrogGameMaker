@@ -172,6 +172,7 @@
     <ClCompile Include="EditorInput.cpp" />
     <ClCompile Include="EditorMain.cpp" />
     <ClCompile Include="EditorObjectSelector.cpp" />
+    <ClCompile Include="EditorPS_UI_Nodes.cpp" />
     <ClCompile Include="EditorUI.cpp" />
     <ClCompile Include="EditorWindow.cpp" />
   </ItemGroup>
@@ -181,6 +182,7 @@
     <ClInclude Include="EditorInput.h" />
     <ClInclude Include="EditorModule.h" />
     <ClInclude Include="EditorObjectSelector.h" />
+    <ClInclude Include="EditorPS_UI_Nodes.h" />
     <ClInclude Include="EditorUI.h" />
     <ClInclude Include="EditorWindow.h" />
   </ItemGroup>

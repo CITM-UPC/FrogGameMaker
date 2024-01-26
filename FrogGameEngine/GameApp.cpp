@@ -4,6 +4,7 @@
 #include <vector>
 #include <IL/il.h>
 #include "MeshLoader.h"
+#include "InitializeModules.h"
 
 using namespace std;
 
@@ -247,9 +248,35 @@ GameObject* GameApp::CreateSmokeObject()
 {
     GameObject* smoker = scene->AddGameObject("Smoker");
 
-    smoker->AddComponent(PARTICLE_SYSTEM);
+    auto ps = (ParticleSystemComponent*)smoker->AddComponent(PARTICLE_SYSTEM);
 
+    ps->ClearEmmiters();
+
+    Emmiter* em1 = ps->AddEmmiter();
+
+    em1->ClearModules();
+
+    em1->AddModule(EmmiterSpawnModule::SINGLE_BURST);
+    
+    SetSpeed* sp = (SetSpeed*)em1->AddModule(EmmiterInitializeModule::SET_SPEED);
+
+    sp->speed.usingSingleValue = false;
+    sp->speed.rangeValue.lowerLimit = vec3{ -5, -5, -5 };
+    sp->speed.rangeValue.upperLimit = vec3{ 5, 5, 5 };
+
+    SetColor* cp = (SetColor*)em1->AddModule(EmmiterInitializeModule::SET_COLOR);
+
+    cp->color.usingSingleValue = false;
+    cp->color.rangeValue.lowerLimit = vec3{ 1, 0, 0 };
+    cp->color.rangeValue.upperLimit = vec3{ 1, 0.5, 0 };
+
+    em1->AddModule(EmmiterRenderModule::BILLBOARD);
 
     return smoker;
+}
+
+GameObject* GameApp::CreateFireworkObject()
+{
+    return nullptr;
 }
 

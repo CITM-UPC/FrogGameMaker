@@ -71,6 +71,7 @@ private:
 	void UIInspectorWriteMeshNode(MeshComponent* component);
 	void UIInspectorWriteTextureNode(TextureComponent* component);
 	void UIInspectorWriteCameraNode(CameraComponent* component);
+	void UIInspectorWriteParticleSystemNode(ParticleSystemComponent* component);
 	void UIInspectorNodeWrite(Component* component);
 	void UIInspectorWindow();
 

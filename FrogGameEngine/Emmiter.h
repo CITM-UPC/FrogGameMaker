@@ -36,6 +36,14 @@ public:
 
 	void InitializeParticle(Particle* particle);
 
+	void ClearModules();
+
+	EmmiterSpawnModule* AddModule(EmmiterSpawnModule::EmmiterSpawnModuleType type);
+	EmmiterInitializeModule* AddModule(EmmiterInitializeModule::EmmiterInitializeModuleType type);
+	EmmiterUpdateModule* AddModule(EmmiterUpdateModule::EmmiterUpdateModuleType type);
+	EmmiterRenderModule* AddModule(EmmiterRenderModule::EmmiterRenderModuleType type);
+
+
 public:
 	bool isON;
 

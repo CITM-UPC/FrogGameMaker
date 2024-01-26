@@ -17,7 +17,9 @@ public:
 
 	float amount;
 
-	bool activated = false;
+	bool activated;
+
+	void Reset() override;
 
 	void Update(double dt) override;
 };

@@ -3,6 +3,7 @@
 
 ConstantSpawnRate::ConstantSpawnRate(Emmiter* owner)
 {
+	type = CONSTANT;
 	this->owner = owner;
 	spawnRate = 0.5f;
 	timeFromLastSpawn = 0;
@@ -10,13 +11,15 @@ ConstantSpawnRate::ConstantSpawnRate(Emmiter* owner)
 
 void ConstantSpawnRate::Update(double dt)
 {
+	if (spawnRate <= 0.001) return;
+
 	timeFromLastSpawn += dt;
 
-	if (timeFromLastSpawn >= spawnRate) {
+	if (timeFromLastSpawn >= 1 / spawnRate) {
 		int ticks = 0;
 
-		while (timeFromLastSpawn >= spawnRate) {
-			timeFromLastSpawn -= spawnRate;
+		while (timeFromLastSpawn >= 1 / spawnRate) {
+			timeFromLastSpawn -= 1 / spawnRate;
 			ticks++;
 		}
 
@@ -24,22 +27,47 @@ void ConstantSpawnRate::Update(double dt)
 	}
 }
 
+SingleBurstSpawn::SingleBurstSpawn(Emmiter* owner)
+{
+	type = SINGLE_BURST;
+	this->owner = owner;
+	amount = 10;
+	activated = false;
+}
+
+void SingleBurstSpawn::Reset()
+{
+	activated = false;
+}
+
 void SingleBurstSpawn::Update(double dt)
 {
+	if (activated) return;
 	owner->SpawnParticles(amount);
 
-	activated = false;
+	activated = true;
+}
+
+ConstantBurstSpawn::ConstantBurstSpawn(Emmiter* owner)
+{
+	type = CONSTANT_BURST;
+	this->owner = owner;
+	spawnRate = 0.5f;
+	timeFromLastSpawn = 0;
+	amount = 10;
 }
 
 void ConstantBurstSpawn::Update(double dt)
 {
+	if (spawnRate <= 0.001) return;
+
 	timeFromLastSpawn += dt;
 
-	if (timeFromLastSpawn >= spawnRate) {
+	if (timeFromLastSpawn >= 1 / spawnRate) {
 		int ticks = 0;
 
-		while (timeFromLastSpawn >= spawnRate) {
-			timeFromLastSpawn -= spawnRate;
+		while (timeFromLastSpawn >= 1 / spawnRate) {
+			timeFromLastSpawn -= 1 / spawnRate;
 			ticks++;
 		}
 

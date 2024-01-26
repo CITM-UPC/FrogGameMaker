@@ -42,6 +42,9 @@
     <ClCompile Include="EditorObjectSelector.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="EditorPS_UI_Nodes.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorApp.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="EditorObjectSelector.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorPS_UI_Nodes.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>

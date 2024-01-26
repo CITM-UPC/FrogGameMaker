@@ -37,14 +37,25 @@ void ParticleSystemComponent::Stop()
 	isON = false;
 }
 
-void ParticleSystemComponent::Restart()
+void ParticleSystemComponent::Replay()
 {
 	for (auto i = emmiters.begin(); i != emmiters.end(); ++i) {
 		(*i)->Start();
 	}
 }
 
-void ParticleSystemComponent::AddEmmiter()
+void ParticleSystemComponent::ClearEmmiters()
+{
+	emmiters.clear();
+}
+
+Emmiter* ParticleSystemComponent::AddEmmiter()
 {
 	emmiters.push_back(std::move(std::make_unique<Emmiter>()));
+	return emmiters[emmiters.size() - 1].get();
+}
+
+bool ParticleSystemComponent::IsON()
+{
+	return isON;
 }
