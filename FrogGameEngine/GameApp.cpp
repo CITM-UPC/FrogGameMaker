@@ -5,6 +5,7 @@
 #include <IL/il.h>
 #include "MeshLoader.h"
 #include "InitializeModules.h"
+#include "SpawnModules.h"
 
 using namespace std;
 
@@ -126,8 +127,11 @@ void GameApp::EditorStart() {
     basicCamera->GetComponent<TransformComponent>()->translate({ 0, 10, -5 }, GLOBAL);
     basicCamera->GetComponent<TransformComponent>()->rotate(10, { 0, 0, 1 });
 
-    CreateSmokeObject();
+    CreateSmokeObject(vec3{10, 10, 10});
 
+    for (int i = 0; i < 5; ++i) {
+        fireworks.push_back(CreateFireworkObject());
+    }
 }
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)
@@ -244,9 +248,11 @@ void GameApp::ClearLogs()
     logs.clear();
 }
 
-GameObject* GameApp::CreateSmokeObject()
+GameObject* GameApp::CreateSmokeObject(vec3 pos)
 {
     GameObject* smoker = scene->AddGameObject("Smoker");
+
+    smoker->GetComponent<TransformComponent>()->translate(pos);
 
     auto ps = (ParticleSystemComponent*)smoker->AddComponent(PARTICLE_SYSTEM);
 
@@ -256,19 +262,18 @@ GameObject* GameApp::CreateSmokeObject()
 
     em1->ClearModules();
 
-    em1->AddModule(EmmiterSpawnModule::SINGLE_BURST);
+    em1->AddModule(EmmiterSpawnModule::CONSTANT);
     
     SetSpeed* sp = (SetSpeed*)em1->AddModule(EmmiterInitializeModule::SET_SPEED);
 
     sp->speed.usingSingleValue = false;
-    sp->speed.rangeValue.lowerLimit = vec3{ -5, -5, -5 };
-    sp->speed.rangeValue.upperLimit = vec3{ 5, 5, 5 };
+    sp->speed.rangeValue.lowerLimit = vec3{ -0.5, 1, -0.5 };
+    sp->speed.rangeValue.upperLimit = vec3{ 0.5, 2, 0.5 };
 
     SetColor* cp = (SetColor*)em1->AddModule(EmmiterInitializeModule::SET_COLOR);
 
-    cp->color.usingSingleValue = false;
-    cp->color.rangeValue.lowerLimit = vec3{ 255, 0, 0 };
-    cp->color.rangeValue.upperLimit = vec3{ 255, 200, 0 };
+    cp->color.usingSingleValue = true;
+    cp->color.rangeValue.upperLimit = vec3{ 100, 100, 100 };
 
     em1->AddModule(EmmiterRenderModule::BILLBOARD);
 
@@ -277,6 +282,53 @@ GameObject* GameApp::CreateSmokeObject()
 
 GameObject* GameApp::CreateFireworkObject()
 {
-    return nullptr;
+    GameObject* firework = scene->AddGameObject("Firework");
+
+    auto ps = (ParticleSystemComponent*)firework->AddComponent(PARTICLE_SYSTEM);
+
+    ps->ClearEmmiters();
+
+    ps->Stop();
+
+    Emmiter* em1 = ps->AddEmmiter();
+    em1->ClearModules();
+    em1->delay = 0;
+    em1->isLooping = false;
+    {
+        {
+            auto spawnEmmiter = (SingleBurstSpawn*)em1->AddModule(EmmiterSpawnModule::SINGLE_BURST);
+            spawnEmmiter->duration = 2;
+            spawnEmmiter->amount = 50;
+        }
+
+        {
+            SetSpeed* sp = (SetSpeed*)em1->AddModule(EmmiterInitializeModule::SET_SPEED);
+
+            sp->speed.usingSingleValue = false;
+            sp->speed.rangeValue.lowerLimit = vec3{ -5, -5, -5 };
+            sp->speed.rangeValue.upperLimit = vec3{ 5, 5, 5 };
+
+            SetColor* cp = (SetColor*)em1->AddModule(EmmiterInitializeModule::SET_COLOR);
+
+            cp->color.usingSingleValue = false;
+            cp->color.rangeValue.lowerLimit = vec3{ 255, 0, 0 };
+            cp->color.rangeValue.upperLimit = vec3{ 255, 200, 0 };
+        }
+
+        {
+            em1->AddModule(EmmiterRenderModule::BILLBOARD);
+        }
+    }
+
+    return firework;
+}
+
+void GameApp::ActivateFirework()
+{
+    if (fireworks[nextFirework]) {
+        fireworks[nextFirework]->GetComponent<ParticleSystemComponent>()->Replay();
+    }
+
+    nextFirework = (nextFirework + 1) % 5;
 }
 
