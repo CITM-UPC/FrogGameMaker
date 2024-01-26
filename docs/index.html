@@ -1,145 +1,173 @@
 <!DOCTYPE html>
 <html>
 <style>
-div {
-  margin: 70px;
-  border: 10px solid white;
-  background-color:white;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
+  div {
+    margin: 70px;
+    border: 10px solid white;
+    background-color: white;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
 </style>
 <title>FrogGameMaker</title>
 
 <body style="background-color:DarkSeaGreen; font-family:'Courier New', monospace; text-align:center;">
 
-<div><h1 style="font-size:75px; font-family:'Luminari', fantasy;">FrogGameMaker</h1>
-  <img src="frog.png" width="250" height="250">
-  <hr>
-  <hr>
-  
-<h3>Introduction</h3>
-<p>FrogGameMaker is a game engine made by Victor Martín and Ari Sevcik for the subject Video Game Engines in our 3rd year of Video Game Design and Development Bachelor’s Degree at CITM-UPC</p>
+  <div>
+    <h1 style="font-size:75px; font-family:'Luminari', fantasy;">FrogGameMaker</h1>
+    <img src="frog.png" width="250" height="250">
+    <hr>
+    <hr>
 
-<hr>
+    <h3>Introduction</h3>
+    <p>FrogGameMaker is a game engine made by Victor Martín and Ari Sevcik for the subject Video Game Engines in our 3rd
+      year of Video Game Design and Development Bachelor’s Degree at CITM-UPC</p>
 
-<h3>Team</h3>
-  <table style= "margin:70px;">
-  <tr>
-    <td><img src="img_victor.jpg" width="300" height="300"></td>
-    <td style="text-align:left;">
-    Victor Martin
-    <a href="https://github.com/VicMarBall">[github]</a>
-    <ul>
-  		<li>GameObject hierarchy </li>
-        <li>Transformations</li>
-  		<li>Camera controls</li>
-  		<li>Editor windows</li>
-        <li>Modify a GameObjects</li>
-        <li>Mouse picking</li>
-        <li>AABB and Frustum Culling</li>
-	</ul> 
-    </td>
-  </tr>
-  <tr>
-  	<td><img src="img_ari.jpg" width="300" height="300"></td>
-    <td style="text-align:left;">
-    Ari Sevcik
-    <a href="https://github.com/AriSevcik">[github]</a>
-    <ul>
-  		<li>Model import</li>
- 		<li>Texture import</li>
-        <li>Basic shapes</li>
-  		<li>Drag and Drop</li>
-        <li>Assets window</li>
-        <li>Own file format</li>
-        <li>Library folder</li> 
-	</ul> 
-    </td>
-  </tr>
-  </table>
-  
-  <hr>
+    <hr>
 
-  <h3>Main core sub-systems</h3>
-  <h4>Game objects</h4>
-  <p>Base of all entities in the scene. Can have the following components</p>
-  <ul style="text-align:left;">
-  <li><h5>Transform</h5>
-  Alters the position, rotation and scale</li>
-  <li><h5>Mesh</h5>
-  3D mesh to be printed. Includes the amount of vertices and faces and has the option to see its normals</li>
-  <li><h5>Texture</h5>
-  2D image assigned to the mesh, can be changed to a checkboard</li>
-  <li><h5>Camera</h5>
-  Includes FOV, zNear, zFar and aspect ratio
-  </li>
-  </ul> 
-  <h4>Scene hierarchy</h4>
-  <ul style="text-align:left;">
-  Delete, reparent, create empty and create children
-  </ul>
-  <h4>Mesh loading optimization</h4>
-  <ul style="text-align:left;">
-  With our own file format created for each mesh when added to the assets, loading of the meshes is quicker and lighter
-  </ul>
-  <h4>UI docking</h4>
-  <ul style="text-align:left;">
-  Since the UI was made with ImGui, all window placements can be edited as user prefers
-  </ul>
-  
-  <hr>
+    <h3>Team</h3>
+    <table style="margin:70px;">
+      <tr>
+        <td><img src="img_victor.jpg" width="300" height="300"></td>
+        <td style="text-align:left;">
+          Victor Martin
+          <a href="https://github.com/VicMarBall">[github]</a>
+          <ul>
+            <li>GameObject hierarchy </li>
+            <li>Transformations</li>
+            <li>Camera controls</li>
+            <li>Editor windows</li>
+            <li>Modify a GameObjects</li>
+            <li>Mouse picking</li>
+            <li>AABB and Frustum Culling</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><img src="img_ari.jpg" width="300" height="300"></td>
+        <td style="text-align:left;">
+          Ari Sevcik
+          <a href="https://github.com/AriSevcik">[github]</a>
+          <ul>
+            <li>Model import</li>
+            <li>Texture import</li>
+            <li>Basic shapes</li>
+            <li>Drag and Drop</li>
+            <li>Assets window</li>
+            <li>Own file format</li>
+            <li>Library folder</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
 
-  <h3>Particle system</h3>
-  <p>Detailed explanation of last assignment sub-system, containing two animated gif that shows editor
-and in-game functionality.</p>
-  
-  <hr>
+    <hr>
 
-  <h3>Video example</h3>
-  <p>One minute video speed-up that shows the process of authoring scenes in your editor, especially
-with your core technology from the last assignment</p>
-  
-  <hr>
-  
-  <h3>Repository and release</h3>
-  
-  <h4>All releases</h4>
-  <a>FrogGameMaker v1.0 (in progress)</a>
-  <p></p>
-  <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v0.6">FrogGameMaker v0.6</a>
-  <p></p>
-  <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v0.3">FrogGameMaker v0.3</a>
-  <h4>Repository</h4>
-  <a href="https://github.com/CITM-UPC/FrogGameMaker">Link to repository</a>
+    <h3>Main core sub-systems</h3>
+    <h4>Game objects</h4>
+    <p>Base of all entities in the scene. Can have the following components</p>
+    <ul style="text-align:left;">
+      <li>
+        <h5>Transform</h5>
+        Alters the position, rotation and scale
+      </li>
+      <li>
+        <h5>Mesh</h5>
+        3D mesh to be printed. Includes the amount of vertices and faces and has the option to see its normals
+      </li>
+      <li>
+        <h5>Texture</h5>
+        2D image assigned to the mesh, can be changed to a checkboard
+      </li>
+      <li>
+        <h5>Camera</h5>
+        Includes FOV, zNear, zFar and aspect ratio
+      </li>
+    </ul>
+    <h4>Scene hierarchy</h4>
+    <ul style="text-align:left;">
+      Delete, reparent, create empty and create children
+    </ul>
+    <h4>Mesh loading optimization</h4>
+    <ul style="text-align:left;">
+      With our own file format created for each mesh when added to the assets, loading of the meshes is quicker and
+      lighter
+    </ul>
+    <h4>UI docking</h4>
+    <ul style="text-align:left;">
+      Since the UI was made with ImGui, all window placements can be edited as user prefers
+    </ul>
 
-  
-  <hr>
-  
-  <h3>License</h3>
-  <p>MIT License</p>
+    <hr>
 
-<p>Copyright (c) 2023 CITM-UPC</p>
+    <h3>Particle system</h3>
+    <ul style="text-align:left;">
 
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:</p>
+      <p>Detailed explanation of last assignment sub-system, containing two animated gif that shows editor
+        and in-game functionality.</p>
+      <p>In this Particle System there are 4 main elements: </p>
+      <p> - Particle System: A component of GameObjects that holds a vector of Emmiters, that manages when the Emmiters
+        start. </p>
+      <p> - Emmiter: A class that holds a few basic parameters, like spawnRate, duration and maximum number of
+        Particles, a series of Emmiter Modules, that set how the Particles will behave, and a Particle Object Pool.</p>
+      <p> - Emmiter Module: An Emmiter Module is a class that affects 1 of the 4 stages of the Emmiter:</p>
+      <p> · Spawn: The way the Emmiter will Spawn the Particles (In a constant rate, with a single burst, etc.).</p>
+      <p> · Initialize: The values the Particle will have at the start of their individual life. </p>
+      <p> · Update: The change of values of each Particle's life. </p>
+      <p> · Render: The way each particle will be rendered. </p>
+      <p> - Particle: A simple class that only stores its individual transformation and color. </p>
+      <p>This Particle Systems works in a tree structure way, where ParticleSystems hold Emmiters, that each holds a
+        Particle Object Pool and a set of Modules. </p>
+    </ul>
 
-<p>The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.</p>
+    <hr>
 
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</p>
-</div>
+    <h3>Video example</h3>
+    <p>One minute video speed-up that shows the process of authoring scenes in your editor, especially
+      with your core technology from the last assignment</p>
+
+    <hr>
+
+    <h3>Repository and release</h3>
+
+    <h4>All releases</h4>
+    <a>FrogGameMaker v1.0 (in progress)</a>
+    <p></p>
+    <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v0.6">FrogGameMaker v0.6</a>
+    <p></p>
+    <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v0.3">FrogGameMaker v0.3</a>
+    <h4>Repository</h4>
+    <a href="https://github.com/CITM-UPC/FrogGameMaker">Link to repository</a>
+
+
+    <hr>
+
+    <h3>License</h3>
+    <p>MIT License</p>
+
+    <p>Copyright (c) 2023 CITM-UPC</p>
+
+    <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+      of this software and associated documentation files (the "Software"), to deal
+      in the Software without restriction, including without limitation the rights
+      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+      copies of the Software, and to permit persons to whom the Software is
+      furnished to do so, subject to the following conditions:</p>
+
+    <p>The above copyright notice and this permission notice shall be included in all
+      copies or substantial portions of the Software.</p>
+
+    <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+      AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+      OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+      SOFTWARE.</p>
+  </div>
 </body>
-</html> 
+
+</html>
