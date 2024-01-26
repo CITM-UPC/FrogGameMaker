@@ -32,9 +32,9 @@ void SetColor::Initialize(Particle* particle)
 	}
 	else {
 		vec3 randomVec = vec3{
-			randomFloat(color.rangeValue.lowerLimit.x, color.rangeValue.upperLimit.x),
-			randomFloat(color.rangeValue.lowerLimit.y, color.rangeValue.upperLimit.y),
-			randomFloat(color.rangeValue.lowerLimit.z, color.rangeValue.upperLimit.z) };
+			randomFloat(color.rangeValue.lowerLimit.r, color.rangeValue.upperLimit.r),
+			randomFloat(color.rangeValue.lowerLimit.g, color.rangeValue.upperLimit.g),
+			randomFloat(color.rangeValue.lowerLimit.b, color.rangeValue.upperLimit.b) };
 
 		particle->color = randomVec;
 	}

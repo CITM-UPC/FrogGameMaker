@@ -53,11 +53,15 @@ public:
 
 	void ClearLogs();
 
-	GameObject* CreateSmokeObject();
+	GameObject* CreateSmokeObject(vec3 pos);
 
 	GameObject* CreateFireworkObject();
 
+	void ActivateFirework();
+
+	// 5
 	std::vector<GameObject*> fireworks;
+	int nextFirework = 0;
 
 private:
 	vector<string> logs;

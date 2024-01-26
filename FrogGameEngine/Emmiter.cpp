@@ -142,6 +142,10 @@ void Emmiter::RestartParticlePool()
 
 void Emmiter::InitializeParticle(Particle* particle)
 {
+	if (spawnModule) {
+		particle->duration = spawnModule->duration;
+	}
+
 	particle->lifetime = 0;
 	particle->position = vec3{ 0, 0, 0 };
 	particle->color = vec3{ 0, 0, 0 };

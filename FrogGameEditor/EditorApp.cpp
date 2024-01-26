@@ -91,6 +91,10 @@ bool EditorApp::Update() {
 		if (gameIsOn) {
 			gameApp->GameStep(FDT);
 		}
+		// DEMO POURPOSES
+		if (editorInput->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+			gameApp->ActivateFirework();
+		}
 	}
 
 	// post update

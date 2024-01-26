@@ -39,6 +39,7 @@ void ParticleSystemComponent::Stop()
 
 void ParticleSystemComponent::Replay()
 {
+	Play();
 	for (auto i = emmiters.begin(); i != emmiters.end(); ++i) {
 		(*i)->Start();
 	}
