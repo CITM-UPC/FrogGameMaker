@@ -19,6 +19,7 @@ public:
 	virtual void Render() {};
 
 	ComponentType componentType = TRANSFORM;
+	//const string getOwnerName() { return owner->name };
 
 protected:
 	// used to connect to other components

@@ -64,6 +64,7 @@ void GameApp::EditorStart() {
 
     std::filesystem::create_directories("Library/Meshes/");
     std::filesystem::create_directories("Library/Materials/");
+    std::filesystem::create_directories("Library/Particles/");
 
     std::string path = "Assets";
     

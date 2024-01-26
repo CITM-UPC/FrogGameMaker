@@ -8,6 +8,10 @@ public:
 	float spawnRate;
 	float timeFromLastSpawn;
 
+	const float getSpawnRate() override {
+		return spawnRate;
+	};
+
 	void Update(double dt) override;
 };
 
@@ -18,6 +22,10 @@ public:
 	float amount;
 
 	bool activated;
+
+	const float getAmount() override {
+		return amount;
+	};
 
 	void Reset() override;
 
@@ -32,6 +40,13 @@ public:
 	float timeFromLastSpawn;
 
 	float amount;
+
+	const float getSpawnRate() override {
+		return spawnRate;
+	};
+	const float getAmount() override {
+		return amount;
+	};
 
 	void Update(double dt) override;
 };
