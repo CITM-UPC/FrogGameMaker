@@ -131,7 +131,9 @@ void GameApp::EditorStart() {
 
     for (int i = 0; i < 5; ++i) {
         fireworks.push_back(CreateFireworkObject());
+        nextFirework++;
     }
+    nextFirework = 0;
 }
 
 void GameApp::EditorStep(std::chrono::duration<double> dt)
@@ -262,8 +264,10 @@ GameObject* GameApp::CreateSmokeObject(vec3 pos)
 
     em1->ClearModules();
 
-    em1->AddModule(EmmiterSpawnModule::CONSTANT);
-    
+    auto spawn = (ConstantSpawnRate*)em1->AddModule(EmmiterSpawnModule::CONSTANT);
+
+    spawn->spawnRate = 2;
+
     SetSpeed* sp = (SetSpeed*)em1->AddModule(EmmiterInitializeModule::SET_SPEED);
 
     sp->speed.usingSingleValue = false;
@@ -309,10 +313,49 @@ GameObject* GameApp::CreateFireworkObject()
             sp->speed.rangeValue.upperLimit = vec3{ 5, 5, 5 };
 
             SetColor* cp = (SetColor*)em1->AddModule(EmmiterInitializeModule::SET_COLOR);
-
             cp->color.usingSingleValue = false;
-            cp->color.rangeValue.lowerLimit = vec3{ 255, 0, 0 };
-            cp->color.rangeValue.upperLimit = vec3{ 255, 200, 0 };
+
+            switch (nextFirework)
+            {
+            case 0:
+                cp->color.rangeValue.lowerLimit = vec3{ 255, 0, 0 };
+                cp->color.rangeValue.upperLimit = vec3{ 255, 200, 0 };
+
+                firework->GetComponent<TransformComponent>()->translate(vec3{0, 20, 0});
+
+                break;
+            case 1:
+                cp->color.rangeValue.lowerLimit = vec3{ 0, 255, 0 };
+                cp->color.rangeValue.upperLimit = vec3{ 0, 255, 200 };
+
+                firework->GetComponent<TransformComponent>()->translate(vec3{ 20, 20, 20 });
+
+                break; 
+            case 2:
+                cp->color.rangeValue.lowerLimit = vec3{ 0, 0, 255 };
+                cp->color.rangeValue.upperLimit = vec3{ 200, 0, 255 };
+
+                firework->GetComponent<TransformComponent>()->translate(vec3{ -20, 20, 20 });
+
+                break;
+            case 3:
+                cp->color.rangeValue.lowerLimit = vec3{ 255, 100, 0 };
+                cp->color.rangeValue.upperLimit = vec3{ 255, 255, 200 };
+
+                firework->GetComponent<TransformComponent>()->translate(vec3{ 20, 20, -20 });
+
+                break;
+            case 4:
+                cp->color.rangeValue.lowerLimit = vec3{ 0, 255, 255 };
+                cp->color.rangeValue.upperLimit = vec3{ 255, 200, 255 };
+
+                firework->GetComponent<TransformComponent>()->translate(vec3{ -20, 20, -20 });
+
+                break;
+            default:
+                break;
+            }
+
         }
 
         {
