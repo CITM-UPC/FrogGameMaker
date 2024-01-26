@@ -109,16 +109,18 @@
       <p>Detailed explanation of last assignment sub-system, containing two animated gif that shows editor
         and in-game functionality.</p>
       <p>In this Particle System there are 4 main elements: </p>
-      <p> - Particle System: A component of GameObjects that holds a vector of Emmiters, that manages when the Emmiters
-        start. </p>
-      <p> - Emmiter: A class that holds a few basic parameters, like spawnRate, duration and maximum number of
-        Particles, a series of Emmiter Modules, that set how the Particles will behave, and a Particle Object Pool.</p>
-      <p> - Emmiter Module: An Emmiter Module is a class that affects 1 of the 4 stages of the Emmiter:</p>
-      <p> · Spawn: The way the Emmiter will Spawn the Particles (In a constant rate, with a single burst, etc.).</p>
-      <p> · Initialize: The values the Particle will have at the start of their individual life. </p>
-      <p> · Update: The change of values of each Particle's life. </p>
-      <p> · Render: The way each particle will be rendered. </p>
-      <p> - Particle: A simple class that only stores its individual transformation and color. </p>
+      <li>  Particle System: A component of GameObjects that holds a vector of Emmiters, that manages when the Emmiters
+        start. </li>
+      <li>  Emmiter: A class that holds a few basic parameters, like spawnRate, duration and maximum number of
+        Particles, a series of Emmiter Modules, that set how the Particles will behave, and a Particle Object Pool.</li>
+      <li>  Emmiter Module: An Emmiter Module is a class that affects 1 of the 4 stages of the Emmiter:</li>
+      <ul>
+      <li>  Spawn: The way the Emmiter will Spawn the Particles (In a constant rate, with a single burst, etc.).</li>
+      <li>  Initialize: The values the Particle will have at the start of their individual life. </li>
+      <li>  Update: The change of values of each Particle's life. </li>
+      <li>  Render: The way each particle will be rendered. </li>
+      </ul>
+      <li>  Particle: A simple class that only stores its individual transformation and color. </li>
       <p>This Particle Systems works in a tree structure way, where ParticleSystems hold Emmiters, that each holds a
         Particle Object Pool and a set of Modules. </p>
     </ul>
@@ -130,15 +132,17 @@
     <hr>
 
     <h3>Video example</h3>
-    <p>One minute video speed-up that shows the process of authoring scenes in your editor, especially
-      with your core technology from the last assignment</p>
+    <video width="600" controls>
+  <source src="EngineVideo.mp4" type="video/mp4">
+  Your browser does not support HTML video.
+</video>
 
     <hr>
 
     <h3>Repository and release</h3>
 
     <h4>All releases</h4>
-    <a>FrogGameMaker v1.0 (in progress)</a>
+    <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v1.0">FrogGameMaker v1.0</a>
     <p></p>
     <a href="https://github.com/CITM-UPC/FrogGameMaker/releases/tag/FrogGameMaker_v0.6">FrogGameMaker v0.6</a>
     <p></p>
