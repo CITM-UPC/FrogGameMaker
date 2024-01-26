@@ -34,7 +34,7 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 
 			break;
 		case EmmiterSpawnModule::CONSTANT_BURST:
-			ImGui::SeparatorText("Single Burst");
+			ImGui::SeparatorText("Constant Burst");
 			ImGui::InputFloat("Spawn Rate", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->spawnRate);
 			ImGui::InputFloat("Amount", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->amount);
 

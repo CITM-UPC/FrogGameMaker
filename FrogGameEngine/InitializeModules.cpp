@@ -1,5 +1,10 @@
 #include "InitializeModules.h"
 
+SetSpeed::SetSpeed()
+{
+	type = SET_SPEED;
+}
+
 void SetSpeed::Initialize(Particle* particle)
 {
 	if (speed.usingSingleValue) {
@@ -13,6 +18,11 @@ void SetSpeed::Initialize(Particle* particle)
 
 		particle->speed = randomVec;
 	}
+}
+
+SetColor::SetColor()
+{
+	type = SET_COLOR;
 }
 
 void SetColor::Initialize(Particle* particle)

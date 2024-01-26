@@ -40,6 +40,11 @@ void Emmiter::Start()
 		freeParticlesIDs.push(usingParticlesIDs[usingParticlesIDs.size() - 1]);
 		usingParticlesIDs.pop_back();
 	}
+
+	if (spawnModule) {
+		spawnModule->Reset();
+	}
+
 	RestartParticlePool();
 }
 
@@ -72,7 +77,7 @@ void Emmiter::Update(double dt)
 		}
 	}
 
-	for (auto i = particlesToFree.begin(); i != particlesToFree.end(); ++i) {
+	for (auto i = particlesToFree.rbegin(); i != particlesToFree.rend(); ++i) {
 		freeParticlesIDs.push(*(*i));
 		usingParticlesIDs.erase(*i);
 
@@ -107,7 +112,7 @@ void Emmiter::SpawnParticles(int amount)
 	for (int i = 0; i < amount; ++i) {
 		if (!freeParticlesIDs.empty()) {
 			int spawnedParticleID = freeParticlesIDs.front();
-			usingParticlesIDs.push_back(freeParticlesIDs.front());
+			usingParticlesIDs.push_back(spawnedParticleID);
 			freeParticlesIDs.pop();
 			InitializeParticle(particles[spawnedParticleID].get());
 		}

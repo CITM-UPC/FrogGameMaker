@@ -6,6 +6,8 @@ class Emmiter;
 
 class EmmiterSpawnModule {
 public:
+	virtual void Reset() {};
+
 	virtual void Update(double dt) {};
 
 	enum EmmiterSpawnModuleType {
@@ -22,6 +24,8 @@ protected:
 
 class EmmiterInitializeModule {
 public:
+	virtual void Reset() {};
+
 	virtual void Initialize(Particle* particle) {};
 
 	enum EmmiterInitializeModuleType {
@@ -37,6 +41,8 @@ protected:
 
 class EmmiterUpdateModule {
 public:
+	virtual void Reset() {};
+
 	virtual void Update(double dt, Particle* particle) {};
 
 	enum EmmiterUpdateModuleType {
@@ -51,6 +57,8 @@ protected:
 
 class EmmiterRenderModule {
 public:
+	virtual void Reset() {};
+
 	virtual void Update(Particle* particle) {};
 
 	enum EmmiterRenderModuleType {

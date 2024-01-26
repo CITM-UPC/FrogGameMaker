@@ -55,6 +55,10 @@ public:
 
 	GameObject* CreateSmokeObject();
 
+	GameObject* CreateFireworkObject();
+
+	std::vector<GameObject*> fireworks;
+
 private:
 	vector<string> logs;
 
