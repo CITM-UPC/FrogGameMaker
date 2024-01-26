@@ -10,21 +10,20 @@ Ari Sevcik (Github: AriSevcik (https://github.com/AriSevcik))
 
 ## New Features: 
 
-Camera Refactoring
+Particle Systems!
 
-Bounding Boxes
+Textures working
 
-Frustum Culling
+## Particle Systems: 
+A new ParticleSystem Component can be added to GameObjects
 
-Mouse Picking
+Works with Emmiters and EmmiterModules
 
-Hierarchy Editing
+Save the ParticleSystem into a file
 
-Own File Format (.sht)
+Can edit parameters in the Inspector
 
-Resources loaded in /Library
-
-PLAY and STOP
+More information on the webpage
 
 ## How To Use: 
 ### Move Camera 
