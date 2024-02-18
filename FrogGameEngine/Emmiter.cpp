@@ -23,7 +23,6 @@ Emmiter::Emmiter()
 	setSpeed->speed.rangeValue.lowerLimit = vec3{-0.5, 1, -0.5};
 	setSpeed->speed.rangeValue.upperLimit = vec3{ 0.5, 2, 0.5 };
 
-
 	initializeModules.push_back(std::move(setSpeed));
 
 	RestartParticlePool();
@@ -36,9 +35,8 @@ Emmiter::~Emmiter()
 void Emmiter::Start()
 {
 	lifetime = 0;
-	while (!usingParticlesIDs.empty()) {
-		freeParticlesIDs.push(usingParticlesIDs[usingParticlesIDs.size() - 1]);
-		usingParticlesIDs.pop_back();
+	for (bool particleUsed : particlesInUse) {
+		particleUsed = false;
 	}
 
 	if (spawnModule) {
@@ -62,25 +60,27 @@ void Emmiter::Update(double dt)
 		}
 	}
 
-	for (auto i = updateModules.begin(); i != updateModules.end(); ++i) {
-		for (auto j = usingParticlesIDs.begin(); j != usingParticlesIDs.end(); ++j) {
-			(*i)->Update(dt, particles[*j].get());
+	for (auto uModule = updateModules.begin(); uModule != updateModules.end(); ++uModule) {
+		for (int i = 0; i < particles.size(); ++i) {
+			if (particlesInUse[i]) {
+				(*uModule)->Update(dt, particles[i].get());
+			}
 		}
 	}
 
-	std::vector<std::vector<int>::iterator> particlesToFree;
+	std::vector<int> particlesToFree;
 
-	for (auto i = usingParticlesIDs.begin(); i != usingParticlesIDs.end(); ++i) {
-		particles[*i]->Update(dt);
-		if (particles[*i]->lifetime > particles[*i]->duration) {
-			particlesToFree.push_back(i);
+	for (int i = 0; i < particles.size(); ++i) {
+		if (particlesInUse[i]) {
+			particles[i]->Update(dt);
+			if (particles[i]->lifetime > particles[i]->duration) {
+				particlesToFree.push_back(i);
+			}
 		}
 	}
 
 	for (auto i = particlesToFree.rbegin(); i != particlesToFree.rend(); ++i) {
-		freeParticlesIDs.push(*(*i));
-		usingParticlesIDs.erase(*i);
-
+		particlesInUse[*i] = false;
 	}
 }
 
@@ -95,14 +95,16 @@ void Emmiter::Render()
 	//	particlesToRender.insert
 	//}
 
-	std::vector<Particle*> particlesToRender;
-	for (auto i = usingParticlesIDs.begin(); i != usingParticlesIDs.end(); ++i) {
-		particlesToRender.push_back(particles[(*i)].get());
-	}
+	//std::vector<Particle*> particlesToRender;
+	//for (auto i = usingParticlesIDs.begin(); i != usingParticlesIDs.end(); ++i) {
+	//	particlesToRender.push_back(particles[(*i)].get());
+	//}
 
 	if (renderModule) {
-		for (auto i = particlesToRender.begin(); i != particlesToRender.end(); ++i) {
-			renderModule->Update(*i);
+		for (int i = 0; i < particles.size(); ++i) {
+			if (particlesInUse[i]) {
+				renderModule->Update(particles[i].get());
+			}
 		}
 	}
 }
@@ -110,34 +112,36 @@ void Emmiter::Render()
 void Emmiter::SpawnParticles(int amount)
 {
 	for (int i = 0; i < amount; ++i) {
-		if (!freeParticlesIDs.empty()) {
-			int spawnedParticleID = freeParticlesIDs.front();
-			usingParticlesIDs.push_back(spawnedParticleID);
-			freeParticlesIDs.pop();
-			InitializeParticle(particles[spawnedParticleID].get());
+
+		for (int id = 0; id < particles.size(); ++id) {
+			if (particlesInUse[id]) continue;
+
+			InitializeParticle(particles[id].get());
+			particlesInUse[id] = true;
+			break;
 		}
+
+		//if (!freeParticlesIDs.empty()) {
+		//	int spawnedParticleID = freeParticlesIDs.front();
+		//	usingParticlesIDs.push_back(spawnedParticleID);
+		//	freeParticlesIDs.pop();
+		//	InitializeParticle(particles[spawnedParticleID].get());
+		//}
 	}
 }
 
 void Emmiter::RestartParticlePool()
 {
-	usingParticlesIDs.clear();
-
-	while (!freeParticlesIDs.empty()) {
-		freeParticlesIDs.pop();
-	}
-
-	for (int i = 0; i < maxParticles; ++i) {
-		freeParticlesIDs.push(i);
-	}
-
 	particles.clear();
+	particlesInUse.clear();
 
 	for (int i = 0; i < maxParticles; ++i) {
 		particles.push_back(std::move(std::make_unique<Particle>()));
+		particlesInUse.push_back(false);
 	}
 
 	particles.shrink_to_fit();
+	particlesInUse.shrink_to_fit();
 }
 
 void Emmiter::InitializeParticle(Particle* particle)

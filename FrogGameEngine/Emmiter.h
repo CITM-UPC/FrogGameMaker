@@ -67,7 +67,6 @@ public:
 
 private: 
 	std::vector<std::unique_ptr<Particle>> particles;
-	std::vector<int> usingParticlesIDs;
-	std::queue<int> freeParticlesIDs;
+	std::vector<bool> particlesInUse;
 
 };
