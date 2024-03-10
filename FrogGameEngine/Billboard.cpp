@@ -11,8 +11,7 @@ void Billboard::BeginCylindricBillboard(vec3 objectPosition, vec3 cameraPosition
 	vec3 lookAt, objToCamProj, upAux;
 	float angleCosine;
 	glPushMatrix();
-	glGet();
-	glLoadIdentity();
+	// glLoadIdentity();
 	// objToCamProj is the vector in world coordinates from the
 	// local origin to the camera projected in the XZ plane
 	objToCamProj.x = cameraPosition.x - objectPosition.x;
