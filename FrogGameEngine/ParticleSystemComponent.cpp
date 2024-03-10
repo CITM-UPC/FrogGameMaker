@@ -8,6 +8,7 @@
 ParticleSystemComponent::ParticleSystemComponent(GameObject* owner) : Component(owner)
 {
 	componentType = PARTICLE_SYSTEM;
+	transform = owner->GetComponent<TransformComponent>();
 	isON = true;
 	AddEmmiter();
 }
@@ -25,10 +26,10 @@ void ParticleSystemComponent::Update(double dt)
 	}
 }
 
-void ParticleSystemComponent::Render()
+void ParticleSystemComponent::Render(vec3 cameraPosition)
 {
 	for (auto i = emmiters.begin(); i != emmiters.end(); ++i) {
-		(*i)->Render();
+		(*i)->Render(cameraPosition);
 	}
 }
 
@@ -57,7 +58,8 @@ void ParticleSystemComponent::ClearEmmiters()
 
 Emmiter* ParticleSystemComponent::AddEmmiter()
 {
-	emmiters.push_back(std::move(std::make_unique<Emmiter>()));
+	auto e = std::make_unique<Emmiter>(this);
+	emmiters.push_back(std::move(e));
 	return emmiters[emmiters.size() - 1].get();
 }
 
@@ -247,4 +249,9 @@ void ParticleSystemComponent::Load(std::string path)
 bool ParticleSystemComponent::IsON()
 {
 	return isON;
+}
+
+TransformComponent* ParticleSystemComponent::GetTransform()
+{
+	return transform;
 }

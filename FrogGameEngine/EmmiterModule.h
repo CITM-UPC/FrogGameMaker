@@ -69,7 +69,7 @@ class EmmiterRenderModule {
 public:
 	virtual void Reset() {};
 
-	virtual void Update(Particle* particle) {};
+	virtual void Update(Particle* particle, vec3 cameraPosition) {};
 
 	enum EmmiterRenderModuleType {
 		BILLBOARD

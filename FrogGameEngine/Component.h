@@ -1,4 +1,5 @@
 #pragma once
+#include "Types.h"
 
 enum ComponentType {
 	TRANSFORM,
@@ -16,7 +17,7 @@ public:
 	~Component() {};
 	virtual void Start() {};
 	virtual void Update(double dt) {};
-	virtual void Render() {};
+	virtual void Render(vec3 cameraPosition) {};
 
 	ComponentType componentType = TRANSFORM;
 	//const string getOwnerName() { return owner->name };

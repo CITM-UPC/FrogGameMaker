@@ -1,5 +1,9 @@
 #include "BillboardingEM.h"
-// #include "GL/glew.h"
+#include "Emmiter.h"
+#include "ParticleSystemComponent.h"
+#include "TransformComponent.h"
+#include "Billboard.h"
+#include "GL/glew.h"
 
 BillboardRender::BillboardRender(Emmiter* owner)
 {
@@ -7,17 +11,28 @@ BillboardRender::BillboardRender(Emmiter* owner)
 	type = NONE;
 }
 
-void BillboardRender::Update(Particle* particle)
+void BillboardRender::Update(Particle* particle, vec3 cameraPosition)
 {
-	// try for making it global
-	// glPushMatrix();
-	// glLoadIdentity();
+	vec3 particlePosition = particle->position + owner->owner->GetTransform()->getPosition();
 
-	// try for making the billboarding
-	// GLfloat projection[16];
-	// glGetFloatv(GL_PROJECTION_MATRIX, projection);
+	Billboard::BeginCylindricBillboard(particlePosition, cameraPosition);
 
-	particle->Render();
+    // render
+    glBegin(GL_TRIANGLES);
+    glColor3ub(particle->color.r, particle->color.g, particle->color.b);
 
-	// glPopMatrix();
+    glVertex3d(particle->position.x - (1 * particle->scale.x), particle->position.y + (1 * particle->scale.y), particle->position.z);
+    glVertex3d(particle->position.x - (1 * particle->scale.x), particle->position.y - (1 * particle->scale.y), particle->position.z);
+    glVertex3d(particle->position.x + (1 * particle->scale.x), particle->position.y + (1 * particle->scale.y), particle->position.z);
+
+    glVertex3d(particle->position.x - (1 * particle->scale.x), particle->position.y - (1 * particle->scale.y), particle->position.z);
+    glVertex3d(particle->position.x + (1 * particle->scale.x), particle->position.y - (1 * particle->scale.y), particle->position.z);
+    glVertex3d(particle->position.x + (1 * particle->scale.x), particle->position.y + (1 * particle->scale.y), particle->position.z);
+
+    glEnd();
+
+	// particle->Render();
+
+	Billboard::EndBillboard();
+
 }

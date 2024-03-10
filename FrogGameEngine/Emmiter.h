@@ -20,14 +20,16 @@
 
 #include "EmmiterModule.h"
 
+class ParticleSystemComponent;
+
 class Emmiter {
 public:
-	Emmiter();
+	Emmiter(ParticleSystemComponent* owner);
 	~Emmiter();
 
 	void Start();
 	void Update(double dt);
-	void Render();
+	void Render(vec3 cameraPosition);
 
 	void SpawnParticles(int amount);
 	
@@ -65,9 +67,12 @@ public:
 
 	std::unique_ptr<EmmiterRenderModule> renderModule;	
 
+	ParticleSystemComponent* owner;
+
 private: 
 	std::vector<std::unique_ptr<Particle>> particles;
 	std::vector<int> usingParticlesIDs;
 	std::queue<int> freeParticlesIDs;
+
 
 };

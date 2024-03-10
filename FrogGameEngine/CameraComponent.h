@@ -14,7 +14,7 @@ public:
 
 	TransformComponent* getTransform();
 
-	void Render() override;
+	void Render(vec3 cameraPosition);
 
 protected:
 

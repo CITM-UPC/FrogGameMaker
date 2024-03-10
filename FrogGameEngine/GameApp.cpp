@@ -181,11 +181,11 @@ void GameApp::EditorRender(CameraComponent* camera)
 
     if (useBasicCameraWithFrustum) {
         // only for debug/showing purposes
-        scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
+        scene->Render(camera->getTransform()->getPosition(), basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
     }
     else {
         // this camera is what it should be used normally
-        scene->Render(camera->getCamera()->createFrustum(camera->getTransform()->getTransform()), true);
+        scene->Render(camera->getTransform()->getPosition(), camera->getCamera()->createFrustum(camera->getTransform()->getTransform()), true);
     }
 
 #pragma endregion
@@ -218,11 +218,11 @@ void GameApp::GameRender(CameraComponent* camera)
 
     if (useBasicCameraWithFrustum) {
         // only for debug/showing purposes
-        scene->Render(basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
+        scene->Render(camera->getTransform()->getPosition(), basicCamera->GetComponent<CameraComponent>()->getCamera()->createFrustum(basicCamera->GetComponent<TransformComponent>()->getTransform()), true);
     }
     else {
         // this camera is what it should be used normally
-        scene->Render(camera->getCamera()->createFrustum(camera->getTransform()->getTransform()), true);
+        scene->Render(camera->getTransform()->getPosition(), camera->getCamera()->createFrustum(camera->getTransform()->getTransform()), true);
     }
 #pragma endregion
 

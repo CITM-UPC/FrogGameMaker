@@ -197,9 +197,13 @@ void GameObject::Update(double dt)
 	for (auto i = components.begin(); i != components.end(); ++i) {
 		(*i)->Update(dt);
 	}
+
+	for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
+		(*childIt)->Update(dt);
+	}
 }
 
-void GameObject::Render(Frustum frustum, bool drawBoundingBox)
+void GameObject::Render(vec3 cameraPosition, Frustum frustum, bool drawBoundingBox)
 {
 	bool toRender = true;
 	// get necessary components
@@ -219,13 +223,13 @@ void GameObject::Render(Frustum frustum, bool drawBoundingBox)
 	if (frustum.IsBoundingBoxInFrustum(globalAABBox)) {
 		if (toRender) {
 			for (auto c = components.begin(); c != components.end(); ++c) {
-				(*c)->Render();
+				(*c)->Render(cameraPosition);
 			}
 		}
 
 		// render
 		for (auto childIt = children.begin(); childIt != children.end(); ++childIt) {
-			(*childIt)->Render(frustum, drawBoundingBox);
+			(*childIt)->Render(cameraPosition, frustum, drawBoundingBox);
 		}
 	}
 

@@ -36,7 +36,7 @@ public:
 	// --TODO--
 	void Update(double dt);
 
-	void Render(Frustum frustum, bool drawBoundingBox = false);
+	void Render(vec3 cameraPosition, Frustum frustum, bool drawBoundingBox = false);
 
 	void CleanUp();
 

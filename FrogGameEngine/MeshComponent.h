@@ -11,7 +11,7 @@ public:
 	void setMesh(Mesh::Ptr mesh);
 	Mesh::Ptr getMesh();
 
-	void Render() override;
+	void Render(vec3 cameraPosition);
 
 protected:
 

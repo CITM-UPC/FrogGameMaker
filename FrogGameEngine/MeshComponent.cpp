@@ -20,7 +20,7 @@ Mesh::Ptr MeshComponent::getMesh()
 	return _mesh;
 }
 
-void MeshComponent::Render()
+void MeshComponent::Render(vec3 cameraPosition)
 {
 	if (getMesh()) getMesh()->draw();
 }

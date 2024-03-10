@@ -27,7 +27,7 @@ public:
 	glm::quat rotation;
 	
 
-	vec3 scale;
+	vec3 scale = vec3(0.1, 0.1, 0.1);
 
 private: 
 	

@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "Emmiter.h"
 #include <vector>
+#include "TransformComponent.h"
 
 class ParticleSystemComponent : public Component {
 
@@ -14,7 +15,7 @@ public:
 	~ParticleSystemComponent();
 
 	void Update(double dt) override;
-	void Render() override;
+	void Render(vec3 cameraPosition);
 
 	void Play();
 	void Stop();
@@ -28,10 +29,14 @@ public:
 
 	bool IsON();
 
+	TransformComponent* GetTransform();
+
 	std::vector<std::unique_ptr<Emmiter>> emmiters;
 
 protected:
 
 private:
+	TransformComponent* transform;
+
 	bool isON;
 };

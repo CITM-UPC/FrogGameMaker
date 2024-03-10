@@ -32,7 +32,7 @@ public:
 	~GameObject();
 
 	void Update(double dt);
-	void Render(Frustum frustum, bool drawBoundingBox = false);
+	void Render(vec3 cameraPosition, Frustum frustum, bool drawBoundingBox = false);
 
 	GameObject* AddNewChildren();
 	GameObject* AddNewChildren(GameObjectTypes GOType);

@@ -105,6 +105,9 @@
     <ClCompile Include="SingleOrRandom.cpp">
       <Filter>Source Files\Particle Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameApp.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="SingleOrRandom.h">
       <Filter>Header Files\Particle Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,8 +5,12 @@
 #include "BillboardingEM.h"
 #include "InitializeModules.h"
 
-Emmiter::Emmiter()
+#include "ParticleSystemComponent.h"
+
+Emmiter::Emmiter(ParticleSystemComponent* owner)
 {
+	this->owner = owner;
+
 	delay = 0;
 	maxParticles = 100;
 	duration = 10;
@@ -84,7 +88,7 @@ void Emmiter::Update(double dt)
 	}
 }
 
-void Emmiter::Render()
+void Emmiter::Render(vec3 cameraPosition)
 {
 	//// sort particles by distance to the camera
 	//std::map<float, Particle*> particlesToRender;
@@ -102,7 +106,7 @@ void Emmiter::Render()
 
 	if (renderModule) {
 		for (auto i = particlesToRender.begin(); i != particlesToRender.end(); ++i) {
-			renderModule->Update(*i);
+			renderModule->Update(*i, cameraPosition);
 		}
 	}
 }

@@ -173,7 +173,7 @@ void Scene::Update(double dt)
 	}
 }
 
-void Scene::Render(Frustum frustum, bool drawBoundingBox)
+void Scene::Render(vec3 cameraPosition, Frustum frustum, bool drawBoundingBox)
 {
 	glColor3ub(128, 0, 0);
 	if (drawBoundingBox) {
@@ -182,7 +182,7 @@ void Scene::Render(Frustum frustum, bool drawBoundingBox)
 
 	if (frustum.IsBoundingBoxInFrustum(GetBoundingBox())) {
 		for (auto gameObjectI = children.begin(); gameObjectI != children.end(); ++gameObjectI) {
-			(*gameObjectI)->Render(frustum, drawBoundingBox);
+			(*gameObjectI)->Render(cameraPosition, frustum, drawBoundingBox);
 		}
 	}
 }

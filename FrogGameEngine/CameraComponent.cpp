@@ -27,7 +27,7 @@ TransformComponent* CameraComponent::getTransform()
 	return transform;
 }
 
-void CameraComponent::Render()
+void CameraComponent::Render(vec3 cameraPosition)
 {
 	getCamera()->drawFrustum();
 }
