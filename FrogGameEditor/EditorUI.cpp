@@ -705,35 +705,38 @@ void EditorUI::UIInspectorWriteTransformNode(TransformComponent* component) {
 		ImGuiInputTextFlags flags = 0;
 		ImGui::PushItemWidth(60);
 
+		ImGui::PushID("position_transform");
+
 		ImGui::SeparatorText("Position: ");
 		ImGui::InputDouble("X", &component->getPosition().x, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Y", &component->getPosition().y, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Z", &component->getPosition().z, 0, 0, "%.2f", flags);
 		ImGui::Spacing();
+		ImGui::PopID();
+
+		ImGui::PushID("rotation_transform");
 
 		ImGui::SeparatorText("Rotation: ");
 		ImGui::InputDouble("X", &component->getEulerAngles().x, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Y", &component->getEulerAngles().y, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Z", &component->getEulerAngles().z, 0, 0, "%.2f", flags);
 		ImGui::Spacing();
+		ImGui::PopID();
+
+		ImGui::PushID("scale_transform");
 
 		ImGui::SeparatorText("Scale: ");
 		ImGui::InputDouble("X", &component->getScaleVector().x, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Y", &component->getScaleVector().y, 0, 0, "%.2f", flags);
 		ImGui::SameLine();
-		ImGui::PopID();
 		ImGui::InputDouble("Z", &component->getScaleVector().z, 0, 0, "%.2f", flags);
 		ImGui::Spacing();
+		ImGui::PopID();
 
 		ImGui::PopItemWidth();
 

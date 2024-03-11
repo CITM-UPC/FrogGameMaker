@@ -8,7 +8,27 @@
 // #include "../FrogGameEngine/UpdateModules.h"
 #include "../FrogGameEngine/BillboardingEM.h"
 
+// spawn modules
+void UIInspectorEmmiterSpawnModule(ConstantSpawnRate* spawnModule) {
+	ImGui::SeparatorText("Constant Spawn Rate");
+	ImGui::InputFloat("Spawn Rate", &spawnModule->spawnRate);
+	ImGui::InputFloat("Particle Duration", &spawnModule->duration);
+}
 
+void UIInspectorEmmiterSpawnModule(SingleBurstSpawn* spawnModule) {
+	ImGui::SeparatorText("Single Burst");
+	ImGui::InputFloat("Amount", &spawnModule->amount);
+	ImGui::InputFloat("Particle Duration", &spawnModule->duration);
+}
+
+void UIInspectorEmmiterSpawnModule(ConstantBurstSpawn* spawnModule) {
+	ImGui::SeparatorText("Constant Burst");
+	ImGui::InputFloat("Amount", &spawnModule->amount);
+	ImGui::InputFloat("Spawn Rate", &spawnModule->spawnRate);
+	ImGui::InputFloat("Particle Duration", &spawnModule->duration);
+}
+
+// initialize modules
 
 void UIEmmiterWriteNode(Emmiter* emmiter) {
 	ImGui::InputInt("maxParticles", &emmiter->maxParticles);
@@ -19,27 +39,20 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 	ImGui::InputFloat("Delay", &emmiter->delay);
 	ImGui::Checkbox("Loop", &emmiter->isLooping);
 
-	if (emmiter->spawnModule) {
-		ImGui::SeparatorText("Spawn Module");
+	ImGui::SeparatorText("Spawn Module");
 
+	if (emmiter->spawnModule) {
 		switch (emmiter->spawnModule->type)	{
 		case EmmiterSpawnModule::CONSTANT:
-			ImGui::SeparatorText("Constant Spawn Rate");
-			ImGui::InputFloat("Particle Duration", &((ConstantSpawnRate*)emmiter->spawnModule.get())->duration);
-			ImGui::InputFloat("Spawn Rate", &((ConstantSpawnRate*)emmiter->spawnModule.get())->spawnRate);
-
+			UIInspectorEmmiterSpawnModule((ConstantSpawnRate*)emmiter->spawnModule.get());
+			
 			break;
 		case EmmiterSpawnModule::SINGLE_BURST:
-			ImGui::SeparatorText("Single Burst");
-			ImGui::InputFloat("Particle Duration", &((SingleBurstSpawn*)emmiter->spawnModule.get())->duration);
-			ImGui::InputFloat("Amount", &((SingleBurstSpawn*)emmiter->spawnModule.get())->amount);
+			UIInspectorEmmiterSpawnModule((SingleBurstSpawn*)emmiter->spawnModule.get());
 
 			break;
 		case EmmiterSpawnModule::CONSTANT_BURST:
-			ImGui::SeparatorText("Constant Burst");
-			ImGui::InputFloat("Particle Duration", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->duration);
-			ImGui::InputFloat("Spawn Rate", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->spawnRate);
-			ImGui::InputFloat("Amount", &((ConstantBurstSpawn*)emmiter->spawnModule.get())->amount);
+			UIInspectorEmmiterSpawnModule((ConstantBurstSpawn*)emmiter->spawnModule.get());
 
 			break;
 		default:
@@ -62,30 +75,30 @@ void UIEmmiterWriteNode(Emmiter* emmiter) {
 			ImGui::PushItemWidth(60);
 
 			if (((SetSpeed*)(*m).get())->speed.usingSingleValue) {
+				ImGui::PushID("set_speed_single_PS");
 				ImGui::InputDouble("X", &((SetSpeed*)(*m).get())->speed.singleValue.x, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Y", &((SetSpeed*)(*m).get())->speed.singleValue.y, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Z", &((SetSpeed*)(*m).get())->speed.singleValue.z, 0, 0, "%.2f");
+				ImGui::PopID();
 			}
 			else {
+				ImGui::PushID("set_speed_min_PS");
 				ImGui::InputDouble("X", &((SetSpeed*)(*m).get())->speed.rangeValue.lowerLimit.x, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Y", &((SetSpeed*)(*m).get())->speed.rangeValue.lowerLimit.y, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Z", &((SetSpeed*)(*m).get())->speed.rangeValue.lowerLimit.z, 0, 0, "%.2f");
+				ImGui::PopID();
 
+				ImGui::PushID("set_speed_max_PS");
 				ImGui::InputDouble("X", &((SetSpeed*)(*m).get())->speed.rangeValue.upperLimit.x, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Y", &((SetSpeed*)(*m).get())->speed.rangeValue.upperLimit.y, 0, 0, "%.2f");
 				ImGui::SameLine();
-				ImGui::PopID();
 				ImGui::InputDouble("Z", &((SetSpeed*)(*m).get())->speed.rangeValue.upperLimit.z, 0, 0, "%.2f");
+				ImGui::PopID();
 			}
 
 			ImGui::PopItemWidth();
